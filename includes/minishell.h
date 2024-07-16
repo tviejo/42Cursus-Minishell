@@ -8,7 +8,8 @@ enum e_type
 {
     command,
     infile,
-    outfile_create,
+    here_doc,
+    outfile_truncate,
     outfile_append,
     pipe,
     OR,
