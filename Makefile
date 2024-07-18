@@ -9,6 +9,7 @@ SRCS		=	builtin/builtin.c env/env.c
 #SRCS		+= exec/exec.c
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_utils.c
+SRCS		+= stack/stack.c
 
 vpath %.c $(SRC_DIR)
 
@@ -59,7 +60,7 @@ ${NAME}: 		${OBJS}
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)stack/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
