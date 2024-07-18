@@ -28,8 +28,9 @@ typedef struct exec
 
 int		store_env(t_exec *exec, char **env);
 char	*find_path(char *name, t_exec *exec);
-int		update_oldpwm(t_exec *exec);
-int		print_env(t_exec *exec);
-int		update_pwd(t_exec *exec, char *pwd);
+int free_env(t_exec *exec);
+int	update_oldpwm(t_exec *exec);
+int print_env(t_exec *exec);
+int update_pwd(t_exec *exec, char *pwd);
 
 #endif
