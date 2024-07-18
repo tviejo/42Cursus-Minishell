@@ -70,7 +70,7 @@ int exec_builtin(t_command_tree *tree, t_exec *exec)
         return (ft_cd(tree, exec));
     return (EXIT_FAILURE);
 }
-
+/*
 int main(int argc, char **argv, char **env)
 {
     t_exec exec;
@@ -92,3 +92,4 @@ int main(int argc, char **argv, char **env)
     exec_builtin(&tree, &exec);
     return (EXIT_SUCCESS);
 }
+*/
