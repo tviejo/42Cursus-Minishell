@@ -96,6 +96,7 @@ int ft_unset(t_command_tree *tree, t_exec *exec)
 int ft_export(t_command_tree *tree, t_exec *exec)
 {
     int i;
+    char **new_env;
 
     i = 0;
     while (exec->env[i])
@@ -108,6 +109,7 @@ int ft_export(t_command_tree *tree, t_exec *exec)
         }
         i++;
     }
+    exec->env = expand_env(exec);
     return (EXIT_SUCCESS);
 }
 
@@ -145,6 +147,8 @@ int exec_builtin(t_command_tree *tree, t_exec *exec)
         return (ft_pwd(exec));
     else if (builtin == b_unset)
         return (ft_unset(tree, exec));
+    else if (builtin == b_export)
+        return (ft_export(tree, exec));
     else if (builtin == b_exit)
         exit(EXIT_SUCCESS);
     return (EXIT_FAILURE);
@@ -158,13 +162,14 @@ int main(int argc, char **argv, char **env)
     argc = 0;
     argv = NULL;
     store_env(&exec, env);
-    tree.type = command;
+    tree.type = nt_command;
     tree.argument = malloc(sizeof(char *) * 4);
-    tree.argument[0] = "unset";
-    tree.argument[1] = "PATH=";
+    tree.argument[0] = "export";
+    tree.argument[1] = "NEW_VAR=42";
     tree.argument[2] = "srcs/"; 
     tree.argument[3] = NULL;
     exec_builtin(&tree, &exec);
+    ft_env(&exec);
     free_env(&exec);
     free(tree.argument[3]);
     free(tree.argument);

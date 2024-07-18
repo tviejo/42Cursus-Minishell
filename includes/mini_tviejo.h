@@ -24,6 +24,7 @@ enum e_builtin
 typedef struct exec
 {
 	char	**env;
+    int     env_len;
 }	t_exec;
 
 int		store_env(t_exec *exec, char **env);
@@ -32,5 +33,6 @@ int free_env(t_exec *exec);
 int	update_oldpwm(t_exec *exec);
 int print_env(t_exec *exec);
 int update_pwd(t_exec *exec, char *pwd);
+char **expand_env(t_exec *exec);
 
 #endif
