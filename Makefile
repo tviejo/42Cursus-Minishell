@@ -6,6 +6,9 @@ SRC_DIR		=	srcs/
 OBJ_DIR     =   objs/
 
 SRCS		=	builtin/builtin.c env/env.c
+#SRCS		+= exec/exec.c
+SRCS		+= parsing/parsing.c
+SRCS		+= parsing/parsing_utils.c
 
 vpath %.c $(SRC_DIR)
 
@@ -13,8 +16,9 @@ OBJS		=	$(patsubst %.c, $(OBJ_DIR)%.o, $(SRCS))
 
 CC			=	cc
 CFLAGS		=	-g3 -Wall -Wextra -Werror
-LIB 		= 	libft/libft.a
+LIBFT 		= 	libft/libft.a
 INCLUDES 	= 	-I includes/ -I libft/includes/
+LIBS		=   -L libft -lft -lreadline
 RM			=	rm -f
 
 GREEN=\033[0;32m
@@ -37,25 +41,25 @@ define PRINT_LOADING
 	@printf "] 100%%$(RESET)\n$(END)"
 endef
 
-all: 			$(LIB) ${NAME}
+all: 			$(LIBFT) ${NAME}
 				@echo "$(GREEN)$(BOLD_START)${NAME} created$(BOLD_END)$(END)"
 
-bonus: 			$(LIB) ${NAME_BONUS}
+bonus: 			$(LIBFT) ${NAME_BONUS}
 				@echo "$(GREEN)$(BOLD_START)${NAME_BONUS} created$(BOLD_END)$(END)"
 
-$(LIB):
+$(LIBFT):
 				@$(PRINT_LOADING)
 				$(MAKE) --no-print-directory -C libft/
 
 ${NAME_BONUS}: 	${OBJS} $(OBJS_BONUS)
-				$(CC) $(CFLAGS) ${OBJS} $(OBJS_BONUS) $(LIB) -o $(NAME_BONUS)
+				$(CC) $(CFLAGS) ${OBJS} $(OBJS_BONUS) $(LIBS) -o $(NAME_BONUS)
 
 ${NAME}: 		${OBJS}
-				$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
+				$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

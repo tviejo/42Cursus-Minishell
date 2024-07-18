@@ -6,13 +6,13 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/18 00:09:25 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:18:17 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmdtree	*build_tree(t_cmdtree *tree, char *cmdline)
+/*t_cmdtree	*build_tree(t_cmdtree *tree, char *cmdline)
 {
 	;
-}
+}*/
