@@ -11,22 +11,22 @@
 
 enum e_builtin
 {
-    b_not_builtin,
-    b_cd,
-    b_echo,
-    b_env,
-    b_exit,
-    b_pwd,
-    b_unset,
-    b_export
+	b_not_builtin,
+	b_cd,
+	b_echo,
+	b_env,
+	b_exit,
+	b_pwd,
+	b_unset,
+	b_export
 };
 
 typedef struct exec
 {
 	char	**env;
-}			t_exec;
+}	t_exec;
 
-int    store_env(t_exec *exec, char **env);
+int		store_env(t_exec *exec, char **env);
 char	*find_path(char *name, t_exec *exec);
 int free_env(t_exec *exec);
 int	update_oldpwm(t_exec *exec);
