@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/17 23:50:51 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/05/15 15:04:49 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/05/20 16:50:55 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_ADE_SARR_H
-# define MINI_ADE_SARR_H
+#include "libft.h"
 
-# include "../libft_ades/libft_ades.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+/* Applique la fonction ’f’ à chaque caractère de la
+ * chaîne de caractères transmise comme argument,
+ * et en passant son index comme premier argument.
+ * Chaque caractère est transmis par adresse à ’f’
+ * afin d’être modifié si nécessaire.
+*/
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	unsigned int	i;
 
-#endif
+	i = 0;
+	while (*s)
+		f(i++, s++);
+}
