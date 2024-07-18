@@ -1,22 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/17 23:50:51 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/05/15 15:04:54 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/05/22 16:47:43 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_ADE_SARR_H
-# define MINI_ADE_SARR_H
+#include "libft.h"
 
-# include "../libft_ades/libft_ades.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	n;
+	size_t	len;
 
-#endif
+	if (size == 0)
+		return (ft_strlen(src));
+	len = ft_strlen(dst);
+	dst += len;
+	if (size > len)
+	{
+		n = size - len - 1;
+		while (*src && n)
+		{
+			*dst++ = *src++;
+			n--;
+			len++;
+		}
+		*dst = '\0';
+		while (*src++)
+			len++;
+		return (len);
+	}
+	n = 0;
+	while (src[n])
+		n++;
+	return (n + size);
+}

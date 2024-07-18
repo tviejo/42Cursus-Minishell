@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/17 23:50:51 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/05/15 15:04:57 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/05/20 16:11:10 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_ADE_SARR_H
-# define MINI_ADE_SARR_H
+#include "libft.h"
 
-# include "../libft_ades/libft_ades.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	n;
+	size_t	l;
 
-#endif
+	l = 0;
+	if (size > 0)
+	{
+		n = size - 1;
+		while (*src && n)
+		{
+			*dst++ = *src++;
+			n--;
+			l++;
+		}
+		*dst = '\0';
+	}
+	while (*src++)
+		l++;
+	return (l);
+}

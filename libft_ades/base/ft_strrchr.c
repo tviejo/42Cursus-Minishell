@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/17 23:50:51 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/05/15 15:05:07 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/05/21 01:44:01 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_ADE_SARR_H
-# define MINI_ADE_SARR_H
+#include "libft.h"
 
-# include "../libft_ades/libft_ades.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+char	*ft_strrchr(const char *s, int c)
+{
+	int	n;
 
-#endif
+	n = ft_strlen(s) + 1;
+	s += n - 1;
+	while (n--)
+	{
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s--;
+	}
+	return (NULL);
+}

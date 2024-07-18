@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/17 23:50:51 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/06/04 00:41:40 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/06/04 03:00:25 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_ADE_SARR_H
-# define MINI_ADE_SARR_H
+#include "libft_ades.h"
+#include <stdlib.h>
 
-# include "../libft_ades/libft_ades.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+int	main(void)
+{
+	char	*line;
 
-#endif
+	line = get_next_line(0);
+	ft_putstr_fd(line, 1);
+	ft_printf("%s", line);
+	free(line);
+}
