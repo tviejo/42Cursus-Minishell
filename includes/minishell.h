@@ -1,4 +1,4 @@
-#ifndef MINISHEL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "mini_tviejo.h"
@@ -11,7 +11,7 @@ enum e_type
     here_doc,
     outfile_truncate,
     outfile_append,
-    pipe,
+    pip,
     OR,
     AND,
 };
