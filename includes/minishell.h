@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/19 16:21:08 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/19 17:14:26 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,14 @@ void					exec_cmd(t_command_tree *tree, t_exec *exec,
 int						cmd_process(char **cmd, t_command_tree *tree,
 							t_exec *exec, int index);
 int						calloc_pid(t_exec *exec, t_command_tree *tree);
+int						child_process(char **cmd, t_command_tree *tree,
+							t_exec *exec, int index);
+int						close_fd(int fd, t_command_tree *tree, t_exec *exec);
+int						duplicate_pipe(t_command_tree *tree, t_exec *exec,
+							int mode);
+int						create_pipe(t_exec *exec, t_cmdtree *tree);
+int						close_pipe(t_exec *exec);
+int						last_child_process(char **cmd, t_command_tree *tree,
+							t_exec *exec, int index);
 
 #endif

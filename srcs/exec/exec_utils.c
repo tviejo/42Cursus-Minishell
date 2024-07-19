@@ -1,4 +1,4 @@
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	*ft_calloc_pid(t_command_tree *tree, t_exec *exec)
 {
@@ -11,11 +11,11 @@ void	*ft_calloc_pid(t_command_tree *tree, t_exec *exec)
 
 int	create_pipe(t_exec *exec, t_cmdtree *tree)
 {
-    if (pipe(exec->fdpipe) == -1)
-    {
-        ft_close_error(tree, exec);
-    }
-    return (EXIT_SUCCESS);
+	if (pipe(exec->fdpipe) == -1)
+	{
+		ft_close_error(tree, exec);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	close_pipe(t_exec *exec)
@@ -48,12 +48,12 @@ int	duplicate_pipe(t_command_tree *tree, t_exec *exec, int mode)
 
 int	close_fd(int fd, t_command_tree *tree, t_exec *exec)
 {
-    if (fd >= 0 && fd <= 1024)
-    {
-        if (close(fd) == -1)
-        {
-            ft_close_error(tree, exec);
-        }
-    }
-    return (-1);
+	if (fd >= 0 && fd <= 1024)
+	{
+		if (close(fd) == -1)
+		{
+			ft_close_error(tree, exec);
+		}
+	}
+	return (-1);
 }
