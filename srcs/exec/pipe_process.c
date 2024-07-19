@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
 
+/*
 int	child_process(char **cmd, t_command_tree *tree, t_exec *exec, int index)
 {
 	create_pipe(exec);
@@ -21,3 +22,4 @@ int	child_process(char **cmd, t_command_tree *tree, t_exec *exec, int index)
 	close_pipe(exec);
 	return (EXIT_SUCCESS);
 }
+*/

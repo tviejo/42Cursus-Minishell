@@ -17,6 +17,18 @@ SRCS		+=	builtin/unset.c
 
 SRCS		+=	env/env.c
 
+SRCS		+=	close/close.c
+
+SRCS		+=	exec/exec.c
+SRCS		+=	exec/cmd_process.c
+SRCS		+=	exec/exec_utils.c
+SRCS		+=	exec/find_path_cmd.c
+SRCS		+=	exec/init_exec.c
+SRCS		+=	exec/redir.c
+SRCS		+=	exec/pipe_process.c
+SRCS		+=	exec/main_exec.c
+SRCS		+=	exec/free_exec.c
+
 #SRCS		+= exec/exec.c
 
 vpath %.c $(SRC_DIR)
@@ -68,7 +80,7 @@ ${NAME}: 		${OBJS}
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)stack/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

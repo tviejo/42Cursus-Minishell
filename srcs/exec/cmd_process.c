@@ -2,6 +2,8 @@
 
 int cmd_process(char **cmd, t_command_tree *tree, t_exec *exec, int index)
 {
+    int status;
+    
     exec->pid[index] = fork();
     if (exec->pid[index] == -1)
     {
@@ -16,4 +18,5 @@ int cmd_process(char **cmd, t_command_tree *tree, t_exec *exec, int index)
     {
         waitpid(exec->pid[index], &status, 0);
     }
+    return (EXIT_SUCCESS);
 }

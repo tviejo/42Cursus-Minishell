@@ -4,18 +4,15 @@
 # include "../libft/libft.h"
 # include "minishell.h"
 # include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
 # include <sys/types.h>
-# include <fcntl.h>
 # include <sys/wait.h>
-# include <errno.h>
-
-
-extern int status;
+# include <unistd.h>
 
 enum		e_builtin
 {
@@ -36,7 +33,7 @@ typedef struct exec
 	int		infile;
 	int		outfile;
 	int		fdpipe[2];
-	pid_t 	*pid;
+	pid_t	*pid;
 }			t_exec;
 
 int			store_env(t_exec *exec, char **env);
@@ -46,6 +43,7 @@ int			update_oldpwm(t_exec *exec);
 int			print_env(t_exec *exec);
 int			update_pwd(t_exec *exec, char *pwd);
 char		**expand_env(t_exec *exec);
-
+char		*find_cmd(char **cmd, char **paths);
+int			ft_free_pid(t_exec *exec);
 
 #endif

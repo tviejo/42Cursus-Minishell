@@ -40,7 +40,7 @@ int	exec_builtin(t_command_tree *tree, t_exec *exec)
 		return (ft_exit(tree));
 	return (EXIT_FAILURE);
 }
-
+/*
 int	main(int argc, char **argv, char **env)
 {
 	t_exec			exec;
@@ -50,13 +50,14 @@ int	main(int argc, char **argv, char **env)
 	argv = NULL;
 	store_env(&exec, env);
 	tree.type = nt_command;
-    tree.argument = malloc(sizeof(char *) * 4);
+	tree.argument = malloc(sizeof(char *) * 4);
 	tree.argument[0] = "exit";
 	tree.argument[1] = "LD_PRELOAD";
 	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
-    exec_builtin(&tree, &exec);
+	exec_builtin(&tree, &exec);
 	free_env(&exec);
 	free(tree.argument);
 	return (EXIT_SUCCESS);
 }
+*/

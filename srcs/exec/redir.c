@@ -1,5 +1,6 @@
 # include "../includes/minishell.h"
 
+/*
 int redir_outfile_append(char **argument, t_command_tree *tree, t_exec *exec)
 {
     int fd;
@@ -17,3 +18,4 @@ int redir_outfile_append(char **argument, t_command_tree *tree, t_exec *exec)
     close(fd);
     return (EXIT_SUCCESS);
 }
+*/

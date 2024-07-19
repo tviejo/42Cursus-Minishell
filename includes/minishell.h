@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/19 15:05:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/19 16:21:08 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ int						ft_unset(t_command_tree *tree, t_exec *exec);
 int						ft_echo(t_command_tree *tree);
 int						find_builtin(t_command_tree *tree);
 int						exec_builtin(t_command_tree *tree, t_exec *exec);
-int					ft_exit(t_command_tree *tree);
+int						ft_exit(t_command_tree *tree);
+char					*find_path_cmd(char **envp);
+int						ft_close_error(t_command_tree *tree, t_exec *exec);
+void					exec_cmd(t_command_tree *tree, t_exec *exec,
+							char **argument);
+int						cmd_process(char **cmd, t_command_tree *tree,
+							t_exec *exec, int index);
+int						calloc_pid(t_exec *exec, t_command_tree *tree);
 
 #endif

@@ -21,11 +21,15 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 
 void	exec_cmd(t_command_tree *tree, t_exec *exec, char **argument)
 {
-	if (argument == NULL)
+	char *tmp;
+
+	tmp = find_cmd(tree->argument,  ft_split(find_path_cmd(exec->env), ':'));
+	if (tmp == NULL)
 		ft_close_error(tree, exec);
-	if (argument[0] != NULL)
+	if (tmp != NULL)
 	{
-		execve(argument[0], argument, exec->env);
+		execve(tmp, argument, exec->env);
+		free(tmp);
 		perror("Error");
 	}
 }
