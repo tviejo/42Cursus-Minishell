@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/18 16:41:09 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:15:21 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,14 @@ typedef struct s_cmdtree
 }	t_command_tree;
 
 typedef t_command_tree	t_cmdtree;
+
+int			ft_export(t_command_tree *tree, t_exec *exec);
+int			ft_cd(t_command_tree *tree, t_exec *exec);
+int			ft_env(t_exec *exec);
+int			ft_pwd(t_exec *exec);
+int			ft_unset(t_command_tree *tree, t_exec *exec);
+int			ft_echo(t_command_tree *tree);
+int			find_builtin(t_command_tree *tree);
+int			exec_builtin(t_command_tree *tree, t_exec *exec);
 
 #endif
