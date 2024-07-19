@@ -37,7 +37,7 @@ int	exec_builtin(t_command_tree *tree, t_exec *exec)
 	else if (builtin == b_export)
 		return (ft_export(tree, exec));
 	else if (builtin == b_exit)
-		exit(EXIT_SUCCESS);
+		return (ft_exit(tree));
 	return (EXIT_FAILURE);
 }
 
@@ -50,15 +50,13 @@ int	main(int argc, char **argv, char **env)
 	argv = NULL;
 	store_env(&exec, env);
 	tree.type = nt_command;
-	tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "export";
-	tree.argument[1] = "NEW_VAR=42";
-	tree.argument[2] = "srcs/";
+    tree.argument = malloc(sizeof(char *) * 4);
+	tree.argument[0] = "exit";
+	tree.argument[1] = "LD_PRELOAD";
+	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
-	exec_builtin(&tree, &exec);
-	ft_env(&exec);
+    exec_builtin(&tree, &exec);
 	free_env(&exec);
-	free(tree.argument[3]);
 	free(tree.argument);
 	return (EXIT_SUCCESS);
 }

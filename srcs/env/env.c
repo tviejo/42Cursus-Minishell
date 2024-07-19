@@ -26,16 +26,19 @@ char **expand_env(t_exec *exec)
     char **new_env;
 
     i = 0;
-    new_env = malloc(sizeof(char *) * (exec->env_len + 1));
+    new_env = malloc(sizeof(char *) * (exec->env_len + 2));
     while (exec->env[i])
     {
         new_env[i] = ft_strdup(exec->env[i]);
         i++;
     }
     new_env[i] = NULL;
+	new_env[i + 1] = NULL;
+	exec->env_len++;
     free_env(exec);
     return (new_env);
 }
+
 char	*find_path(char *name, t_exec *exec)
 {
 	int		i;
@@ -50,27 +53,6 @@ char	*find_path(char *name, t_exec *exec)
 		i++;
 	}
 	return (NULL);
-}
-
-int	update_oldpwm(t_exec *exec)
-{
-	char *oldpwd;
-	char *pwd;
-
-	oldpwd = find_path("PWD=", exec);
-	if (oldpwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	pwd = find_path("PWD=", exec);
-	if (pwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: PWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	oldpwd = ft_strdup(pwd);
-	return (EXIT_SUCCESS);
 }
 
 int    free_env(t_exec *exec)
@@ -106,3 +88,4 @@ int update_pwd(t_exec *exec, char *pwd)
     }
     return (EXIT_FAILURE);
 }
+
