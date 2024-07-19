@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
 /*   Updated: 2024/07/19 02:21:35 by ade-sarr         ###   ########.fr       */
@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+
 
 t_cmdtree	*parse_cmdline(char *cmdline)
 {
@@ -43,3 +46,4 @@ int	main(void)
 	}
 	return (free_parsing(p), 0);
 }
+*/

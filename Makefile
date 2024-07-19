@@ -5,7 +5,18 @@ SRC_DIR		=	srcs/
 
 OBJ_DIR     =   objs/
 
-#SRCS		=	builtin/builtin.c env/env.c
+
+SRCS		=	builtin/builtin.c
+SRCS		+=	builtin/cd.c
+SRCS		+=	builtin/echo.c
+SRCS		+=	builtin/env.c
+SRCS		+=	builtin/exit.c
+SRCS		+=	builtin/export.c
+SRCS		+=	builtin/pwd.c
+SRCS		+=	builtin/unset.c
+
+SRCS		+=	env/env.c
+
 #SRCS		+= exec/exec.c
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_utils.c
