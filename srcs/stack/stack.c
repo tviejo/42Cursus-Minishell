@@ -6,9 +6,12 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/18 18:52:13 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:56:31 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* Pile générique (éléments de type void *) mise en oeuvre à l'aide d'un tableau
+*/
 
 #include "minishell.h"
 
