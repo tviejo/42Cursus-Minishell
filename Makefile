@@ -18,9 +18,6 @@ SRCS		+=	builtin/unset.c
 SRCS		+=	env/env.c
 
 #SRCS		+= exec/exec.c
-SRCS		+= parsing/parsing.c
-SRCS		+= parsing/parsing_utils.c
-SRCS		+= stack/stack.c
 
 vpath %.c $(SRC_DIR)
 

@@ -55,27 +55,6 @@ char	*find_path(char *name, t_exec *exec)
 	return (NULL);
 }
 
-int	update_oldpwm(t_exec *exec)
-{
-	char *oldpwd;
-	char *pwd;
-
-	oldpwd = find_path("PWD=", exec);
-	if (oldpwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	pwd = find_path("PWD=", exec);
-	if (pwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: PWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	oldpwd = ft_strdup(pwd);
-	return (EXIT_SUCCESS);
-}
-
 int    free_env(t_exec *exec)
 {
     int i;
@@ -109,3 +88,4 @@ int update_pwd(t_exec *exec, char *pwd)
     }
     return (EXIT_FAILURE);
 }
+
