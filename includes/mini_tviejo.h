@@ -9,6 +9,13 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <errno.h>
+
+
+extern int status;
 
 enum		e_builtin
 {
@@ -26,6 +33,10 @@ typedef struct exec
 {
 	char	**env;
 	int		env_len;
+	int		infile;
+	int		outfile;
+	int		fdpipe[2];
+	pid_t 	*pid;
 }			t_exec;
 
 int			store_env(t_exec *exec, char **env);

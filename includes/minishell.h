@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/19 14:07:41 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/19 15:05:16 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_cmdtree
 {
 	enum e_nodetype		type;
 	char				**argument;
+	int					nb_command;
 	struct s_cmdtree	*left;
 	struct s_cmdtree	*right;
 }						t_command_tree;
@@ -46,6 +47,6 @@ int						ft_unset(t_command_tree *tree, t_exec *exec);
 int						ft_echo(t_command_tree *tree);
 int						find_builtin(t_command_tree *tree);
 int						exec_builtin(t_command_tree *tree, t_exec *exec);
-void					ft_exit(t_command_tree *tree);
+int					ft_exit(t_command_tree *tree);
 
 #endif

@@ -15,21 +15,21 @@ bool	ft_isnumber(char *str)
 	return (true);
 }
 
-void	ft_exit(t_command_tree *tree)
+int	ft_exit(t_command_tree *tree)
 {
 	if (tree->argument[1] != NULL)
 	{
 		if (tree->argument[2] != NULL)
 		{
 			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
-			return ;
+			return (EXIT_FAILURE);
 		}
 		else if (ft_isnumber(tree->argument[1]) == false)
 		{
 			ft_putstr_fd("exit\nminishell: exit: ", 2);
 			ft_putstr_fd(tree->argument[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return ;
+			return (EXIT_FAILURE);
 		}
 		else
 		{
@@ -38,4 +38,5 @@ void	ft_exit(t_command_tree *tree)
 	}
 	else
 		printf("exit\n");
+    return (EXIT_SUCCESS);
 }
