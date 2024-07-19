@@ -26,16 +26,19 @@ char **expand_env(t_exec *exec)
     char **new_env;
 
     i = 0;
-    new_env = malloc(sizeof(char *) * (exec->env_len + 1));
+    new_env = malloc(sizeof(char *) * (exec->env_len + 2));
     while (exec->env[i])
     {
         new_env[i] = ft_strdup(exec->env[i]);
         i++;
     }
     new_env[i] = NULL;
+	new_env[i + 1] = NULL;
+	exec->env_len++;
     free_env(exec);
     return (new_env);
 }
+
 char	*find_path(char *name, t_exec *exec)
 {
 	int		i;

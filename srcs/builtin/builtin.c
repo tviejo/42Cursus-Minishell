@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 	tree.type = nt_command;
 	tree.argument = malloc(sizeof(char *) * 4);
 	tree.argument[0] = "export";
-	tree.argument[1] = "NEW_VAR=42";
+	tree.argument[1] = "PATH=42";
 	tree.argument[2] = "srcs/";
 	tree.argument[3] = NULL;
 	exec_builtin(&tree, &exec);
