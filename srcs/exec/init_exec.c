@@ -10,7 +10,7 @@ int	calloc_pid(t_exec *exec, t_command_tree *tree)
         ft_close_error(tree, exec);
 	while (i < tree->nb_command)
 	{
-		exec->pid[i] = -1;
+		exec->pid[i] = -10;
 		i++;
 	}
 	return (EXIT_SUCCESS);
