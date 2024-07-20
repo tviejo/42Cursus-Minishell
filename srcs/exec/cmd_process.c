@@ -1,18 +1,14 @@
 # include "../includes/minishell.h"
 
-int cmd_process(char **cmd, t_command_tree *tree, t_exec *exec, int index)
+int cmd_process_and_or(t_command_tree *tree, t_exec *exec)
 {
     int status;
+    int index;
     
-    exec->pid[index] = fork();
-    if (exec->pid[index] == -1)
+    index = create_fork(tree, exec);
+    if (exec->pid[index] == 0)
     {
-        ft_putstr_fd("fork failed\n", 2);
-        return (EXIT_FAILURE);
-    }
-    else if (exec->pid[index] == 0)
-    {
-        exec_cmd(tree, exec, cmd);
+        exec_cmd(tree, exec);
     }
     else
     {

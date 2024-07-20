@@ -19,7 +19,7 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 }
 */
 
-void	exec_cmd(t_command_tree *tree, t_exec *exec, char **argument)
+void	exec_cmd(t_command_tree *tree, t_exec *exec)
 {
 	char *tmp;
 
@@ -28,7 +28,7 @@ void	exec_cmd(t_command_tree *tree, t_exec *exec, char **argument)
 		ft_close_error(tree, exec);
 	if (tmp != NULL)
 	{
-		execve(tmp, argument, exec->env);
+		execve(tmp, tree->argument, exec->env);
 		free(tmp);
 		perror("Error");
 	}
