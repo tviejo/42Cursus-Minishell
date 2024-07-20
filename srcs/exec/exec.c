@@ -1,28 +1,35 @@
 #include "../includes/minishell.h"
 
-int	exec(t_command_tree *tree)
+/*
+void	exec_error(t_pipex *pipex, char **argv, int argc)
 {
-	int	i;
+	int	index;
+	int	fd;
 
-	i = 0;
-	if (tree->type == nt_AND)
+	index = 0;
+	while (pipex->arguments[index] != NULL)
 	{
-		if (exec(tree->left) == 1)
-			return (exec(tree->right));
-		else
-			return (0);
+		if (pipex->arguments[index][0] == NULL)
+		{
+			fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			close(fd);
+		}
+		index++;
 	}
-	else if (tree->type == nt_OR)
+}
+*/
+
+void	exec_cmd(t_command_tree *tree, t_exec *exec, char **argument)
+{
+	char *tmp;
+
+	tmp = find_cmd(tree->argument,  ft_split(find_path_cmd(exec->env), ':'));
+	if (tmp == NULL)
+		ft_close_error(tree, exec);
+	if (tmp != NULL)
 	{
-		if (exec(tree->left) == 0)
-			return (exec(tree->right));
-	}
-	else if (tree->type == nt_pipe)
-	{
-		return (exec(tree->left), exec(tree->right));
-	}
-	else if (tree->type == nt_command)
-	{
-		return (exec_command(tree));
+		execve(tmp, argument, exec->env);
+		free(tmp);
+		perror("Error");
 	}
 }

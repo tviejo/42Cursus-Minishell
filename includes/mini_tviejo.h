@@ -2,14 +2,19 @@
 # define MINI_TVIEJO_H
 
 # include "../libft/libft.h"
+# include "minishell.h"
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <string.h>
-# include <stdbool.h>
-# include <dirent.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-enum e_builtin
+enum		e_builtin
 {
 	b_not_builtin,
 	b_cd,
@@ -24,13 +29,21 @@ enum e_builtin
 typedef struct exec
 {
 	char	**env;
-}	t_exec;
+	int		env_len;
+	int		infile;
+	int		outfile;
+	int		fdpipe[2];
+	pid_t	*pid;
+}			t_exec;
 
-int		store_env(t_exec *exec, char **env);
-char	*find_path(char *name, t_exec *exec);
-int free_env(t_exec *exec);
-int	update_oldpwm(t_exec *exec);
-int print_env(t_exec *exec);
-int update_pwd(t_exec *exec, char *pwd);
+int			store_env(t_exec *exec, char **env);
+char		*find_path(char *name, t_exec *exec);
+int			free_env(t_exec *exec);
+int			update_oldpwm(t_exec *exec);
+int			print_env(t_exec *exec);
+int			update_pwd(t_exec *exec, char *pwd);
+char		**expand_env(t_exec *exec);
+char		*find_cmd(char **cmd, char **paths);
+int			ft_free_pid(t_exec *exec);
 
 #endif
