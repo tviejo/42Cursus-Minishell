@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/18 16:41:09 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:36:37 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ enum e_nodetype
 	nt_pipe,
 	nt_OR,
 	nt_AND,
+	nt_open_parenth,
+	nt_close_parenth,
+	nt_number_of_nodetype
 };
 
 typedef struct s_cmdtree

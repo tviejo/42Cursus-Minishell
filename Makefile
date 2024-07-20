@@ -1,6 +1,5 @@
 NAME		=	Minishell
 
-
 SRC_DIR		=	srcs/
 
 OBJ_DIR     =   objs/
@@ -8,8 +7,11 @@ OBJ_DIR     =   objs/
 #SRCS		=	builtin/builtin.c env/env.c
 #SRCS		+= exec/exec.c
 SRCS		+= parsing/parsing.c
+SRCS		+= parsing/parsing_init.c
 SRCS		+= parsing/parsing_utils.c
 SRCS		+= stack/stack.c
+SRCS		+= stack/stack_init.c
+SRCS		+= main.c
 
 vpath %.c $(SRC_DIR)
 

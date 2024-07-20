@@ -5,44 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/19 02:47:18 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/07/20 10:20:47 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parsing	*init_parsing(void)
+int	get_node_priority(t_parsing *p, t_cmdtree *node)
 {
-	static t_operator	operators[] = {{"<", 2}, {"<<", 2},
-	{">", 2}, {">>", 2}, {"|", 1}, {"||", 0}, {"&&", 0}, NULL};
-	t_parsing *const	p = malloc(sizeof(t_parsing));
+	return (p->operators[node->type - 1].priority);
+}
 
-	if (p)
+enum e_nodetype	get_node_type(t_parsing *p, char *word)
+{
+	enum e_nodetype	type;
+
+	type = 0;
+	while (++type < nt_number_of_nodetype)
 	{
-		p->operators = operators;
-		p->pile = stack_new(1024);
-		if (p->pile == NULL)
-			return (free_parsing(p), NULL);
+		if (ft_strncmp(word, p->operators[type - 1].token, 255) == 0)
+			return (type);
 	}
-	return (p);
+	return (nt_command);
 }
 
-void	free_parsing(t_parsing *p)
+int	get_nb_args(t_parsing *p, char **words)
 {
-	if (p)
+	int	nb_args;
+
+	nb_args = 0;
+	while (*words && get_node_type(p, *words) == nt_command)
 	{
-		stack_delete(p->pile);
-		free(p);
+		words++;
+		nb_args++;
 	}
+	return (nb_args);
 }
 
-void	print_cmdtree(t_cmdtree *cmdtree)
+bool	fill_cmd_args(t_parsing *p, char ***words, t_cmdtree *cmdnode)
 {
-	(void)cmdtree;
+	int	nb_args;
+	int	i;
+
+	nb_args = get_nb_args(p, *words);
+	cmdnode->argument = malloc((nb_args + 1) * sizeof(char *));
+	i = nb_args;
+	cmdnode->argument[i] = NULL;
+	while (i-- > 0)
+		cmdnode->argument[i] = (*words)[i];
+	*words += nb_args;
+	return (true);
 }
 
-/*t_cmdtree	*build_tree(t_cmdtree *tree, char *cmdline)
+t_cmdtree	*new_node(t_parsing *p, char ***words)
 {
-	;
-}*/
+	static t_cmdtree		open_parenthesis = {.type = nt_open_parenth};
+	static t_cmdtree		close_parenthesis = {.type = nt_close_parenth};
+	t_cmdtree				*node;
+	const enum e_nodetype	type = get_node_type(p, **words);
+
+	if (type == nt_open_parenth)
+		return (&open_parenthesis);
+	if (type == nt_close_parenth)
+		return (&close_parenthesis);
+	node = malloc(sizeof(t_cmdtree));
+	if (node == NULL)
+		return (ft_putstr_fd("[new_node] malloc fails !\n", 2), NULL);
+	node->type = type;
+	node->argument = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	if (node->type < nt_pipe)
+		fill_cmd_args(p, words, node);
+	return (node);
+}

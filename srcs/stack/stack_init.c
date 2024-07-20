@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.c                                            :+:      :+:    :+:   */
+/*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/20 04:56:59 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/07/20 04:57:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,27 @@
 
 #include "stack.h"
 
-void	push(t_stack *s, void *obj)
+t_stack	*stack_new(int capacity)
 {
-	if (s->top - s->elems >= s->nb_max_elems - 1)
+	t_stack *const	stack = malloc(sizeof(t_stack));
+
+	if (stack)
 	{
-		ft_printf("[stack: %p][push] Dépassement de capacité (max: %d éléments)\
-\n", s, s->nb_max_elems);
-		exit(-1);
+		stack->elems = malloc(capacity * sizeof(void *));
+		if (stack->elems == NULL)
+			return (free(stack), NULL);
+		stack->nb_max_elems = capacity;
+		stack->top = stack->elems - 1;
 	}
-	*++s->top = obj;
+	return (stack);
 }
 
-void	*pop(t_stack *s)
+void	stack_delete(t_stack *s)
 {
-	if (s->top < s->elems)
+	if (s)
 	{
-		ft_printf("[stack: %p][pop] Erreur pile vide !\n", s, s->nb_max_elems);
-		exit(-1);
+		if (s->elems)
+			free(s->elems);
+		free(s);
 	}
-	return (*s->top--);
-}
-
-void	*gettop(t_stack *s)
-{
-	if (s->top < s->elems)
-		return (NULL);
-	return (s->top);
-}
-
-int	getsize(t_stack *s)
-{
-	return (s->top - s->elems + 1);
 }
