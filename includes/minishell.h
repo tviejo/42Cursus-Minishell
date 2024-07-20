@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/20 16:58:23 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/20 18:59:03 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,19 @@ int						exec_builtin(t_command_tree *tree, t_exec *exec);
 int						ft_exit(t_command_tree *tree);
 char					*find_path_cmd(char **envp);
 int						ft_close_error(t_command_tree *tree, t_exec *exec);
-void					exec_cmd(t_command_tree *tree, t_exec *exec,
-							char **argument);
-int						cmd_process(char **cmd, t_command_tree *tree,
-							t_exec *exec);
+void					exec_cmd(t_command_tree *tree, t_exec *exec);
+int						cmd_process_and_or(t_command_tree *tree, t_exec *exec);
 int						calloc_pid(t_exec *exec, t_command_tree *tree);
-int						child_process(char **cmd, t_command_tree *tree,
-							t_exec *exec);
+int						child_process(t_command_tree *tree, t_exec *exec);
 int						close_fd(int fd, t_command_tree *tree, t_exec *exec);
 int						duplicate_pipe(t_command_tree *tree, t_exec *exec,
 							int mode);
 int						create_pipe(t_exec *exec, t_cmdtree *tree);
 int						close_pipe(t_exec *exec);
-int						last_child_process(char **cmd, t_command_tree *tree,
-							t_exec *exec);
+int						last_child_process(t_command_tree *tree, t_exec *exec);
 int						create_fork(t_command_tree *tree, t_exec *exec);
 int						redir_infile(t_command_tree *tree, t_exec *exec);
-int						handle_here_doc(t_command_tree *tree, t_exec *exec);
 int						redir_outfile(t_command_tree *tree, t_exec *exec);
+int						here_doc(t_command_tree *tree, t_exec *exec);
 
 #endif

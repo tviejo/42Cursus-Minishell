@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	child_process(char **cmd, t_command_tree *tree, t_exec *exec)
+int	child_process(t_command_tree *tree, t_exec *exec)
 {
 	int index;
 
@@ -10,7 +10,7 @@ int	child_process(char **cmd, t_command_tree *tree, t_exec *exec)
 	{
 		exec->fdpipe[0] = close_fd(exec->fdpipe[0], tree, exec);
 		duplicate_pipe(tree, exec, 1);
-		exec_cmd(tree, exec, cmd);
+		exec_cmd(tree, exec);
 	}
 	else
 	{
@@ -22,14 +22,14 @@ int	child_process(char **cmd, t_command_tree *tree, t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	last_child_process(char **cmd, t_command_tree *tree, t_exec *exec)
+int	last_child_process(t_command_tree *tree, t_exec *exec)
 {
 	int index;
 
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
 	{
-		exec_cmd(tree, exec, cmd);
+		exec_cmd(tree, exec);
 	}
 	return (EXIT_SUCCESS);
 }

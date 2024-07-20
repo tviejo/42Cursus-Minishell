@@ -1,6 +1,6 @@
 # include "../includes/minishell.h"
 
-int cmd_process(char **cmd, t_command_tree *tree, t_exec *exec)
+int cmd_process_and_or(t_command_tree *tree, t_exec *exec)
 {
     int status;
     int index;
@@ -8,7 +8,7 @@ int cmd_process(char **cmd, t_command_tree *tree, t_exec *exec)
     index = create_fork(tree, exec);
     if (exec->pid[index] == 0)
     {
-        exec_cmd(tree, exec, cmd);
+        exec_cmd(tree, exec);
     }
     else
     {

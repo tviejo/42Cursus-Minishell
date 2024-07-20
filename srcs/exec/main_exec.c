@@ -2,13 +2,13 @@
 
 int exec_command(t_command_tree *tree, t_exec *exec)
 {
-    cmd_process(tree->argument, tree, exec);
+    cmd_process_and_or(tree, exec);
     return (EXIT_SUCCESS);
 }
 
 int exec_pipe(t_command_tree *tree, t_exec *exec)
 {
-    child_process(tree->argument, tree, exec);
+    child_process(tree, exec);
     return (EXIT_SUCCESS);
 }
 
@@ -22,14 +22,14 @@ int	main(int argc, char **argv, char **env)
 	argv = NULL;
 	store_env(&exec, env);
     tree.nb_command = 3;
+	calloc_pid(&exec, &tree);
 	tree.type = nt_here_doc;
 	tree.argument = malloc(sizeof(char *) * 4);
 	tree.argument[0] = "LIMITER";
 	tree.argument[1] = NULL;
 	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
-	calloc_pid(&exec, &tree);
-	handle_here_doc(&tree, &exec);
+	here_doc(&tree, &exec);
 	free(tree.argument);
 	tree.type = nt_pipe;
 	tree.argument = malloc(sizeof(char *) * 4);
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
     free(tree.argument);
 	tree.type = nt_pipe;
 	tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "cat";
+	tree.argument[0] = "outfile";
 	tree.argument[1] = NULL;
 	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 	tree.argument[1] = "-c";
 	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
-    last_child_process(tree.argument, &tree, &exec);
+    last_child_process(&tree, &exec);
     while (waitpid(-1, NULL, 0) > 0)
 		;
 	free_env(&exec);
