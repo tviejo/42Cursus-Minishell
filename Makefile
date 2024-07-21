@@ -29,6 +29,9 @@ SRCS		+=	exec/main_exec.c
 SRCS		+=	exec/free_exec.c
 SRCS		+=	exec/fork_utils.c
 SRCS		+=	exec/heredoc.c
+SRCS		+=	exec/wait.c
+
+SRCS		+=	signal/signal.c
 
 #SRCS		+= exec/exec.c
 SRCS		+= parsing/parsing.c
@@ -87,7 +90,7 @@ ${NAME}: 		${OBJS}
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/ $(OBJ_DIR)signal/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

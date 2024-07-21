@@ -4,6 +4,7 @@ int	child_process(t_command_tree *tree, t_exec *exec)
 {
 	int index;
 
+	signal(SIGINT, signal_handler_process);
 	create_pipe(exec, tree);
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
@@ -26,10 +27,11 @@ int	last_child_process(t_command_tree *tree, t_exec *exec)
 {
 	int index;
 
+	signal(SIGINT, signal_handler_process);
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
 	{
 		exec_cmd(tree, exec);
 	}
-	return (EXIT_SUCCESS);
+	return (g_signal);
 }

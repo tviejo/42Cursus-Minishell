@@ -1,62 +1,65 @@
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int exec_command(t_command_tree *tree, t_exec *exec)
+int	exec_command(t_command_tree *tree, t_exec *exec)
 {
-    cmd_process_and_or(tree, exec);
-    return (EXIT_SUCCESS);
+	cmd_process_and_or(tree, exec);
+	return (EXIT_SUCCESS);
 }
 
-int exec_pipe(t_command_tree *tree, t_exec *exec)
+int	exec_pipe(t_command_tree *tree, t_exec *exec)
 {
-    child_process(tree, exec);
-    return (EXIT_SUCCESS);
+	child_process(tree, exec);
+	return (EXIT_SUCCESS);
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
-	t_exec			exec;
-	t_command_tree	tree;
+	t_exec exec;
+	t_command_tree tree;
 
+	signal(SIGINT, signal_handler);
 	argc = 0;
 	argv = NULL;
 	store_env(&exec, env);
-    tree.nb_command = 3;
+	tree.nb_command = 3;
 	calloc_pid(&exec, &tree);
-	tree.type = nt_here_doc;
-	tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "LIMITER";
-	tree.argument[1] = NULL;
-	tree.argument[2] = NULL;
-	tree.argument[3] = NULL;
-	here_doc(&tree, &exec);
-	free(tree.argument);
+	// tree.type = nt_here_doc;
+	// tree.argument = malloc(sizeof(char *) * 4);
+	// tree.argument[0] = "LIMITER";
+	// tree.argument[1] = NULL;
+	// tree.argument[2] = NULL;
+	// tree.argument[3] = NULL;
+	// here_doc(&tree, &exec);
+	// free(tree.argument);
 	tree.type = nt_pipe;
 	tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "cat";
-	tree.argument[1] = NULL;
+	tree.argument[0] = "ls";
+	tree.argument[1] = "-l";
 	tree.argument[2] = NULL;
 	tree.argument[3] = NULL;
 	exec_pipe(&tree, &exec);
-    free(tree.argument);
-	tree.type = nt_pipe;
-	tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "outfile";
-	tree.argument[1] = NULL;
-	tree.argument[2] = NULL;
-	tree.argument[3] = NULL;
-	redir_outfile(&tree, &exec);
-    free(tree.argument);
-    tree.argument = malloc(sizeof(char *) * 4);
-	tree.argument[0] = "wc";
-	tree.argument[1] = "-c";
-	tree.argument[2] = NULL;
-	tree.argument[3] = NULL;
-    last_child_process(&tree, &exec);
-    while (waitpid(-1, NULL, 0) > 0)
-		;
+	// cmd_process_and_or(&tree, &exec);
+	// if (wait_one_process() == true)
+	// {
+		// free(tree.argument);
+		// tree.type = nt_pipe;
+		// tree.argument = malloc(sizeof(char *) * 4);
+		// tree.argument[0] = "outfile";
+		// tree.argument[1] = NULL;
+		// tree.argument[2] = NULL;
+		// tree.argument[3] = NULL;
+		// redir_outfile(&tree, &exec);
+		free(tree.argument);
+		tree.argument = malloc(sizeof(char *) * 4);
+		tree.argument[0] = "wcfd";
+		tree.argument[1] = "-c";
+		tree.argument[2] = NULL;
+		tree.argument[3] = NULL;
+		last_child_process(&tree, &exec);
+		wait_all_process();
+	// }
 	free_env(&exec);
-    ft_free_pid(&exec);
+	ft_free_pid(&exec);
 	free(tree.argument);
-	return (EXIT_SUCCESS);
+	return (g_signal);
 }

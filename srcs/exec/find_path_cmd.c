@@ -12,19 +12,6 @@ char	*find_path_cmd(char **envp)
 	}
 }
 
-void	ft_free_cmd(char	**cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		free(cmd[i]);
-		cmd[i] = NULL;
-		i++;
-	}
-}
-
 char	*find_cmd(char **cmd, char **paths)
 {
 	char	*tmp;
@@ -49,7 +36,7 @@ char	*find_cmd(char **cmd, char **paths)
 		}
 		i++;
 	}
-	ft_printf("command not found: %s\n", cmd[0]);
-	ft_free_cmd(cmd);
+	ft_printf("minishell: %s: command not found\n", cmd[0]);
+	g_signal = 127;
 	return (free(tmppath), free(tmp), NULL);
 }

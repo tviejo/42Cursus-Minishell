@@ -6,12 +6,14 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/20 18:59:03 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/21 14:35:00 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int				g_signal;
 
 # include "mini_ade_sarr.h"
 # include "mini_tviejo.h"
