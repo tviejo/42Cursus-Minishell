@@ -27,6 +27,8 @@ SRCS		+=	exec/redir.c
 SRCS		+=	exec/pipe_process.c
 SRCS		+=	exec/main_exec.c
 SRCS		+=	exec/free_exec.c
+SRCS		+=	exec/fork_utils.c
+SRCS		+=	exec/heredoc.c
 
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c
