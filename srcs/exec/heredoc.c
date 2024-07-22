@@ -31,29 +31,24 @@ int	get_line(t_command_tree *tree, int fd)
 
 	nb_line = 1;
 	warning = true;
-	ft_putstr_fd(">", 1);
-	output = get_next_line(STDIN_FILENO);
-	while (output != NULL)
+	signal(SIGINT, signal_handler_here_doc);
+	output = readline("> ");
+	while (output != NULL && ft_strncmp(output, tree->argument[0],
+			ft_strlen(tree->argument[0])) != 0)
 	{
-		if (ft_strncmp(output, tree->argument[0],
-				ft_strlen(tree->argument[0])) == 0)
-		{
-			warning = false;
-			break ;
-		}
 		write(fd, output, ft_strlen(output));
-		ft_putstr_fd(">", 1);
+		write(fd, "\n", 1);
 		free(output);
-		output = get_next_line(STDIN_FILENO);
+		output = readline("> ");
 		nb_line++;
+	}
+	if (output == NULL)
+	{
+		printf("minishell: warning: here-document at line %d ", nb_line);
+		printf("delimited by end-of-file (wanted `%s')\n", tree->argument[0]);
 	}
 	free(output);
 	close(fd);
-	if (warning == true)
-	{
-		printf("\nbash: warning: here-document at line %d ", nb_line);
-		printf("delimited by end-of-file (wanted `%s')\n", tree->argument[0]);
-	}
 	return (1);
 }
 

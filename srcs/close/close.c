@@ -7,6 +7,5 @@ int	ft_close_error(t_command_tree *tree, t_exec *exec)
 	(void)tree;
 	(void)exec;
 	printf("free and close all\n");
-	exit(0);
-	return (EXIT_SUCCESS);
+	return (g_signal);
 }

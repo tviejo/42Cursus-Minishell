@@ -6,6 +6,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -45,5 +46,10 @@ int			update_pwd(t_exec *exec, char *pwd);
 char		**expand_env(t_exec *exec);
 char		*find_cmd(char **cmd, char **paths);
 int			ft_free_pid(t_exec *exec);
+void		wait_all_process(void);
+bool		wait_one_process(void);
+void		signal_handler(int sig);
+void		signal_handler_here_doc(int sig);
+void		signal_handler_process(int sig);
 
 #endif
