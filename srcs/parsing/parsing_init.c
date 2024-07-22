@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 07:20:31 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:11:48 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_parsing	*init_parsing(void)
 {
 	static t_operator	operators[] = {{"cmd", 255},
 	{"<", 2}, {"<<", 2}, {">", 2}, {">>", 2}, {"|", 1},
-	{"||", 0}, {"&&", 0}, {"(", -1}, {")", -1}, {NULL}};
+	{"||", 0}, {"&&", 0}, {"(", -1}, {")", -1}, {NULL, 0}};
 	t_parsing *const	p = malloc(sizeof(t_parsing));
 
 	if (p)
