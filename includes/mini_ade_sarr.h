@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/20 10:02:16 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:12:39 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void				print_cmdtree(struct s_cmdtree *cmdtree, t_operator *ope,
 						int depth);
 void				free_cmdtree(t_parsing *p);
 struct s_cmdtree	*new_node(t_parsing *p, char ***words);
+void				print_node(struct s_cmdtree *cmdtree, t_operator *ope);
 int					get_node_priority(t_parsing *p, struct s_cmdtree *node);
 enum e_nodetype		get_node_type(t_parsing *p, char *word);
 int					get_nb_args(t_parsing *p, char **words);

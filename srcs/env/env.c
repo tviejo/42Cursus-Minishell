@@ -58,12 +58,12 @@ char	*find_path(char *name, t_exec *exec)
 int    free_env(t_exec *exec)
 {
     int i;
-    int j;
+    //int j;
 
     i = 0;
     while (exec->env[i] != NULL)
     {
-        j = 0;
+        //j = 0;
         free(exec->env[i]);
         i++;
     }

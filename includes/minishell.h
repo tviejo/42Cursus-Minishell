@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
 /*   Updated: 2024/07/21 14:35:00 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/22 07:32:59 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +19,7 @@ extern int				g_signal;
 # include "mini_ade_sarr.h"
 # include "mini_tviejo.h"
 
-enum					e_nodetype
+enum	e_nodetype
 {
 	nt_command,
 	nt_infile,
