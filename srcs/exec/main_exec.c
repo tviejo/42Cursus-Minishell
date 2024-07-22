@@ -11,7 +11,15 @@ int	exec_pipe(t_command_tree *tree, t_exec *exec)
 	child_process(tree, exec);
 	return (EXIT_SUCCESS);
 }
-
+int exec(t_command_tree *tree, t_exec *exec)
+{
+	if (tree->type == nt_pipe)
+		exec_pipe(tree, exec);
+	else
+		exec_command(tree, exec);
+	return (EXIT_SUCCESS);
+}
+/*
 int	main(int argc, char **argv, char **env)
 {
 	t_exec exec;
@@ -63,3 +71,4 @@ int	main(int argc, char **argv, char **env)
 	free(tree.argument);
 	return (g_signal);
 }
+*/
