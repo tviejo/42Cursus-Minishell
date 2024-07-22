@@ -28,12 +28,13 @@ SRCS		+=	exec/pipe_process.c
 SRCS		+=	exec/main_exec.c
 SRCS		+=	exec/free_exec.c
 
-#SRCS		+= exec/exec.c
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c
 SRCS		+= parsing/parsing_utils.c
+SRCS		+= parsing/parsing_print.c
+
 SRCS		+= stack/stack.c
-SRCS		+= stack/stack_init.c
+SRCS		+= stack/stack_utils.c
 SRCS		+= main.c
 
 vpath %.c $(SRC_DIR)

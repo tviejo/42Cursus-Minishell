@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/20 04:56:59 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/22 07:21:08 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*gettop(t_stack *s)
 {
 	if (s->top < s->elems)
 		return (NULL);
-	return (s->top);
+	return (*s->top);
 }
 
 int	getsize(t_stack *s)

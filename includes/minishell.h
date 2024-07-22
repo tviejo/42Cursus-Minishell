@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/20 10:47:06 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/20 22:23:10 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "mini_ade_sarr.h"
 # include "mini_tviejo.h"
 
-enum					e_nodetype
+enum	e_nodetype
 {
 	nt_command,
 	nt_infile,

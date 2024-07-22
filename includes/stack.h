@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:48:41 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/20 10:23:18 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/21 09:38:50 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../libft/libft.h"
 # include <stddef.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_stack
 {
@@ -27,11 +28,14 @@ typedef struct s_stack
 	void	**elems;
 }	t_stack;
 
-t_stack				*stack_new(int capacity);
-void				stack_delete(t_stack *s);
-void				push(t_stack *s, void *obj);
-void				*pop(t_stack *s);
-void				*gettop(t_stack *s);
-int					getsize(t_stack *s);
+typedef void	(*t_print_elem_fct)(void *elm, void *ctx);
+
+t_stack	*stack_new(int capacity);
+void	stack_delete(t_stack *s);
+void	stack_print(t_stack *s, bool from_top, t_print_elem_fct fct, void *ctx);
+void	push(t_stack *s, void *obj);
+void	*pop(t_stack *s);
+void	*gettop(t_stack *s);
+int		getsize(t_stack *s);
 
 #endif
