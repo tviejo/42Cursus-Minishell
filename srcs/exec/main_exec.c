@@ -13,17 +13,23 @@ int	exec_pipe(t_command_tree *tree, t_exec *exec)
 }
 int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 {
-	if (tree != NULL && tree->type == nt_command)
+	if (tree == NULL)
+		return (EXIT_SUCCESS);
+	if (tree->type == nt_command)
 	{
+		printf("command: %s\n", tree->argument[0]);
 		printf("oldtype: %d\n", exec->oldtype);
 		printf("nexttype: %d\n", exec->nexttype);
 		if (exec->oldtype == nt_pipe && exec->side == e_left)
 			exec_pipe(tree, exec);
-		else if (exec->nexttype == nt_pipe && exec->side == e_right)
+		else if (exec->oldtype == nt_pipe && exec->nexttype == nt_pipe)
 			exec_pipe(tree, exec);
-		else if (exec->oldtype == nt_pipe && exec->side == e_right)
+		else if (exec->oldtype == nt_pipe && exec->nexttype != nt_pipe && exec->side == e_right)
+		{
 			last_child_process(tree, exec);
-		else if (exec->oldtype == nt_OR || exec->oldtype == nt_AND)
+			wait_all_process();
+		}
+		else if (exec->side == e_left && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
 			exec_command(tree, exec);
 		else if (exec->side == e_right)
 		{
@@ -33,27 +39,19 @@ int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 				exec_command(tree, exec);
 		}
 		else
-			last_child_process(tree, exec);
-		if (exec->oldtype == nt_pipe && exec->side == e_right && exec->nexttype != nt_pipe)
-			wait_all_process();
+			exec_command(tree, exec);
 	}
-	if (tree != NULL && tree->type != nt_command)
+	if (tree->type != nt_command && tree->left != NULL)
 	{
+		exec->nexttype = exec->oldtype;
 		exec->oldtype = tree->type;
-		if (tree->left != NULL)
-			exec->nexttype = tree->left->type;
-		else
-			exec->nexttype = nt_command;
 		exec->side = e_left;
 		exec_cmdtree(tree->left, exec);
 	}
-	if (tree->right != NULL && tree->type != nt_command)
+	if (tree->type != nt_command && tree->right != NULL)
 	{
+		exec->nexttype = exec->oldtype;
 		exec->oldtype = tree->type;
-		if (tree->left != NULL)
-			exec->nexttype = tree->left->type;
-		else
-			exec->nexttype = nt_command;
 		exec->side = e_right;
 		exec_cmdtree(tree->right, exec);
 	}

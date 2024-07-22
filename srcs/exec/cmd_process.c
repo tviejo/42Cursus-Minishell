@@ -14,6 +14,7 @@ int cmd_process_and_or(t_command_tree *tree, t_exec *exec)
     else
     {
         waitpid(exec->pid[index], &status, 0);
+        g_signal = WEXITSTATUS(status);
     }
     return (EXIT_SUCCESS);
 }
