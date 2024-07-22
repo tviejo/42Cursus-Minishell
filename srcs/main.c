@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 19:07:05 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/22 20:05:43 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		cmdline = readline("minishell> ");
+		while (cmdline == NULL)
+			cmdline = readline("");
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
-		if (!cmdline)
-			break ;
 		add_history(cmdline);
 		cmdtree = parse_cmdline(p, cmdline);
 		// print_cmdtree(cmdtree, p->operators, 0);
