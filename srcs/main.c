@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 15:20:43 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/22 19:07:05 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_parsing *const	p = init_parsing();
-	char				*cmdline;
-	t_command_tree		*cmdtree;
-	t_exec				exec;
+	char			*cmdline;
+	t_command_tree	*cmdtree;
+	t_exec			exec;
 
+	t_parsing *const p = init_parsing();
 	argc = 0;
 	argv = NULL;
 	store_env(&exec, env);
@@ -28,21 +28,24 @@ int	main(int argc, char **argv, char **env)
 	using_history();
 	while (1)
 	{
+		cmdline = readline("minishell> ");
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
-		cmdline = readline("minishell> ");
 		if (!cmdline)
 			break ;
 		add_history(cmdline);
 		cmdtree = parse_cmdline(p, cmdline);
-		//print_cmdtree(cmdtree, p->operators, 0);
+		// print_cmdtree(cmdtree, p->operators, 0);
 		calloc_pid(&exec, cmdtree);
-		exec.oldtype = nt_command;
+		exec.oldtype = 0;
+		exec.nexttype = 0;
 		exec_cmdtree(cmdtree, &exec);
+		while (wait(NULL) > 0)
+			;
 		ft_free_pid(&exec);
-		wait_all_process();
 		free_cmdtree(p);
 		free(cmdline);
+		rl_redisplay();
 	}
 	free_env(&exec);
 	return (free_parsing(p), 0);

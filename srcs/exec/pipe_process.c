@@ -26,7 +26,7 @@ int	child_process(t_command_tree *tree, t_exec *exec)
 int	last_child_process(t_command_tree *tree, t_exec *exec)
 {
 	int index;
-
+	
 	signal(SIGINT, signal_handler_process);
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
