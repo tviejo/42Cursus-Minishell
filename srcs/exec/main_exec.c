@@ -11,19 +11,57 @@ int	exec_pipe(t_command_tree *tree, t_exec *exec)
 	child_process(tree, exec);
 	return (EXIT_SUCCESS);
 }
-int exec(t_command_tree *tree, t_exec *exec)
+int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 {
-	if (tree->type == nt_pipe)
-		exec_pipe(tree, exec);
-	else
-		exec_command(tree, exec);
+	if (tree == NULL)
+		return (EXIT_SUCCESS);
+	if (tree->type == nt_command)
+	{
+		if (exec->oldtype == nt_pipe && exec->side == e_left)
+			exec_pipe(tree, exec);
+		// else if (exec->nexttype == nt_pipe)
+		// 	exec_pipe(tree, exec);
+		else if (exec->oldtype == nt_pipe && exec->side == e_right)
+		{
+			last_child_process(tree, exec);
+			wait_all_process();
+		}
+		else if (exec->side == e_left && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
+			exec_command(tree, exec);
+		else if (exec->side == e_right && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
+		{
+			if (g_signal == 0 && exec->oldtype == nt_AND)
+				exec_command(tree, exec);
+			else if (g_signal != 0 && exec->oldtype == nt_OR)
+				exec_command(tree, exec);
+		}
+		else
+		{
+			write(2, "exec_command\n", 13);
+			exec_command(tree, exec);
+		}
+	}
+	if (tree->type != nt_command && tree->left != NULL)
+	{
+		exec->nexttype = exec->oldtype;
+		exec->oldtype = tree->type;
+		exec->side = e_left;
+		exec_cmdtree(tree->left, exec);
+	}
+	if (tree->type != nt_command && tree->right != NULL)
+	{
+		exec->nexttype = exec->oldtype; 
+		exec->oldtype = tree->type;
+		exec->side = e_right;
+		exec_cmdtree(tree->right, exec);
+	}
 	return (EXIT_SUCCESS);
 }
 /*
 int	main(int argc, char **argv, char **env)
 {
-	t_exec exec;
-	t_command_tree tree;
+	t_exec			exec;
+	t_command_tree	tree;
 
 	signal(SIGINT, signal_handler);
 	argc = 0;

@@ -21,15 +21,23 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 
 void	exec_cmd(t_command_tree *tree, t_exec *exec)
 {
-	char *tmp;
+	char	*tmp;
 
-	tmp = find_cmd(tree->argument,  ft_split(find_path_cmd(exec->env), ':'));
-	if (tmp == NULL)
-		ft_close_error(tree, exec);
-	if (tmp != NULL)
+	if (find_builtin(tree) > 0)
 	{
-		execve(tmp, tree->argument, exec->env);
-		free(tmp);
-		perror("Error");
+		exec_builtin(tree, exec);
+		return ;
+	}
+	else
+	{
+		tmp = find_cmd(tree->argument, ft_split(find_path_cmd(exec->env), ':'));
+		if (tmp == NULL)
+			ft_close_error(tree, exec);
+		if (tmp != NULL)
+		{
+			execve(tmp, tree->argument, exec->env);
+			free(tmp);
+			perror("minishell: Error: ");
+		}
 	}
 }

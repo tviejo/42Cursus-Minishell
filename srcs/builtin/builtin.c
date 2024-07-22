@@ -16,7 +16,7 @@ int	find_builtin(t_command_tree *tree)
 		return (b_export);
 	else if (!ft_strncmp(tree->argument[0], "exit", 5))
 		return (b_exit);
-	return (EXIT_FAILURE);
+	return (0);
 }
 
 int	exec_builtin(t_command_tree *tree, t_exec *exec)
