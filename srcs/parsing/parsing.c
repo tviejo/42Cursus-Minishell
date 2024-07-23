@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 07:20:44 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:34:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	build_tree(t_parsing *p, t_cmdtree **node)
+int	build_tree(t_data *p, t_cmdtree **node)
 {
 	if (getsize(p->pile_npi))
 	{
@@ -29,7 +29,7 @@ int	build_tree(t_parsing *p, t_cmdtree **node)
 	return (0);
 }
 
-void	process_close_parenth(t_parsing *p)
+void	process_close_parenth(t_data *p)
 {
 	t_cmdtree	*ope;
 
@@ -43,7 +43,7 @@ void	process_close_parenth(t_parsing *p)
 	}
 }
 
-void	process_operator(t_parsing *p, t_cmdtree *ope)
+void	process_operator(t_data *p, t_cmdtree *ope)
 {
 	const int	priority = get_node_priority(p, ope);
 
@@ -57,7 +57,7 @@ void	process_operator(t_parsing *p, t_cmdtree *ope)
 	push(p->pile_ope, ope);
 }
 
-void	depiler_operateurs_restants(t_parsing *p)
+void	depiler_operateurs_restants(t_data *p)
 {
 	t_cmdtree	*ope;
 
@@ -69,7 +69,7 @@ void	depiler_operateurs_restants(t_parsing *p)
 	}
 }
 
-t_cmdtree	*parse_cmdline(t_parsing *p, char *cmdline)
+t_cmdtree	*parse_cmdline(t_data *p, char *cmdline)
 {
 	char **const	words = ft_split(cmdline, ' ');
 	t_cmdtree		*node;
@@ -98,7 +98,7 @@ t_cmdtree	*parse_cmdline(t_parsing *p, char *cmdline)
 			process_operator(p, node);
 	}
 	depiler_operateurs_restants(p);
-	stack_print(p->pile_npi, false, (t_print_elem_fct)print_node, p->operators);
+	//stack_print(p->pile_npi, false, (t_print_elem_fct)print_node, p->operators);
 	build_tree(p, &p->cmdtree);
 	return (p->cmdtree);
 }

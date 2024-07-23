@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 07:20:38 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:34:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_node_priority(t_parsing *p, t_cmdtree *node)
+int	get_node_priority(t_data *p, t_cmdtree *node)
 {
 	//ft_printf("node->type = %d\n", node->type);
 	return (p->operators[node->type].priority);
 }
 
-enum e_nodetype	get_node_type(t_parsing *p, char *word)
+enum e_nodetype	get_node_type(t_data *p, char *word)
 {
 	enum e_nodetype	type;
 
@@ -31,7 +31,7 @@ enum e_nodetype	get_node_type(t_parsing *p, char *word)
 	return (nt_command);
 }
 
-int	get_nb_args(t_parsing *p, char **words)
+int	get_nb_args(t_data *p, char **words)
 {
 	int	nb_args;
 
@@ -44,7 +44,7 @@ int	get_nb_args(t_parsing *p, char **words)
 	return (nb_args);
 }
 
-int	fill_cmd_args(t_parsing *p, char **words, t_cmdtree *cmdnode)
+int	fill_cmd_args(t_data *p, char **words, t_cmdtree *cmdnode)
 {
 	int	nb_args;
 	int	i;
@@ -61,7 +61,7 @@ int	fill_cmd_args(t_parsing *p, char **words, t_cmdtree *cmdnode)
 	return (nb_args);
 }
 
-t_cmdtree	*new_node(t_parsing *p, char ***words)
+t_cmdtree	*new_node(t_data *p, char ***words)
 {
 	static t_cmdtree		open_parenthesis = {.type = nt_open_parenth};
 	static t_cmdtree		close_parenthesis = {.type = nt_close_parenth};

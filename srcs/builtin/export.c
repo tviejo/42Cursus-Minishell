@@ -23,10 +23,22 @@ int len_env_var(char *env_var)
         i++;
     return (i);
 }
-int ft_export(t_command_tree *tree, t_exec *exec)
+int ft_export(t_command_tree *tree, t_data *exec)
 {
     int i;
 
+    if (tree->argument[1] == NULL)
+    {
+        i = 0;
+        while (exec->env[i])
+        {
+            ft_putstr_fd("export ", 1);
+            ft_putstr_fd(exec->env[i], 1);
+            ft_putstr_fd("\n", 1);
+            i++;
+        }
+        return (EXIT_SUCCESS);
+    }
     if (is_env_var(tree->argument[1]) == false)
         return (EXIT_FAILURE);
     i = 0;

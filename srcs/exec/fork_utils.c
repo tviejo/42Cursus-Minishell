@@ -1,6 +1,6 @@
 # include "../includes/minishell.h"
 
-int create_fork(t_command_tree *tree, t_exec *exec)
+int create_fork(t_command_tree *tree, t_data *exec)
 {
     int index;
 

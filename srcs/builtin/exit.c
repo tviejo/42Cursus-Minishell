@@ -15,9 +15,16 @@ bool	ft_isnumber(char *str)
 	return (true);
 }
 
-int	ft_exit(t_command_tree *tree)
+int ft_free_all(t_data *exec)
 {
-	printf("exit1\n");
+	ft_free_pid(exec);
+	close_std_fd(exec);
+	free_env(exec);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_exit(t_command_tree *tree, t_data *exec)
+{
 	if (tree->argument[1] != NULL)
 	{
 		if (tree->argument[2] != NULL)
@@ -30,16 +37,19 @@ int	ft_exit(t_command_tree *tree)
 			ft_putstr_fd("exit\nminishell: exit: ", 2);
 			ft_putstr_fd(tree->argument[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(255);
 			return (EXIT_FAILURE);
 		}
 		else
 		{
-			printf("exit(%d)\n", ft_atoi(tree->argument[1]));
+			ft_free_all(exec);
+			printf("exit\n");
+			if (ft_atoi(tree->argument[1]) > 255 || atoi(tree->argument[1]) < 255)
+				exit(255);
+			exit(ft_atoi(tree->argument[1]));
 		}
 	}
-	else
-		printf("exit\n");
+	ft_free_all(exec);
+	printf("exit\n");
 	exit(0);
     return (EXIT_SUCCESS);
 }

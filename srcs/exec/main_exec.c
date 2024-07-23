@@ -1,17 +1,17 @@
 #include "../includes/minishell.h"
 
-int	exec_command(t_command_tree *tree, t_exec *exec)
+int	exec_command(t_command_tree *tree, t_data *exec)
 {
 	cmd_process_and_or(tree, exec);
 	return (EXIT_SUCCESS);
 }
 
-int	exec_pipe(t_command_tree *tree, t_exec *exec)
+int	exec_pipe(t_command_tree *tree, t_data *exec)
 {
 	child_process(tree, exec);
 	return (EXIT_SUCCESS);
 }
-int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
+int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 {
 	if (tree == NULL)
 		return (EXIT_SUCCESS);
@@ -19,8 +19,6 @@ int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 	{
 		if (exec->oldtype == nt_pipe && exec->side == e_left)
 			exec_pipe(tree, exec);
-		// else if (exec->nexttype == nt_pipe)
-		// 	exec_pipe(tree, exec);
 		else if (exec->oldtype == nt_pipe && exec->side == e_right)
 		{
 			last_child_process(tree, exec);
@@ -36,21 +34,16 @@ int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 				exec_command(tree, exec);
 		}
 		else
-		{
-			write(2, "exec_command\n", 13);
 			exec_command(tree, exec);
-		}
 	}
 	if (tree->type != nt_command && tree->left != NULL)
 	{
-		exec->nexttype = exec->oldtype;
 		exec->oldtype = tree->type;
 		exec->side = e_left;
 		exec_cmdtree(tree->left, exec);
 	}
 	if (tree->type != nt_command && tree->right != NULL)
 	{
-		exec->nexttype = exec->oldtype; 
 		exec->oldtype = tree->type;
 		exec->side = e_right;
 		exec_cmdtree(tree->right, exec);
@@ -60,7 +53,7 @@ int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 /*
 int	main(int argc, char **argv, char **env)
 {
-	t_exec			exec;
+	t_data			exec;
 	t_command_tree	tree;
 
 	signal(SIGINT, signal_handler);
