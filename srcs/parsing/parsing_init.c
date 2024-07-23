@@ -6,18 +6,18 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 10:11:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/23 16:34:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parsing	*init_parsing(void)
+t_data	*init_data(void)
 {
 	static t_operator	operators[] = {{"cmd", 255},
 	{"<", 2}, {"<<", 2}, {">", 2}, {">>", 2}, {"|", 1},
 	{"||", 0}, {"&&", 0}, {"(", -1}, {")", -1}, {NULL, 0}};
-	t_parsing *const	p = malloc(sizeof(t_parsing));
+	t_data *const	p = malloc(sizeof(t_data));
 
 	if (p)
 	{
@@ -30,7 +30,7 @@ t_parsing	*init_parsing(void)
 	return (p);
 }
 
-void	free_parsing(t_parsing *p)
+void	free_parsing(t_data *p)
 {
 	if (p)
 	{
@@ -54,7 +54,7 @@ void	free_node(t_cmdtree *node)
 	}
 }
 
-void	free_cmdtree(t_parsing *p)
+void	free_cmdtree(t_data *p)
 {
 	if (p)
 	{

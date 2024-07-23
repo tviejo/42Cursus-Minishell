@@ -1,17 +1,17 @@
 #include "../includes/minishell.h"
 
-int	exec_command(t_command_tree *tree, t_exec *exec)
+int	exec_command(t_command_tree *tree, t_data *exec)
 {
 	cmd_process_and_or(tree, exec);
 	return (EXIT_SUCCESS);
 }
 
-int	exec_pipe(t_command_tree *tree, t_exec *exec)
+int	exec_pipe(t_command_tree *tree, t_data *exec)
 {
 	child_process(tree, exec);
 	return (EXIT_SUCCESS);
 }
-int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
+int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 {
 	if (tree == NULL)
 		return (EXIT_SUCCESS);
@@ -53,7 +53,7 @@ int	exec_cmdtree(t_command_tree *tree, t_exec *exec)
 /*
 int	main(int argc, char **argv, char **env)
 {
-	t_exec			exec;
+	t_data			exec;
 	t_command_tree	tree;
 
 	signal(SIGINT, signal_handler);

@@ -19,7 +19,7 @@ int	find_builtin(t_command_tree *tree)
 	return (0);
 }
 
-int	exec_builtin(t_command_tree *tree, t_exec *exec)
+int	exec_builtin(t_command_tree *tree, t_data *exec)
 {
 	int	builtin;
 
@@ -29,7 +29,7 @@ int	exec_builtin(t_command_tree *tree, t_exec *exec)
 	else if (builtin == b_cd)
 		return (ft_cd(tree, exec));
 	else if (builtin == b_env)
-		return (ft_env(exec));
+		return (ft_env(exec, tree));
 	else if (builtin == b_pwd)
 		return (ft_pwd(exec));
 	else if (builtin == b_unset)
@@ -37,13 +37,13 @@ int	exec_builtin(t_command_tree *tree, t_exec *exec)
 	else if (builtin == b_export)
 		return (ft_export(tree, exec));
 	else if (builtin == b_exit)
-		return (ft_exit(tree));
+		return (ft_exit(tree, exec));
 	return (EXIT_FAILURE);
 }
 /*
 int	main(int argc, char **argv, char **env)
 {
-	t_exec			exec;
+	t_data			exec;
 	t_command_tree	tree;
 
 	argc = 0;

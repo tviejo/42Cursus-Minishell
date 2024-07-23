@@ -19,7 +19,7 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 }
 */
 
-void	exec_cmd(t_command_tree *tree, t_exec *exec)
+void	exec_cmd(t_command_tree *tree, t_data *exec)
 {
 	char	*tmp;
 

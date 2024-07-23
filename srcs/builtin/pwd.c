@@ -1,6 +1,6 @@
 # include "../includes/minishell.h"
 
-int ft_pwd(t_exec *exec)
+int ft_pwd(t_data *exec)
 {
     char	pwd[4096];
 	char	*pwd2;

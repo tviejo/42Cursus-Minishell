@@ -1,6 +1,24 @@
 #include "../includes/minishell.h"
 
-int	calloc_pid(t_exec *exec, t_command_tree *tree)
+int	dup_std(t_data *exec)
+{
+	exec->dupstdin = dup(STDIN_FILENO);
+	exec->dupstdout = dup(STDOUT_FILENO);
+	if (exec->dupstdin == -1 || exec->dupstdout == -1)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+int close_std_fd(t_data *exec)
+{
+	if (exec->dupstdin != -1)
+		close(exec->dupstdin);
+	if (exec->dupstdout != -1)
+		close(exec->dupstdout);
+	return (EXIT_SUCCESS);
+}
+
+int	calloc_pid(t_data *exec, t_command_tree *tree)
 {
 	int i;
 

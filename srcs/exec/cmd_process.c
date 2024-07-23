@@ -1,6 +1,6 @@
 # include "../includes/minishell.h"
 
-int cmd_process_and_or(t_command_tree *tree, t_exec *exec)
+int cmd_process_and_or(t_command_tree *tree, t_data *exec)
 {
     int status;
     int index;

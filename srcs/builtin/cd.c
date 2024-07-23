@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	update_oldpwm(t_exec *exec)
+int	update_oldpwm(t_data *exec)
 {
 	int		i;
 	char	*pwd;
@@ -25,7 +25,7 @@ int	update_oldpwm(t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	cd_go_home(t_exec *exec)
+int	cd_go_home(t_data *exec)
 {
 	char	*pwd;
 
@@ -40,7 +40,7 @@ int	cd_go_home(t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	cd_go_path(t_exec *exec, char *path)
+int	cd_go_path(t_data *exec, char *path)
 {
 	char	pwd[4096];
 	char	*pwd2;
@@ -58,7 +58,7 @@ int	cd_go_path(t_exec *exec, char *path)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(t_command_tree *tree, t_exec *exec)
+int	ft_cd(t_command_tree *tree, t_data *exec)
 {
 	if (tree->argument[1] != NULL && tree->argument[2] != NULL)
 	{

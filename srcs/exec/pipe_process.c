@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	child_process(t_command_tree *tree, t_exec *exec)
+int	child_process(t_command_tree *tree, t_data *exec)
 {
 	int index;
 
@@ -23,7 +23,7 @@ int	child_process(t_command_tree *tree, t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	last_child_process(t_command_tree *tree, t_exec *exec)
+int	last_child_process(t_command_tree *tree, t_data *exec)
 {
 	int index;
 	
