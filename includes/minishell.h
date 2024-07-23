@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/23 16:35:57 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/23 17:46:19 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ enum					e_nodetype
 
 typedef struct s_data
 {
+	int					error_code;
 	char				**env;
 	int					env_len;
 	int					infile;
@@ -107,8 +108,8 @@ int						update_pwd(t_data *exec, char *pwd);
 char					**expand_env(t_data *exec);
 char					*find_cmd(char **cmd, char **paths);
 int						ft_free_pid(t_data *exec);
-void					wait_all_process(void);
-bool					wait_one_process(void);
+void					wait_all_process(t_data *exec);
+bool					wait_one_process(t_data *exec);
 void					signal_handler(int sig);
 void					signal_handler_here_doc(int sig);
 void					signal_handler_process(int sig);

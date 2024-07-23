@@ -19,6 +19,34 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 }
 */
 
+static char *find_exec_cmd(t_command_tree *tree, t_data *exec)
+{
+	char	*tmp;
+	char	*path;
+
+	path = find_path_cmd(exec->env);
+	if (path == NULL)
+	{
+		if (access(tree->argument[0], F_OK | X_OK) == 0)
+			return (tree->argument[0]);
+		printf("minishell: %s: No such file or directory\n", tree->argument[0]);
+		free(path);
+		ft_close_error(tree, exec);
+		exec->error_code = 127;
+		return (NULL);
+	}
+	tmp = find_cmd(tree->argument, ft_split(path, ':'));
+	if (tmp == NULL)
+	{
+		printf("minishell: %s: command not found\n", tree->argument[0]);
+		ft_close_error(tree, exec);
+		free(tmp);
+		exec->error_code = 127;
+		return (NULL);
+	}
+	return (tmp);
+}
+
 void	exec_cmd(t_command_tree *tree, t_data *exec)
 {
 	char	*tmp;
@@ -30,10 +58,13 @@ void	exec_cmd(t_command_tree *tree, t_data *exec)
 	}
 	else
 	{
-		tmp = find_cmd(tree->argument, ft_split(find_path_cmd(exec->env), ':'));
+		tmp = find_exec_cmd(tree, exec);
 		if (tmp == NULL)
-			ft_close_error(tree, exec);
-		if (tmp != NULL)
+		{
+			free(tmp);
+			exit(127);
+		}
+		else
 		{
 			execve(tmp, tree->argument, exec->env);
 			free(tmp);

@@ -1,9 +1,13 @@
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 char	*find_path_cmd(char **envp)
 {
-	while (ft_strncmp(*envp, "PATH=", 5) != 0 && *envp != NULL)
+	if (envp == NULL)
+		return (NULL);
+	while (*envp != NULL && ft_strncmp(*envp, "PATH=", 5) != 0)
 		envp++;
+	if (*envp == NULL)
+		return (NULL);
 	if (ft_strncmp(*envp, "PATH=", 5) == 0)
 		return (*envp + 5);
 	else
@@ -11,17 +15,16 @@ char	*find_path_cmd(char **envp)
 		return (NULL);
 	}
 }
-
-char	*find_cmd(char **cmd, char **paths)
+static char	*find_good_path(char **cmd, char **paths)
 {
 	char	*tmp;
 	char	*tmppath;
 	int		i;
 
-	i = 0;
+	i = -1;
 	tmp = NULL;
 	tmppath = NULL;
-	while (paths[i] != NULL)
+	while (paths[++i] != NULL)
 	{
 		free(tmp);
 		free(tmppath);
@@ -34,9 +37,23 @@ char	*find_cmd(char **cmd, char **paths)
 			free(tmppath);
 			return (tmp);
 		}
-		i++;
 	}
-	ft_printf("minishell: %s: command not found\n", cmd[0]);
-	g_signal = 127;
 	return (free(tmppath), free(tmp), NULL);
+}
+
+char	*find_cmd(char **cmd, char **paths)
+{
+	char *tmp;
+
+	tmp = NULL;
+	if (access(cmd[0], F_OK | X_OK) == 0)
+		return (ft_strdup(cmd[0]));
+	if (cmd != NULL && paths != NULL)
+	{
+		tmp = find_good_path(cmd, paths);
+	}
+	if (tmp != NULL)
+		return (tmp);
+	else
+		return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/23 16:34:45 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/23 17:59:35 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **env)
 		g_signal = 0;
 		add_history(cmdline);
 		cmdtree = parse_cmdline(p, cmdline);
+		free(cmdline);
 		// print_cmdtree(cmdtree, p->operators, 0);
 		calloc_pid(&exec, cmdtree);
 		exec.oldtype = 0;
@@ -56,7 +57,6 @@ int	main(int argc, char **argv, char **env)
 		close_std_fd(&exec);
 		ft_free_pid(&exec);
 		free_cmdtree(p);
-		free(cmdline);
 	}
 	free_env(&exec);
 	return (free_parsing(p), 0);

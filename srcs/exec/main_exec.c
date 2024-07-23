@@ -22,7 +22,7 @@ int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 		else if (exec->oldtype == nt_pipe && exec->side == e_right)
 		{
 			last_child_process(tree, exec);
-			wait_all_process();
+			wait_all_process(exec);
 		}
 		else if (exec->side == e_left && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
 			exec_command(tree, exec);

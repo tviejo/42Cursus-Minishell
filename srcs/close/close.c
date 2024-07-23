@@ -2,9 +2,7 @@
 
 int	ft_close_error(t_command_tree *tree, t_data *exec)
 {
-    tree = NULL;
-    exec = NULL;
-	(void)tree;
-	(void)exec;
-	return (g_signal);
+	(void)*tree;
+	(void)*exec;
+	return (EXIT_FAILURE);
 }

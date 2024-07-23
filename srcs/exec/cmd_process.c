@@ -6,6 +6,7 @@ int cmd_process_and_or(t_command_tree *tree, t_data *exec)
     int index;
     
     signal(SIGINT, signal_handler_process);
+    close_std_fd(exec);
     if (find_builtin(tree) > 0)
     {
         exec_builtin(tree, exec);
@@ -19,7 +20,7 @@ int cmd_process_and_or(t_command_tree *tree, t_data *exec)
     else
     {
         waitpid(exec->pid[index], &status, 0);
-        g_signal = WEXITSTATUS(status);
+        exec->error_code = WEXITSTATUS(status);
     }
     return (EXIT_SUCCESS);
 }
