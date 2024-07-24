@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 13:55:41 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 15:19:55 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,31 @@ int	print_minishell(void)
 	return (0);
 }
 
-void	execute(t_data *exec, t_cmdtree *cmdtree)
+void	execute(t_data *mshell)
 {
-	calloc_pid(exec, cmdtree);
-	exec->oldtype = 0;
-	exec->side = e_left;
-	dup_std(exec);
-	exec_cmdtree(cmdtree, exec);
-	dup2(exec->dupstdin, 0);
-	dup2(exec->dupstdout, 1);
-	close_std_fd(exec);
-	ft_free_pid(exec);
+	calloc_pid(mshell, mshell->cmdtree);
+	mshell->oldtype = 0;
+	mshell->side = e_left;
+	dup_std(mshell);
+	exec_cmdtree(mshell->cmdtree, mshell);
+	dup2(mshell->dupstdin, 0);
+	dup2(mshell->dupstdout, 1);
+	close_std_fd(mshell);
+	ft_free_pid(mshell);
 }
 
-void	init(t_data *exec, char **env, int argc)
+void	init(t_data *mshell, int argc, char **argv, char **env)
 {
-	if (argc > 0)
-		exec->debug_mode = 1;
-	if (!init_parsing(exec))
+	if (argc > 1)
+		mshell->debug_mode = atoi(argv[1]);
+	else
+		mshell->debug_mode = 0;
+	if (!init_parsing(mshell))
+	{
+		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
 		exit (-1);
-	store_env(exec, env);
+	}
+	store_env(mshell, env);
 	rl_bind_key('\t', rl_complete);
 	using_history();
 	print_minishell();
@@ -50,30 +55,25 @@ void	init(t_data *exec, char **env, int argc)
 
 int	main(int argc, char **argv, char **env)
 {
-	char			*cmdline;
-	t_command_tree	*cmdtree;
-	t_data			*exec;
+	char	*cmdline;
+	t_data	mshell;
 
-	(void)argv;
-	exec = malloc(sizeof(t_data));
-	if (exec == NULL)
-		return (ft_putstr_fd("minishell: error: malloc failed\n", 2), 1);
-	init(exec, env, argc - 1);
-	while (1)
+	init(&mshell, argc, argv, env);
+	while (true)
 	{
 		cmdline = readline("minishell> ");
 		while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
-			cmdline = readline("minishell>");
+			cmdline = readline("minishell> ");
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
 		add_history(cmdline);
-		cmdtree = parse_cmdline(exec, cmdline);
+		parse_cmdline(&mshell, cmdline);
 		free(cmdline);
-		if (exec->debug_mode > 0)
-			print_cmdtree(cmdtree, exec->operators, 0);
-		execute(exec, cmdtree);
-		free_cmdtree(exec);
+		if (mshell.debug_mode > 0)
+			print_cmdtree(&mshell);
+		execute(&mshell);
+		free_cmdtree(&mshell);
 	}
-	free_env(exec);
-	return (free_parsing(exec), 0);
+	free_env(&mshell);
+	return (free_parsing(&mshell), 0);
 }
