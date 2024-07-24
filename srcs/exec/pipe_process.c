@@ -35,5 +35,5 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 		close_std_fd(exec);
 		exec_cmd(tree, exec);
 	}
-	return (g_signal);
+	return (exec->error_code);
 }

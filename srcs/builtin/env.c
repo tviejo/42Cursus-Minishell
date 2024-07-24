@@ -7,9 +7,10 @@ int ft_env(t_data *exec, t_command_tree *tree)
     i = 0;
     if (tree->argument[1] != NULL)
     {
-        ft_putstr_fd("env: '", 1);
-        ft_putstr_fd(tree->argument[1], 1);
-        ft_putstr_fd("': No such file or directory\n", 1);
+        ft_putstr_fd("env: '", 2);
+        ft_putstr_fd(tree->argument[1], 2);
+        ft_putstr_fd("': No such file or directory\n", 2);
+        exec->error_code = 127;
         return (EXIT_FAILURE);
     }
     while (exec->env[i])

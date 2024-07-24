@@ -25,34 +25,35 @@ int	ft_free_all(t_data *exec)
 	return (EXIT_SUCCESS);
 }
 
+int	exit_parameter(t_data *exec, int return_value)
+{
+	ft_free_all(exec);
+	exit(return_value);
+}
 int	ft_exit(t_command_tree *tree, t_data *exec)
 {
+	printf("exit\n");
 	if (tree->argument[1] != NULL)
 	{
-		if (tree->argument[2] != NULL)
-		{
-			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
-			return (EXIT_FAILURE);
-		}
-		else if (ft_isnumber(tree->argument[1]) == false)
+		if (ft_isnumber(tree->argument[1]) == false)
 		{
 			ft_putstr_fd("exit\nminishell: exit: ", 2);
 			ft_putstr_fd(tree->argument[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
+			exit_parameter(exec, 2);
+		}
+		else if (tree->argument[2] != NULL)
+		{
+			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
 			return (EXIT_FAILURE);
 		}
+		else if (ft_atoi(tree->argument[1]) > 255 || ft_atoi(tree->argument[1]) < 255)
+			exit_parameter(exec, ft_atoi(tree->argument[1]) % 256);
+		else if (ft_atoi(tree->argument[1]) < 0)
+			exit_parameter(exec, 256 + ft_atoi(tree->argument[1]));
 		else
-		{
-			ft_free_all(exec);
-			printf("exit\n");
-			if (ft_atoi(tree->argument[1]) > 255
-				|| atoi(tree->argument[1]) < 255)
-				exit(255);
-			exit(ft_atoi(tree->argument[1]));
-		}
+			exit_parameter(exec, ft_atoi(tree->argument[1]));
 	}
-	ft_free_all(exec);
-	printf("exit\n");
-	exit(0);
+	exit_parameter(exec, 0);
 	return (EXIT_SUCCESS);
 }

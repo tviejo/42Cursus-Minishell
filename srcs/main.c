@@ -6,6 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/07/24 15:20:07 by tviejo           ###   ########.fr       */
 /*   Updated: 2024/07/24 15:33:59 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -38,6 +39,8 @@ void	execute(t_data *mshell)
 
 void	init(t_data *mshell, int argc, char **argv, char **env)
 {
+	exec->debug_mode = 0;
+	exec->error_code = 0;
 	if (argc > 1)
 		mshell->debug_mode = atoi(argv[1]);
 	else
@@ -61,6 +64,7 @@ int	main(int argc, char **argv, char **env)
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
+		//printf("error code: %d\n", exec->error_code);
 		cmdline = readline("minishell> ");
 		while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
 			cmdline = readline("minishell> ");

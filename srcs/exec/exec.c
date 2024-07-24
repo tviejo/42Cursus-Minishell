@@ -68,6 +68,7 @@ void	exec_cmd(t_command_tree *tree, t_data *exec)
 		{
 			execve(tmp, tree->argument, exec->env);
 			free(tmp);
+			exec->error_code = 1;
 			perror("minishell: Error: ");
 		}
 	}
