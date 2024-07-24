@@ -54,7 +54,8 @@ void	exec_cmd(t_command_tree *tree, t_data *exec)
 	if (find_builtin(tree) > 0)
 	{
 		exec_builtin(tree, exec);
-		return ;
+		ft_close_error(tree, exec);
+		exit(0);
 	}
 	else
 	{

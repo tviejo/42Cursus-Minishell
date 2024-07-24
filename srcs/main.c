@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 15:20:07 by tviejo           ###   ########.fr       */
-/*   Updated: 2024/07/24 15:33:59 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:48:13 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #include "minishell.h"
@@ -39,8 +39,7 @@ void	execute(t_data *mshell)
 
 void	init(t_data *mshell, int argc, char **argv, char **env)
 {
-	exec->debug_mode = 0;
-	exec->error_code = 0;
+	mshell->error_code = 0;
 	if (argc > 1)
 		mshell->debug_mode = atoi(argv[1]);
 	else
