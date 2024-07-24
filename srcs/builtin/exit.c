@@ -20,6 +20,8 @@ int	ft_free_all(t_data *exec)
 	ft_free_pid(exec);
 	close_std_fd(exec);
 	free_env(exec);
+	free_cmdtree(exec);
+	free_parsing(exec);
 	return (EXIT_SUCCESS);
 }
 

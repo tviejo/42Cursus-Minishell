@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/23 17:59:35 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 13:05:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	main(int argc, char **argv, char **env)
 {
 	char			*cmdline;
 	t_command_tree	*cmdtree;
-	t_data			exec;
+	t_data			*exec;
 
-	t_data *const p = init_data();
+	exec = init_data();
 	argc = 0;
 	argv = NULL;
-	store_env(&exec, env);
-	if (p == NULL)
+	store_env(exec, env);
+	if (exec == NULL)
 		return (-1);
 	rl_bind_key('\t', rl_complete);
 	using_history();
@@ -44,20 +44,20 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
 		add_history(cmdline);
-		cmdtree = parse_cmdline(p, cmdline);
+		cmdtree = parse_cmdline(exec, cmdline);
 		free(cmdline);
 		// print_cmdtree(cmdtree, p->operators, 0);
-		calloc_pid(&exec, cmdtree);
-		exec.oldtype = 0;
-		exec.side = e_left;
-		dup_std(&exec);
-		exec_cmdtree(cmdtree, &exec);
-		dup2(exec.dupstdin, 0);
-		dup2(exec.dupstdout, 1);
-		close_std_fd(&exec);
-		ft_free_pid(&exec);
-		free_cmdtree(p);
+		calloc_pid(exec, cmdtree);
+		exec->oldtype = 0;
+		exec->side = e_left;
+		dup_std(exec);
+		exec_cmdtree(cmdtree, exec);
+		dup2(exec->dupstdin, 0);
+		dup2(exec->dupstdout, 1);
+		close_std_fd(exec);
+		ft_free_pid(exec);
+		free_cmdtree(exec);
 	}
-	free_env(&exec);
-	return (free_parsing(p), 0);
+	free_env(exec);
+	return (free_parsing(exec), 0);
 }
