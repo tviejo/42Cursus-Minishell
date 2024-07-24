@@ -6,18 +6,14 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/23 16:24:24 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:14:10 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parsing	*init_parsing(void)
-{
-	static t_operator	operators[] = {{"cmd", 255}, {"piped", 255},
-	{"<", 2}, {"<<", 2}, {">", 2}, {">>", 2}, {"|", 1},
-	{"||", 0}, {"&&", 0}, {"(", -1}, {")", -1}, {NULL, 0}};
-	t_parsing *const	p = malloc(sizeof(t_parsing));
+/*
+	t_data *const	p = malloc(sizeof(t_data));
 
 	if (p)
 	{
@@ -28,9 +24,23 @@ t_parsing	*init_parsing(void)
 			return (free_parsing(p), NULL);
 	}
 	return (p);
+*/
+
+bool	init_parsing(t_data *p)
+{
+	static t_operator	operators[] = {{"cmd", 255}, {"piped", 255},
+	{"<", 2}, {"<<", 2}, {">", 2}, {">>", 2}, {"|", 1},
+	{"||", 0}, {"&&", 0}, {"(", -1}, {")", -1}, {NULL, 0}};
+
+	p->operators = operators;
+	p->pile_ope = stack_new(1024);
+	p->pile_npi = stack_new(2048);
+	if (p->pile_ope == NULL || p->pile_npi == NULL)
+		return (free_parsing(p), false);
+	return (true);
 }
 
-void	free_parsing(t_parsing *p)
+void	free_parsing(t_data *p)
 {
 	if (p)
 	{
@@ -54,7 +64,7 @@ void	free_node(t_cmdtree *node)
 	}
 }
 
-void	free_cmdtree(t_parsing *p)
+void	free_cmdtree(t_data *p)
 {
 	if (p)
 	{

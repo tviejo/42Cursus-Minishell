@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	update_oldpwm(t_exec *exec)
+int	update_oldpwm(t_data *exec)
 {
 	int		i;
 	char	*pwd;
@@ -25,7 +25,7 @@ int	update_oldpwm(t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	cd_go_home(t_exec *exec)
+int	cd_go_home(t_data *exec)
 {
 	char	*pwd;
 
@@ -40,35 +40,10 @@ int	cd_go_home(t_exec *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	cd_go_back(t_exec *exec)
+int	cd_go_path(t_data *exec, char *path)
 {
-	char	*oldpwd;
-	int		i;
-
-	oldpwd = find_path("PWD=", exec);
-	if (oldpwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	i = ft_strlen(oldpwd) - 2;
-	while (oldpwd[i] != '/' && i >= 0)
-	{
-		oldpwd[i] = '\0';
-		i--;
-	}
-	if (oldpwd[i] == '\0')
-	{
-		ft_putstr_fd("minishell: cd: PWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int	cd_go_path(t_exec *exec, char *path)
-{
-	char	*pwd1;
-    char	*pwd2;
+	char	pwd[4096];
+	char	*pwd2;
 
 	if (chdir(path) == -1)
 	{
@@ -77,26 +52,24 @@ int	cd_go_path(t_exec *exec, char *path)
 		ft_putstr_fd(": No such file or directory\n", 2);
 		return (EXIT_FAILURE);
 	}
-    pwd1 = ft_strjoin(find_path("PWD=", exec), "/");
-	pwd2 = ft_strjoin(pwd1, path);
-    free(pwd1);
+	pwd2 = ft_strjoin("PATH=", getcwd(pwd, 4096));
 	update_pwd(exec, pwd2);
     free(pwd2);
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(t_command_tree *tree, t_exec *exec)
+int	ft_cd(t_command_tree *tree, t_data *exec)
 {
+	if (tree->argument[1] != NULL && tree->argument[2] != NULL)
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (EXIT_FAILURE);
+	}
+	else
 	if (tree->argument[1] == NULL)
 	{
         update_oldpwm(exec);
 		cd_go_home(exec);
-		return (EXIT_SUCCESS);
-	}
-	else if (ft_strncmp(tree->argument[1], "..", 2) == 0)
-	{
-        update_oldpwm(exec);
-		cd_go_back(exec);
 		return (EXIT_SUCCESS);
 	}
 	else

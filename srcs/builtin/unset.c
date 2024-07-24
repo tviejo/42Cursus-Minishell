@@ -1,10 +1,12 @@
 # include "../includes/minishell.h"
 
-int ft_unset(t_command_tree *tree, t_exec *exec)
+int ft_unset(t_command_tree *tree, t_data *exec)
 {
     int i;
 
     i = 0;
+    if (tree->argument[1] == NULL)
+        return (EXIT_FAILURE);
     while (exec->env[i] != NULL)
     {
         if (ft_strncmp(exec->env[i], tree->argument[1], ft_strlen(tree->argument[1])) == 0)

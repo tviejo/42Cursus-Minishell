@@ -52,7 +52,7 @@ int	get_line(t_command_tree *tree, int fd)
 	return (1);
 }
 
-char	*handle_here_doc(t_command_tree *tree, t_exec *exec)
+char	*handle_here_doc(t_command_tree *tree, t_data *exec)
 {
 	int		index;
 	int		fd;
@@ -73,7 +73,7 @@ char	*handle_here_doc(t_command_tree *tree, t_exec *exec)
 	return (name);
 }
 
-int	here_doc(t_command_tree *tree, t_exec *exec)
+int	here_doc(t_command_tree *tree, t_data *exec)
 {
 	char *name;
 	int fd;

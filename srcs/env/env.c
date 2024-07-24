@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	store_env(t_exec *exec, char **env)
+int	store_env(t_data *exec, char **env)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ int	store_env(t_exec *exec, char **env)
 	exec->env[i] = NULL;
 	return (EXIT_SUCCESS);
 }
-char **expand_env(t_exec *exec)
+char **expand_env(t_data *exec)
 {
     int i;
     char **new_env;
@@ -39,7 +39,7 @@ char **expand_env(t_exec *exec)
     return (new_env);
 }
 
-char	*find_path(char *name, t_exec *exec)
+char	*find_path(char *name, t_data *exec)
 {
 	int		i;
 
@@ -55,7 +55,7 @@ char	*find_path(char *name, t_exec *exec)
 	return (NULL);
 }
 
-int    free_env(t_exec *exec)
+int    free_env(t_data *exec)
 {
     int i;
     //int j;
@@ -71,7 +71,7 @@ int    free_env(t_exec *exec)
     return (EXIT_SUCCESS);
 }
 
-int update_pwd(t_exec *exec, char *pwd)
+int update_pwd(t_data *exec, char *pwd)
 {
     int i;
 

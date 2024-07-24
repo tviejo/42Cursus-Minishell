@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	redir_outfile(t_command_tree *tree, t_exec *exec)
+int	redir_outfile(t_command_tree *tree, t_data *exec)
 {
 	int	fd;
 
@@ -14,12 +14,12 @@ int	redir_outfile(t_command_tree *tree, t_exec *exec)
 		ft_close_error(tree, exec);
 		return (EXIT_FAILURE);
 	}
-	dup2(fd, STDOUT_FILENO);
+	dup2(fd, exec->dupstdout);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
 
-int	redir_infile(t_command_tree *tree, t_exec *exec)
+int	redir_infile(t_command_tree *tree, t_data *exec)
 {
 	int	fd;
 
@@ -30,7 +30,7 @@ int	redir_infile(t_command_tree *tree, t_exec *exec)
 		ft_close_error(tree, exec);
 		return (EXIT_FAILURE);
 	}
-	dup2(fd, STDIN_FILENO);
+	dup2(fd, exec->dupstdin);
 	close(fd);
 	return (EXIT_SUCCESS);
 }

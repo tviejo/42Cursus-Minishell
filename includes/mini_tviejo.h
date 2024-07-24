@@ -27,32 +27,4 @@ enum		e_builtin
 	b_export
 };
 
-typedef struct exec
-{
-	char	**env;
-	int		env_len;
-	int		infile;
-	int		outfile;
-	int		fdpipe[2];
-	int 	oldtype;
-	int 	nexttype;
-	int		side;
-	pid_t	*pid;
-}			t_exec;
-
-int			store_env(t_exec *exec, char **env);
-char		*find_path(char *name, t_exec *exec);
-int			free_env(t_exec *exec);
-int			update_oldpwm(t_exec *exec);
-int			print_env(t_exec *exec);
-int			update_pwd(t_exec *exec, char *pwd);
-char		**expand_env(t_exec *exec);
-char		*find_cmd(char **cmd, char **paths);
-int			ft_free_pid(t_exec *exec);
-void		wait_all_process(void);
-bool		wait_one_process(void);
-void		signal_handler(int sig);
-void		signal_handler_here_doc(int sig);
-void		signal_handler_process(int sig);
-
 #endif

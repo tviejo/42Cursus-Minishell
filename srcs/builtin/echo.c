@@ -6,10 +6,10 @@ int	ft_echo(t_command_tree *tree)
 	bool	backslash;
 
 	i = 1;
-    backslash = false;
+    backslash = true;
 	if (tree->argument[1] && !ft_strncmp(tree->argument[1], "-n", 2))
 	{
-		backslash = true;
+		backslash = false;
 		i++;
 	}
 	while (tree->argument[i])
