@@ -81,10 +81,15 @@ int update_pwd(t_data *exec, char *pwd)
         if (ft_strncmp(exec->env[i], "PWD=", 4) == 0)
         {
             free(exec->env[i]);
-            exec->env[i] = ft_strjoin("PWD=", pwd);
+            exec->env[i] = ft_strdup(pwd);
             return (EXIT_SUCCESS);
         }
         i++;
+    }
+    if (i == exec->env_len)
+    {
+        exec->env = expand_env(exec);
+        exec->env[i] = ft_strdup(pwd);
     }
     return (EXIT_FAILURE);
 }

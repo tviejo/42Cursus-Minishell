@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/23 17:46:19 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 11:24:21 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_cmdtree
 
 typedef t_command_tree	t_cmdtree;
 
-
 /*				EXEC				*/
 
 int						ft_export(t_command_tree *tree, t_data *exec);
@@ -115,19 +114,21 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler_process(int sig);
 int						dup_std(t_data *exec);
 int						close_std_fd(t_data *exec);
+char					**expand_env(t_data *exec);
+char					**add_back_env(t_data *exec, char *env_var);
 
 /*				PARSING					*/
 
-t_data			*init_data(void);
-void				free_parsing(t_data *p);
-struct s_cmdtree	*parse_cmdline(t_data *p, char *cmdline);
-void				print_cmdtree(struct s_cmdtree *cmdtree, t_operator *ope,
-						int depth);
-void				free_cmdtree(t_data *p);
-struct s_cmdtree	*new_node(t_data *p, char ***words);
-void				print_node(struct s_cmdtree *cmdtree, t_operator *ope);
-int					get_node_priority(t_data *p, struct s_cmdtree *node);
-enum e_nodetype		get_node_type(t_data *p, char *word);
-int					get_nb_args(t_data *p, char **words);
+t_data					*init_data(void);
+void					free_parsing(t_data *p);
+struct s_cmdtree		*parse_cmdline(t_data *p, char *cmdline);
+void					print_cmdtree(struct s_cmdtree *cmdtree,
+							t_operator *ope, int depth);
+void					free_cmdtree(t_data *p);
+struct s_cmdtree		*new_node(t_data *p, char ***words);
+void					print_node(struct s_cmdtree *cmdtree, t_operator *ope);
+int						get_node_priority(t_data *p, struct s_cmdtree *node);
+enum e_nodetype			get_node_type(t_data *p, char *word);
+int						get_nb_args(t_data *p, char **words);
 
 #endif

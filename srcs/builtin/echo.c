@@ -1,17 +1,32 @@
 # include "../includes/minishell.h"
 
+static bool check_option(char *arg)
+{
+	int		j;
+	bool	backslash;
+
+	backslash = true;
+	if (arg != NULL && ft_strncmp(arg, "-", 1) == 0)
+	{
+		j = 1;
+		while (arg[j] == 'n')
+			j++;
+		if (arg[j] == '\0')
+			backslash = false;
+	}
+	return (backslash);
+}
+
 int	ft_echo(t_command_tree *tree)
 {
 	int		i;
 	bool	backslash;
 
-	i = 1;
-    backslash = true;
-	if (tree->argument[1] && !ft_strncmp(tree->argument[1], "-n", 2))
-	{
-		backslash = false;
-		i++;
-	}
+    backslash = check_option(tree->argument[1]);
+	if (backslash == true)
+		i = 1;
+	else
+		i = 2;
 	while (tree->argument[i])
 	{
 		if (i != 1)
