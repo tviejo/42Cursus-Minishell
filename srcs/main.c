@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 13:55:41 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 14:03:06 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ void	execute(t_data *exec, t_cmdtree *cmdtree)
 	ft_free_pid(exec);
 }
 
-void	init(t_data *exec, char **env, int argc)
+void	init(t_data *exec, char **env)
 {
-	if (argc > 0)
-		exec->debug_mode = 1;
+	exec->debug_mode = 0;
 	if (!init_parsing(exec))
 		exit (-1);
 	store_env(exec, env);
@@ -54,11 +53,12 @@ int	main(int argc, char **argv, char **env)
 	t_command_tree	*cmdtree;
 	t_data			*exec;
 
+	(void)argc;
 	(void)argv;
 	exec = malloc(sizeof(t_data));
 	if (exec == NULL)
 		return (ft_putstr_fd("minishell: error: malloc failed\n", 2), 1);
-	init(exec, env, argc - 1);
+	init(exec, env);
 	while (1)
 	{
 		cmdline = readline("minishell> ");

@@ -1,41 +1,32 @@
 #include "../includes/minishell.h"
 
-int	exec_command(t_command_tree *tree, t_data *exec)
+void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
-	cmd_process_and_or(tree, exec);
-	return (EXIT_SUCCESS);
-}
-
-int	exec_pipe(t_command_tree *tree, t_data *exec)
-{
-	child_process(tree, exec);
-	return (EXIT_SUCCESS);
-}
-int	exec_cmdtree(t_command_tree *tree, t_data *exec)
-{
-	if (tree == NULL)
-		return (EXIT_SUCCESS);
-	if (tree->type == nt_command)
-	{
-		if (exec->oldtype == nt_pipe && exec->side == e_left)
-			exec_pipe(tree, exec);
-		else if (exec->oldtype == nt_pipe && exec->side == e_right)
+	if (exec->oldtype == nt_pipe)
 		{
 			last_child_process(tree, exec);
 			wait_all_process(exec);
 		}
 		else if (exec->side == e_left && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
-			exec_command(tree, exec);
+			cmd_process_and_or(tree, exec);
 		else if (exec->side == e_right && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
 		{
 			if (g_signal == 0 && exec->oldtype == nt_AND)
-				exec_command(tree, exec);
+				cmd_process_and_or(tree, exec);
 			else if (g_signal != 0 && exec->oldtype == nt_OR)
-				exec_command(tree, exec);
+				cmd_process_and_or(tree, exec);
 		}
 		else
-			exec_command(tree, exec);
-	}
+			cmd_process_and_or(tree, exec);
+}
+int	exec_cmdtree(t_command_tree *tree, t_data *exec)
+{
+	if (tree == NULL)
+		return (EXIT_SUCCESS);
+	if (tree->type == nt_piped_cmd)
+		child_process(tree, exec);
+	if (tree->type == nt_command)
+		ft_is_cmd(tree, exec);
 	if (tree->type != nt_command && tree->left != NULL)
 	{
 		exec->oldtype = tree->type;
