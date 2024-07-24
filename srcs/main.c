@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 13:05:47 by tviejo           ###   ########.fr       */
-/*   Updated: 2024/07/24 12:45:24 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:50:46 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -53,9 +53,11 @@ int	main(int argc, char **argv, char **env)
 	t_command_tree	*cmdtree;
 	t_data			*exec;
 
-	(void)argc;
 	(void)argv;
-	init(&exec, env, 1);
+	exec = malloc(sizeof(t_data));
+	if (exec == NULL)
+		return (ft_putstr_fd("minishell: error: malloc failed\n", 2), 1);
+	init(exec, env, argc - 1);
 	while (1)
 	{
 		cmdline = readline("minishell> ");
@@ -64,13 +66,13 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
 		add_history(cmdline);
-		cmdtree = parse_cmdline(&exec, cmdline);
+		cmdtree = parse_cmdline(exec, cmdline);
 		free(cmdline);
-		if (exec.debug_mode > 0)
-			print_cmdtree(cmdtree, exec.operators, 0);
-		execute(&exec, cmdtree);
-		free_cmdtree(&exec);
+		if (exec->debug_mode > 0)
+			print_cmdtree(cmdtree, exec->operators, 0);
+		execute(exec, cmdtree);
+		free_cmdtree(exec);
 	}
-	free_env(&exec);
-	return (free_parsing(&exec), 0);
+	free_env(exec);
+	return (free_parsing(exec), 0);
 }
