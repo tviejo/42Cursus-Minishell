@@ -55,6 +55,7 @@ dkms.conf
 *.swp
 
 # Path & Program
+Minishell
 minishell
 
 # vscode

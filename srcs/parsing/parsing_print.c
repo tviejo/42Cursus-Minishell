@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_print.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 14:33:56 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 12:12:59 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,10 @@
 
 void	print_cmdtree(t_cmdtree *cmdtree, t_operator *ope, int depth)
 {
-	//bool	firstprint;
 	char	**args;
-	
+
 	if (cmdtree)
 	{
-		/*if (cmdtree->type > nt_command)
-			ft_printf("[depth:%d][%s]\n", depth, ope[cmdtree->type].token);
-		else
-			ft_printf("[depth:%d][%s]\n", depth, cmdtree->argument[0]);*/
 		ft_printf("[depth:%d][nbcmd:%d][%s]", depth, cmdtree->nb_command,
 			ope[cmdtree->type].token);
 		args = cmdtree->argument;
@@ -34,15 +29,20 @@ void	print_cmdtree(t_cmdtree *cmdtree, t_operator *ope, int depth)
 			print_cmdtree(cmdtree->left, ope, depth + 1);
 		if (cmdtree->right)
 			print_cmdtree(cmdtree->right, ope, depth + 1);
-		//return (true);
 	}
-	//return (false);
 }
 
 void	print_node(t_cmdtree *cmdtree, t_operator *ope)
 {
-	if (cmdtree->type >= 1)
+	if (cmdtree->type > nt_piped_cmd)
 		ft_printf("[%s]", ope[cmdtree->type].token);
 	else
 		ft_printf("[%s]", cmdtree->argument[0]);
+}
+
+void	if_debug_print_npi_stack(t_data *p)
+{
+	if (p->debug_mode > 0)
+		stack_print(p->pile_npi, false,
+			(t_print_elem_fct)print_node, p->operators);
 }

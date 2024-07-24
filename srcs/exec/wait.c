@@ -21,11 +21,9 @@ bool	wait_one_process(t_data *exec)
 
 void	wait_all_process(t_data *exec)
 {
-	int	i;
 	int	status;
 
 	status = 0;
-	i = 0;
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))

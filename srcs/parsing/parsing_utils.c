@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/23 16:34:45 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 12:17:19 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	get_node_priority(t_data *p, t_cmdtree *node)
 {
-	//ft_printf("node->type = %d\n", node->type);
+	if (p->debug_mode >= 10)
+		ft_printf("node->type = %d\n", node->type);
 	return (p->operators[node->type].priority);
 }
 
