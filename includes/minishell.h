@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/24 12:36:21 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:41:17 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,6 @@ void			print_node(t_cmdtree *cmdtree, t_operator *ope);
 int				get_node_priority(t_data *p, t_cmdtree *node);
 enum e_nodetype	get_node_type(t_data *p, char *word);
 int				get_nb_args(t_data *p, char **words);
+void			if_debug_print_npi_stack(t_data *p);
 
 #endif

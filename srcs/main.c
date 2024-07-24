@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 12:22:28 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:45:24 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	execute(t_data *exec, t_cmdtree *cmdtree)
 void	init(t_data *exec, char **env, int debug_mode)
 {
 	exec->debug_mode = debug_mode;
-	if (!init_parsing(&exec))
+	if (!init_parsing(exec))
 		exit (-1);
-	store_env(&exec, env);
+	store_env(exec, env);
 	rl_bind_key('\t', rl_complete);
 	using_history();
 	print_minishell();
@@ -63,13 +63,13 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGINT, signal_handler);
 		g_signal = 0;
 		add_history(cmdline);
-		cmdtree = parse_cmdline(p, cmdline);
+		cmdtree = parse_cmdline(&exec, cmdline);
 		free(cmdline);
 		if (exec.debug_mode > 0)
-			print_cmdtree(cmdtree, p->operators, 0);
+			print_cmdtree(cmdtree, exec.operators, 0);
 		execute(&exec, cmdtree);
-		free_cmdtree(p);
+		free_cmdtree(&exec);
 	}
 	free_env(&exec);
-	return (free_parsing(p), 0);
+	return (free_parsing(&exec), 0);
 }
