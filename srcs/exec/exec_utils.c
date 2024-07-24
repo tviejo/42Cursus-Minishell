@@ -6,6 +6,9 @@ void	*ft_calloc_pid(t_command_tree *tree, t_exec *exec)
 	if (exec->pid == NULL)
 		ft_close_error(tree, exec);
 	ft_memset(exec->pid, -10, tree->nb_command);
+	exec->nexttype = nt_command;
+	exec->oldtype = nt_command;
+	exec->side = e_left;
 	return (exec->pid);
 }
 

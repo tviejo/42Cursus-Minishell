@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 07:20:24 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 01:59:00 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_cmdtree(t_cmdtree *cmdtree, t_operator *ope, int depth)
 
 void	print_node(t_cmdtree *cmdtree, t_operator *ope)
 {
-	if (cmdtree->type >= 1)
+	if (cmdtree->type > nt_piped_cmd)
 		ft_printf("[%s]", ope[cmdtree->type].token);
 	else
 		ft_printf("[%s]", cmdtree->argument[0]);

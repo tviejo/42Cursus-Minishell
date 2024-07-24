@@ -11,7 +11,7 @@ char	*open_here_document(int *fd)
 	name = ft_strjoin("/tmp/here-document-", number);
 	*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	free(number);
-	while (fd < 0)
+	while (*fd < 0)  // ajout indirection '*' devant fd (oubli ?)
 	{
 		nb++;
 		number = ft_itoa(nb);
@@ -27,10 +27,10 @@ int	get_line(t_command_tree *tree, int fd)
 {
 	char	*output;
 	int		nb_line;
-	bool	warning;
+	//bool	warning;
 
 	nb_line = 1;
-	warning = true;
+	//warning = true;
 	signal(SIGINT, signal_handler_here_doc);
 	output = readline("> ");
 	while (output != NULL && ft_strncmp(output, tree->argument[0],

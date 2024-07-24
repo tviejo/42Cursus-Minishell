@@ -21,6 +21,7 @@ SRCS		+=	close/close.c
 SRCS		+=	exec/exec.c
 SRCS		+=	exec/cmd_process.c
 SRCS		+=	exec/exec_utils.c
+SRCS		+=	exec/exec_utils2.c
 SRCS		+=	exec/find_path_cmd.c
 SRCS		+=	exec/init_exec.c
 SRCS		+=	exec/redir.c
@@ -30,6 +31,7 @@ SRCS		+=	exec/free_exec.c
 SRCS		+=	exec/fork_utils.c
 SRCS		+=	exec/heredoc.c
 SRCS		+=	exec/wait.c
+
 
 SRCS		+=	signal/signal.c
 

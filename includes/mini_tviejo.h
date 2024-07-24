@@ -34,6 +34,9 @@ typedef struct exec
 	int		infile;
 	int		outfile;
 	int		fdpipe[2];
+	int 	oldtype;
+	int 	nexttype;
+	int		side;
 	pid_t	*pid;
 }			t_exec;
 
