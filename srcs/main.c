@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 13:50:46 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 13:55:41 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ void	execute(t_data *exec, t_cmdtree *cmdtree)
 	ft_free_pid(exec);
 }
 
-void	init(t_data *exec, char **env, int debug_mode)
+void	init(t_data *exec, char **env, int argc)
 {
-	exec->debug_mode = debug_mode;
+	if (argc > 0)
+		exec->debug_mode = 1;
 	if (!init_parsing(exec))
 		exit (-1);
 	store_env(exec, env);
