@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 14:03:06 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/24 15:20:07 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	execute(t_data *exec, t_cmdtree *cmdtree)
 void	init(t_data *exec, char **env)
 {
 	exec->debug_mode = 0;
+	exec->error_code = 0;
 	if (!init_parsing(exec))
 		exit (-1);
 	store_env(exec, env);
@@ -61,6 +62,7 @@ int	main(int argc, char **argv, char **env)
 	init(exec, env);
 	while (1)
 	{
+		//printf("error code: %d\n", exec->error_code);
 		cmdline = readline("minishell> ");
 		while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
 			cmdline = readline("minishell>");

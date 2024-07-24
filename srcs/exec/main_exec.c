@@ -11,10 +11,13 @@ void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 			cmd_process_and_or(tree, exec);
 		else if (exec->side == e_right && (exec->oldtype == nt_OR || exec->oldtype == nt_AND))
 		{
-			if (g_signal == 0 && exec->oldtype == nt_AND)
+			if (exec->error_code == 0 && exec->oldtype == nt_AND)
 				cmd_process_and_or(tree, exec);
-			else if (g_signal != 0 && exec->oldtype == nt_OR)
+			else if (exec->error_code != 0 && exec->oldtype == nt_OR)
+			{
+				exec->error_code = 0;
 				cmd_process_and_or(tree, exec);
+			}
 		}
 		else
 			cmd_process_and_or(tree, exec);

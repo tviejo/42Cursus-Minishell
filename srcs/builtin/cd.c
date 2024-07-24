@@ -31,6 +31,7 @@ int	cd_go_home(t_data *exec)
 	if (pwd == NULL)
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
 	update_pwd(exec, pwd);
@@ -48,6 +49,7 @@ int	cd_go_path(t_data *exec, char *path)
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
 	pwd2 = ft_strjoin("PATH=", getcwd(pwd, 4096));
@@ -61,6 +63,7 @@ int	ft_cd(t_command_tree *tree, t_data *exec)
 	if (tree->argument[1] != NULL && tree->argument[2] != NULL)
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
+		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
 	else
