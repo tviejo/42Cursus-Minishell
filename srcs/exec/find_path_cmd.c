@@ -52,6 +52,7 @@ char	*find_cmd(char **cmd, char **paths)
 	{
 		tmp = find_good_path(cmd, paths);
 	}
+	ft_free_split(paths);
 	if (tmp != NULL)
 		return (tmp);
 	else

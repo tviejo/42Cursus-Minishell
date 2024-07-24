@@ -6,6 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/07/24 13:05:47 by tviejo           ###   ########.fr       */
 /*   Updated: 2024/07/24 12:45:24 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -50,7 +51,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char			*cmdline;
 	t_command_tree	*cmdtree;
-	t_data			exec;
+	t_data			*exec;
 
 	(void)argc;
 	(void)argv;

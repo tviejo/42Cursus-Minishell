@@ -31,17 +31,17 @@ static char *find_exec_cmd(t_command_tree *tree, t_data *exec)
 			return (tree->argument[0]);
 		printf("minishell: %s: No such file or directory\n", tree->argument[0]);
 		free(path);
-		ft_close_error(tree, exec);
 		exec->error_code = 127;
+		ft_close_error(tree, exec);
 		return (NULL);
 	}
 	tmp = find_cmd(tree->argument, ft_split(path, ':'));
 	if (tmp == NULL)
 	{
 		printf("minishell: %s: command not found\n", tree->argument[0]);
-		ft_close_error(tree, exec);
 		free(tmp);
 		exec->error_code = 127;
+		ft_close_error(tree, exec);
 		return (NULL);
 	}
 	return (tmp);
