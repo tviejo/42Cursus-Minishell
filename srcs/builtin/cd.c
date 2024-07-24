@@ -4,13 +4,9 @@ int	update_oldpwm(t_data *exec)
 {
 	int		i;
 	char	*pwd;
+	char buffer[4096];
 
-	pwd = find_path("PWD=", exec);
-	if (pwd == NULL)
-	{
-		ft_putstr_fd("minishell: cd: PWD not set\n", 2);
-		return (EXIT_FAILURE);
-	}
+	pwd = getcwd(buffer, 4096);
 	i = 0;
 	while (exec->env[i])
 	{
@@ -22,6 +18,8 @@ int	update_oldpwm(t_data *exec)
 		}
 		i++;
 	}
+	if (exec->env[i] == NULL)
+		exec->env = add_back_env(exec, ft_strjoin("OLDPWD=", pwd));
 	return (EXIT_SUCCESS);
 }
 
