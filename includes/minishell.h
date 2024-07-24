@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/24 15:10:33 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:44:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ enum	e_nodetype
 	nt_AND,
 	nt_open_parenth,
 	nt_close_parenth,
-	nt_number_of_nodetype
+	nt_number_of_nodetype,
+	nt_exec_done
 };
 
 typedef struct s_data
 {
 	int					error_code;
+	bool				end_exec;
 	char				**env;
 	int					env_len;
 	int					infile;
