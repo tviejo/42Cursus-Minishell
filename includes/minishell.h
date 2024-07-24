@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/24 12:41:17 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:10:33 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,17 +155,16 @@ char			**add_back_env(t_data *exec, char *env_var);
 
 /*				PARSING					*/
 
-//t_data			*init_data(void);
-bool			init_parsing(t_data *p);
-void			free_parsing(t_data *p);
-t_cmdtree		*parse_cmdline(t_data *p, char *cmdline);
-void			print_cmdtree(t_cmdtree *cmdtree, t_operator *ope, int depth);
-void			free_cmdtree(t_data *p);
-t_cmdtree		*new_node(t_data *p, char ***words);
-void			print_node(t_cmdtree *cmdtree, t_operator *ope);
-int				get_node_priority(t_data *p, t_cmdtree *node);
-enum e_nodetype	get_node_type(t_data *p, char *word);
-int				get_nb_args(t_data *p, char **words);
-void			if_debug_print_npi_stack(t_data *p);
+bool			init_parsing(t_data *ms);
+void			free_parsing(t_data *ms);
+t_cmdtree		*parse_cmdline(t_data *ms, char *cmdline);
+void			print_cmdtree(t_data *ms);
+void			free_cmdtree(t_data *ms);
+t_cmdtree		*new_node(t_data *ms, char ***words);
+void			print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
+int				get_node_priority(t_data *ms, t_cmdtree *node);
+enum e_nodetype	get_node_type(t_data *ms, char *word);
+int				get_nb_args(t_data *ms, char **words);
+void			if_debug_print_npi_stack(t_data *ms);
 
 #endif

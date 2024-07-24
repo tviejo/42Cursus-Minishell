@@ -6,25 +6,11 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 12:14:10 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:59:55 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	t_data *const	p = malloc(sizeof(t_data));
-
-	if (p)
-	{
-		p->operators = operators;
-		p->pile_ope = stack_new(1024);
-		p->pile_npi = stack_new(2048);
-		if (p->pile_ope == NULL || p->pile_npi == NULL)
-			return (free_parsing(p), NULL);
-	}
-	return (p);
-*/
 
 bool	init_parsing(t_data *p)
 {
@@ -46,7 +32,6 @@ void	free_parsing(t_data *p)
 	{
 		stack_delete(p->pile_ope);
 		stack_delete(p->pile_npi);
-		free(p);
 	}
 }
 
