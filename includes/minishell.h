@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/24 11:58:09 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:36:21 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct s_cmdtree
 
 typedef t_command_tree	t_cmdtree;
 
-
 /*				EXEC				*/
 
 int				ft_export(t_command_tree *tree, t_data *exec);
@@ -151,6 +150,8 @@ void			signal_handler_here_doc(int sig);
 void			signal_handler_process(int sig);
 int				dup_std(t_data *exec);
 int				close_std_fd(t_data *exec);
+char			**expand_env(t_data *exec);
+char			**add_back_env(t_data *exec, char *env_var);
 
 /*				PARSING					*/
 

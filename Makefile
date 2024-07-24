@@ -15,6 +15,7 @@ SRCS		+=	builtin/pwd.c
 SRCS		+=	builtin/unset.c
 
 SRCS		+=	env/env.c
+SRCS		+=	env/env_utils.c
 
 SRCS		+=	close/close.c
 
@@ -31,7 +32,6 @@ SRCS		+=	exec/free_exec.c
 SRCS		+=	exec/fork_utils.c
 SRCS		+=	exec/heredoc.c
 SRCS		+=	exec/wait.c
-
 
 SRCS		+=	signal/signal.c
 
