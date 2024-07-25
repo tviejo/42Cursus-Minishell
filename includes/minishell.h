@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:46:05 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 14:29:31 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void					wait_all_process(t_data *exec);
 bool					wait_one_process(t_data *exec, int index);
 void					signal_handler(int sig);
 void					signal_handler_here_doc(int sig);
-void					signal_handler_process(int sig);
 int						dup_std(t_data *exec);
 int						close_std_fd(t_data *exec);
 char					**expand_env(t_data *exec);
@@ -160,6 +159,12 @@ int						exec_node_right(t_cmdtree *tree, t_data *exec);
 bool					is_node(t_cmdtree *tree);
 bool					is_redir(t_cmdtree *tree);
 void					ft_redir(t_command_tree *tree, t_data *exec);
+void					signal_init(void);
+void					signal_handler_process(void);
+void					signal_handler_here_doc(int sig);
+void					signal_handler(int sig);
+void					signal_sigint(int sig);
+void					signal_sigquit(int sig);
 
 /*				PARSING					*/
 

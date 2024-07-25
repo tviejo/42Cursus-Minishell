@@ -6,42 +6,24 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:15 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:52:17 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 14:28:38 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int g_signal;
+int		g_signal;
 
-void signal_handler(int sig)
+void	signal_init(void)
 {
-    if (sig == SIGINT)
-    {
-        ft_putstr_fd("\n", 1);
-        g_signal = 130;
-    }
+	g_signal = 0;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }
 
-void signal_handler_here_doc(int sig)
+void	signal_handler_process(void)
 {
-    if (sig == SIGINT)
-    {
-        ft_putstr_fd("\n", 1);
-        g_signal = 130;
-    }
-    if (sig == SIGQUIT)
-    {
-        ft_putstr_fd("Quit: 3\n", 1);
-        g_signal = 131;
-    }
-}
-
-void signal_handler_process(int sig)
-{
-    if (sig == SIGINT)
-    {
-        ft_putstr_fd("\n", 1);
-        g_signal = 130;
-    }
+	signal(SIGINT, signal_sigint);
+	signal(SIGQUIT, signal_sigquit);
 }
