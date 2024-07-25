@@ -6,30 +6,25 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:52:33 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:00:39 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-void	exec_error(t_pipex *pipex, char **argv, int argc)
+static void	print_no_file_error(t_command_tree *tree)
 {
-	int	index;
-	int	fd;
-
-	index = 0;
-	while (pipex->arguments[index] != NULL)
-	{
-		if (pipex->arguments[index][0] == NULL)
-		{
-			fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			close(fd);
-		}
-		index++;
-	}
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(tree->argument[0], 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 }
-*/
+
+static void	print_command_not_found_error(t_command_tree *tree)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(tree->argument[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
+}
 
 static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 {
@@ -41,7 +36,7 @@ static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 	{
 		if (access(tree->argument[0], F_OK | X_OK) == 0)
 			return (tree->argument[0]);
-		printf("minishell: %s: No such file or directory\n", tree->argument[0]);
+		print_no_file_error(tree);
 		free(path);
 		exec->error_code = 127;
 		ft_close_error(tree, exec);
@@ -51,7 +46,7 @@ static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 	if (tmp == NULL)
 	{
 		exec->error_code = 127;
-		printf("minishell: %s: command not found\n", tree->argument[0]);
+		print_command_not_found_error(tree);
 		free(tmp);
 		ft_close_error(tree, exec);
 		return (NULL);

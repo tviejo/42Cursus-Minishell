@@ -6,13 +6,22 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:55:47 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:01:38 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*open_here_document(int *fd)
+static void	print_incorrect_delimiter_error(t_command_tree *tree, int nb_line)
+{
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putnbr_fd(nb_line, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(tree->argument[0], 2);
+	ft_putstr_fd("')\n", 2);
+}
+
+char	*open_here_document(int fd)
 {
 	int		nb;
 	char	*name;
@@ -21,15 +30,15 @@ char	*open_here_document(int *fd)
 	nb = 1;
 	number = ft_itoa(nb);
 	name = ft_strjoin("/tmp/here-document-", number);
-	*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	free(number);
-	while (*fd < 0) // ajout indirection '*' devant fd (oubli ?)
+	while (fd < 0)
 	{
 		nb++;
 		number = ft_itoa(nb);
 		free(name);
 		name = ft_strjoin("/tmp/here-document-", number);
-		*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		free(number);
 	}
 	return (name);
@@ -53,10 +62,7 @@ int	get_line(t_command_tree *tree, int fd)
 		nb_line++;
 	}
 	if (output == NULL)
-	{
-		printf("minishell: warning: here-document at line %d ", nb_line);
-		printf("delimited by end-of-file (wanted `%s')\n", tree->argument[0]);
-	}
+		print_incorrect_delimiter_error(tree, nb_line);
 	free(output);
 	close(fd);
 	return (1);
