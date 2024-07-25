@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:53:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:26:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	redir_infile(t_command_tree *tree, t_data *exec)
 	exec->infile = open(tree->argument[0], O_RDONLY);
 	if (exec->infile == -1)
 	{
-		ft_close_error(tree, exec);
+		ft_putstr_fd("minishel: ", 2);
+		ft_putstr_fd(tree->argument[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
 	dup2(exec->infile, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 13:09:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:34:01 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
-	if (tree->type == nt_piped_cmd)
+	if (tree->type == nt_piped_cmd && exec->error_code == 0)
 		child_process(tree, exec);
-	else if (exec->oldtype == nt_pipe)
+	else if (exec->oldtype == nt_pipe && exec->error_code == 0)
 	{
 		last_child_process(tree, exec);
 		wait_all_process(exec);
 	}
-	else
+	else if (exec->error_code == 0 || exec->oldtype == nt_OR)
+	{
 		cmd_process_and_or(tree, exec);
+		wait_all_process(exec);
+	}
 }
 
 void	ft_redir(t_command_tree *tree, t_data *exec)

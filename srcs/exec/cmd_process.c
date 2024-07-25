@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:19 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 14:18:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 17:42:27 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 	if (exec->pid[index] == 0)
 	{
 		exec_cmd(tree, exec);
-	}
-	else
-	{
-		wait_one_process(exec, index);
 	}
 	return (EXIT_SUCCESS);
 }

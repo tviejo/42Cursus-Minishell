@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:59 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:55:10 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 18:43:15 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	exec_node_left(t_command_tree *tree, t_data *exec)
 {
 	if (is_redir(tree) == true)
 		ft_redir(tree, exec);
+	else if (tree->type != nt_pipe)
+	{
+		dup2(exec->dupstdin, STDIN_FILENO);
+		dup2(exec->dupstdout, STDOUT_FILENO);
+	}
 	exec->oldtype = tree->type;
 	exec->side = e_left;
 	exec_cmdtree(tree->left, exec);
@@ -26,6 +31,11 @@ int	exec_node_right(t_command_tree *tree, t_data *exec)
 {
 	if (is_redir(tree) == true)
 		ft_redir(tree, exec);
+	else if (tree->type != nt_pipe)
+	{
+		dup2(exec->dupstdin, STDIN_FILENO);
+		dup2(exec->dupstdout, STDOUT_FILENO);
+	}
 	if (exec->error_code != 0 && tree->type == nt_AND)
 		return (EXIT_FAILURE);
 	else if (exec->error_code == 0 && tree->type == nt_OR)

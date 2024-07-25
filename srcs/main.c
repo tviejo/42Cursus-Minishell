@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/25 13:41:00 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:39:39 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	execute(t_data *mshell)
 	mshell->side = e_left;
 	mshell->dupstdin = dup(STDIN_FILENO);
 	mshell->dupstdout = dup(STDOUT_FILENO);
+	mshell->error_code = 0;
 	exec_cmdtree(mshell->cmdtree, mshell);
+	printf("error code: %d\n", mshell->error_code);
 	dup2(mshell->dupstdin, STDIN_FILENO);
 	dup2(mshell->dupstdout, STDOUT_FILENO);
 	close(mshell->dupstdout);
