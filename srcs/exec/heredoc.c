@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 13:01:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:12:18 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_incorrect_delimiter_error(t_command_tree *tree, int nb_line)
 	ft_putstr_fd("')\n", 2);
 }
 
-char	*open_here_document(int fd)
+char	*open_here_document(int *fd)
 {
 	int		nb;
 	char	*name;
@@ -30,15 +30,15 @@ char	*open_here_document(int fd)
 	nb = 1;
 	number = ft_itoa(nb);
 	name = ft_strjoin("/tmp/here-document-", number);
-	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	free(number);
-	while (fd < 0)
+	while (*fd < 0)
 	{
 		nb++;
 		number = ft_itoa(nb);
 		free(name);
 		name = ft_strjoin("/tmp/here-document-", number);
-		fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		free(number);
 	}
 	return (name);

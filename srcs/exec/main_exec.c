@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:53:07 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:09:48 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
-	if (exec->oldtype == nt_pipe)
+	if (tree->type == nt_piped_cmd)
+		child_process(tree, exec);
+	else if (exec->oldtype == nt_pipe)
 	{
 		last_child_process(tree, exec);
 		wait_all_process(exec);
@@ -39,9 +41,7 @@ int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 {
 	if (tree == NULL)
 		return (EXIT_SUCCESS);
-	else if (tree->type == nt_piped_cmd)
-		child_process(tree, exec);
-	else if (tree->type == nt_command)
+	else if (tree->type == nt_command || tree->type == nt_piped_cmd)
 		ft_is_cmd(tree, exec);
 	if (is_node(tree) == true && tree->left != NULL)
 		exec_node_left(tree, exec);
