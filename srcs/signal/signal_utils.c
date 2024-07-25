@@ -12,7 +12,7 @@ void	signal_sigquit(int sig)
 {
 	(void)sig;
 	g_signal = 128 + SIGINT;
-	ft_putstr_fd("Quit (core dumped)\n", 1);
+	ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 void	signal_handler(int sig)
