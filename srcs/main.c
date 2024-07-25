@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 19:48:11 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:41:00 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,15 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 	using_history();
 	print_minishell();
 }
+char	*read_prompt(void)
+{
+	char	*cmdline;
 
+	cmdline = readline("minishell> ");
+	while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
+		cmdline = readline("minishell> ");
+	return (cmdline);
+}
 int	main(int argc, char **argv, char **env)
 {
 	char	*cmdline;
@@ -64,12 +72,10 @@ int	main(int argc, char **argv, char **env)
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
-		// printf("error code: %d\n", exec->error_code);
-		cmdline = readline("minishell> ");
-		while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
-			cmdline = readline("minishell> ");
-		signal(SIGINT, signal_handler);
-		g_signal = 0;
+		signal_init();
+		cmdline = read_prompt();
+		if (cmdline == NULL)
+			break ;
 		add_history(cmdline);
 		parse_cmdline(&mshell, cmdline);
 		free(cmdline);
@@ -78,6 +84,5 @@ int	main(int argc, char **argv, char **env)
 		execute(&mshell);
 		free_cmdtree(&mshell);
 	}
-	free_env(&mshell);
-	return (free_parsing(&mshell), 0);
+	return (ft_printf("exit\n"), free_env(&mshell), free_parsing(&mshell), 0);
 }

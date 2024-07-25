@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:55:07 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 14:18:31 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	child_process(t_command_tree *tree, t_data *exec)
 {
 	int	index;
 
-	signal(SIGINT, signal_handler_process);
+	signal_handler_process();
 	create_pipe(exec, tree);
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
@@ -40,7 +40,7 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 {
 	int	index;
 
-	signal(SIGINT, signal_handler_process);
+	signal_handler_process();
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)
 	{

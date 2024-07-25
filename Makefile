@@ -35,6 +35,7 @@ SRCS		+=	exec/heredoc.c
 SRCS		+=	exec/wait.c
 
 SRCS		+=	signal/signal.c
+SRCS		+=	signal/signal_utils.c
 
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c
