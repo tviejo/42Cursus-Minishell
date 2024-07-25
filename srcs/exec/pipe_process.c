@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_process.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:55:07 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	child_process(t_command_tree *tree, t_data *exec)
 {
-	int index;
+	int	index;
 
 	signal(SIGINT, signal_handler_process);
 	create_pipe(exec, tree);
@@ -26,8 +38,8 @@ int	child_process(t_command_tree *tree, t_data *exec)
 
 int	last_child_process(t_command_tree *tree, t_data *exec)
 {
-	int index;
-	
+	int	index;
+
 	signal(SIGINT, signal_handler_process);
 	index = create_fork(tree, exec);
 	if (exec->pid[index] == 0)

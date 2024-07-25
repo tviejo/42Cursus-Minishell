@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wait.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:53:20 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-int		g_signal;
-
-bool	wait_one_process(t_data *exec)
+bool	wait_one_process(t_data *exec, int index)
 {
 	int	status;
 
 	status = 0;
-	waitpid(-1, &status, 0);
+	waitpid(exec->pid[index], &status, 0);
 	if (WIFEXITED(status))
 	{
 		exec->error_code = WEXITSTATUS(status);
