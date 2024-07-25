@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_path_cmd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:52:40 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:52:43 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*find_path_cmd(char **envp)
@@ -15,6 +27,7 @@ char	*find_path_cmd(char **envp)
 		return (NULL);
 	}
 }
+
 static char	*find_good_path(char **cmd, char **paths)
 {
 	char	*tmp;
@@ -43,7 +56,7 @@ static char	*find_good_path(char **cmd, char **paths)
 
 char	*find_cmd(char **cmd, char **paths)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	if (access(cmd[0], F_OK | X_OK) == 0)

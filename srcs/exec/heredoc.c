@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:55:47 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*open_here_document(int *fd)
@@ -11,7 +23,7 @@ char	*open_here_document(int *fd)
 	name = ft_strjoin("/tmp/here-document-", number);
 	*fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	free(number);
-	while (*fd < 0)  // ajout indirection '*' devant fd (oubli ?)
+	while (*fd < 0) // ajout indirection '*' devant fd (oubli ?)
 	{
 		nb++;
 		number = ft_itoa(nb);
@@ -27,10 +39,8 @@ int	get_line(t_command_tree *tree, int fd)
 {
 	char	*output;
 	int		nb_line;
-	//bool	warning;
 
 	nb_line = 1;
-	//warning = true;
 	signal(SIGINT, signal_handler_here_doc);
 	output = readline("> ");
 	while (output != NULL && ft_strncmp(output, tree->argument[0],
@@ -75,8 +85,8 @@ char	*handle_here_doc(t_command_tree *tree, t_data *exec)
 
 int	here_doc(t_command_tree *tree, t_data *exec)
 {
-	char *name;
-	int fd;
+	char	*name;
+	int		fd;
 
 	name = handle_here_doc(tree, exec);
 	fd = open(name, O_RDONLY, 0644);

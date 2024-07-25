@@ -1,3 +1,4 @@
+error code in: 0
 includes
 libft
 Makefile
@@ -6,4 +7,4 @@ objs
 out
 srcs
 supp.supp
-[?2004hminishell> ^Z[?2004l
+error code out: 0

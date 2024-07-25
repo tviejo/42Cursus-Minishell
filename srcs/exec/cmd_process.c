@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_process.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:52:19 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:53:50 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 {
-	int status;
-	int index;
+	int	index;
 
 	signal(SIGINT, signal_handler_process);
-    close_std_fd(exec);
 	if (find_builtin(tree) > 0)
 	{
 		exec_builtin(tree, exec);
@@ -19,8 +29,7 @@ int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 	}
 	else
 	{
-		waitpid(exec->pid[index], &status, 0);
-		exec->error_code = WEXITSTATUS(status);
+		wait_one_process(exec, index);
 	}
 	return (EXIT_SUCCESS);
 }

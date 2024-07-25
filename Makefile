@@ -28,6 +28,7 @@ SRCS		+=	exec/init_exec.c
 SRCS		+=	exec/redir.c
 SRCS		+=	exec/pipe_process.c
 SRCS		+=	exec/main_exec.c
+SRCS		+=	exec/main_exec_utils.c
 SRCS		+=	exec/free_exec.c
 SRCS		+=	exec/fork_utils.c
 SRCS		+=	exec/heredoc.c

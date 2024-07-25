@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/25 11:52:33 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 /*
@@ -19,7 +31,7 @@ void	exec_error(t_pipex *pipex, char **argv, int argc)
 }
 */
 
-static char *find_exec_cmd(t_command_tree *tree, t_data *exec)
+static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 {
 	char	*tmp;
 	char	*path;
@@ -38,39 +50,44 @@ static char *find_exec_cmd(t_command_tree *tree, t_data *exec)
 	tmp = find_cmd(tree->argument, ft_split(path, ':'));
 	if (tmp == NULL)
 	{
+		exec->error_code = 127;
 		printf("minishell: %s: command not found\n", tree->argument[0]);
 		free(tmp);
-		exec->error_code = 127;
 		ft_close_error(tree, exec);
 		return (NULL);
 	}
 	return (tmp);
 }
 
-void	exec_cmd(t_command_tree *tree, t_data *exec)
+static void	normal_exec(t_command_tree *tree, t_data *exec)
 {
 	char	*tmp;
 
-	if (find_builtin(tree) > 0)
+	tmp = find_exec_cmd(tree, exec);
+	if (tmp == NULL)
 	{
-		exec_builtin(tree, exec);
-		ft_close_error(tree, exec);
-		exit(0);
+		close_std_fd(exec);
+		exit(exec->error_code);
 	}
 	else
 	{
-		tmp = find_exec_cmd(tree, exec);
-		if (tmp == NULL)
-		{
-			free(tmp);
-			exit(127);
-		}
-		else
-		{
-			execve(tmp, tree->argument, exec->env);
-			free(tmp);
-			exec->error_code = 1;
-			perror("minishell: Error: ");
-		}
+		close_std_fd(exec);
+		execve(tmp, tree->argument, exec->env);
+		free(tmp);
+		perror("minishell: Error: ");
+	}
+}
+
+void	exec_cmd(t_command_tree *tree, t_data *exec)
+{
+	if (find_builtin(tree) > 0)
+	{
+		exec_builtin(tree, exec);
+		close_std_fd(exec);
+		exit(exec->error_code);
+	}
+	else
+	{
+		normal_exec(tree, exec);
 	}
 }
