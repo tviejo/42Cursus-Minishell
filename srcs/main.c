@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/25 19:39:39 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 20:51:38 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,9 @@ int	print_minishell(void)
 
 void	execute(t_data *mshell)
 {
-	mshell->end_exec = false;
-	calloc_pid(mshell, mshell->cmdtree);
-	mshell->oldtype = 0;
-	mshell->side = e_left;
-	mshell->dupstdin = dup(STDIN_FILENO);
-	mshell->dupstdout = dup(STDOUT_FILENO);
-	mshell->error_code = 0;
+	init_exec(mshell);
 	exec_cmdtree(mshell->cmdtree, mshell);
-	printf("error code: %d\n", mshell->error_code);
-	dup2(mshell->dupstdin, STDIN_FILENO);
-	dup2(mshell->dupstdout, STDOUT_FILENO);
-	close(mshell->dupstdout);
-	close(mshell->dupstdin);
-	ft_free_pid(mshell);
+	close_exec(mshell);
 }
 
 void	init(t_data *mshell, int argc, char **argv, char **env)

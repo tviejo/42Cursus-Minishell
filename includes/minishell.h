@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 14:29:31 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 20:50:16 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler(int sig);
 void					signal_sigint(int sig);
 void					signal_sigquit(int sig);
+void 					init_exec(t_data *mshell);
+void 					close_exec(t_data *mshell);
 
 /*				PARSING					*/
 
