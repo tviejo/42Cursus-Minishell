@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/25 20:51:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/25 21:14:55 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	print_minishell(void)
 
 void	execute(t_data *mshell)
 {
+	if (mshell->cmdtree == NULL || mshell->cmdtree->nb_command == 0)
+		return ;
 	init_exec(mshell);
 	exec_cmdtree(mshell->cmdtree, mshell);
 	close_exec(mshell);
