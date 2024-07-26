@@ -86,7 +86,7 @@ int update_pwd(t_data *exec, char *pwd)
         }
         i++;
     }
-    if (i == exec->env_len)
+    if (exec->env[i] == NULL)
     {
         exec->env = expand_env(exec);
         exec->env[i] = ft_strdup(pwd);
