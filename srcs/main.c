@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/25 21:14:55 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/26 13:47:08 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 	if (!init_parsing(mshell))
 	{
 		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
-		exit(-1);
+		exit(2);
 	}
 	store_env(mshell, env);
 	rl_bind_key('\t', rl_complete);
@@ -65,10 +65,14 @@ int	main(int argc, char **argv, char **env)
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
+		mshell.error_code = g_signal;
 		signal_init();
 		cmdline = read_prompt();
 		if (cmdline == NULL)
+		{
+			mshell.error_code = 131;
 			break ;
+		}
 		add_history(cmdline);
 		parse_cmdline(&mshell, cmdline);
 		free(cmdline);
@@ -77,5 +81,6 @@ int	main(int argc, char **argv, char **env)
 		execute(&mshell);
 		free_cmdtree(&mshell);
 	}
-	return (ft_printf("exit\n"), free_env(&mshell), free_parsing(&mshell), 0);
+	ft_printf("exit\n");
+	return (free_env(&mshell), free_parsing(&mshell), mshell.error_code);
 }
