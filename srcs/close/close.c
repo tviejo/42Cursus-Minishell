@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_close_error(t_command_tree *tree, t_data *exec)
 {

@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/27 03:35:32 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:16:32 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 		return (NULL);
 	ft_strlcpy(outstr, *cmdline, str - *cmdline + 1);
 	*cmdline = str;
-	ft_printf("  get_string returns: %s\n", outstr);
+	if (ms->debug_mode > 0)
+		ft_printf("  get_string returns: %s\n", outstr);
 	return (outstr);
 }
 

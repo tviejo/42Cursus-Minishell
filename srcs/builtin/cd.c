@@ -52,7 +52,7 @@ int	cd_go_path(t_data *exec, char *path)
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
-	pwd2 = ft_strjoin("PATH=", getcwd(pwd, 4096));
+	pwd2 = ft_strjoin("PWD=", getcwd(pwd, 4096));
 	update_pwd(exec, pwd2);
     free(pwd2);
 	return (EXIT_SUCCESS);

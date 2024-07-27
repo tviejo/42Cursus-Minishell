@@ -56,6 +56,8 @@ SRCS		+= queue/queue_utils.c
 SRCS		+= print_logo.c
 SRCS		+= main.c
 
+SRCS 		+= wildcard/wildcard.c
+
 vpath %.c $(SRC_DIR)
 
 OBJS		=	$(patsubst %.c, $(OBJ_DIR)%.o, $(SRCS))
@@ -105,7 +107,7 @@ ${NAME}: 		${OBJS}
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)lexing/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/ $(OBJ_DIR)queue/ $(OBJ_DIR)signal/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)lexing/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/ $(OBJ_DIR)queue/ $(OBJ_DIR)signal/ $(OBJ_DIR)wildcard/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

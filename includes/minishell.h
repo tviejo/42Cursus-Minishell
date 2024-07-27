@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/26 18:48:17 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/27 04:04:37 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,9 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler(int sig);
 void					signal_sigint(int sig);
 void					signal_sigquit(int sig);
-void 					init_exec(t_data *mshell);
-void 					close_exec(t_data *mshell);
+void					init_exec(t_data *mshell);
+void					close_exec(t_data *mshell);
+char					*find_wildcard(char *wildcard);
 
 /*				PARSING					*/
 
