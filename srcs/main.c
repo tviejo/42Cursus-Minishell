@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/27 03:58:32 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/27 09:31:09 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	main(int argc, char **argv, char **env)
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
-		mshell.error_code = g_signal;
+		if (g_signal != 0)
+			mshell.error_code = g_signal;
 		signal_init();
 		cmdline = read_prompt();
 		if (cmdline == NULL)
