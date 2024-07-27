@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 12:23:13 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/26 01:43:33 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ void	process_operator(t_data *p, t_cmdtree *ope)
 {
 	const int	priority = get_node_priority(p, ope);
 
+	if (priority == PRI_REDIR)
+	{
+		push(p->pile_ope, ope);
+		return ;
+	}
 	while (gettop(p->pile_ope))
 	{
 		if (priority <= get_node_priority(p, gettop(p->pile_ope)))

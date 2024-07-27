@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/24 15:15:08 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:42:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	print_stack_node(t_cmdtree *cmdtree, t_operator *ope)
 void	if_debug_print_npi_stack(t_data *p)
 {
 	if (p->debug_mode > 0)
+	{
+		ft_printf("  ");
 		stack_print(p->pile_npi, false,
 			(t_print_elem_fct)print_stack_node, p->operators);
+	}
 }

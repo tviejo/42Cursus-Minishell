@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/21 10:08:39 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:38:19 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "stack.h"
 
-t_stack	*stack_new(int capacity)
+t_stack	*stack_new(int capacity, char *name)
 {
 	t_stack *const	stack = malloc(sizeof(t_stack));
 
@@ -26,6 +26,7 @@ t_stack	*stack_new(int capacity)
 			return (free(stack), NULL);
 		stack->nb_max_elems = capacity;
 		stack->top = stack->elems - 1;
+		stack->name = name;
 	}
 	return (stack);
 }
@@ -55,7 +56,7 @@ void	stack_print(t_stack *s, bool from_top,
 {
 	void	**elm;
 
-	ft_printf("[pile (%p)]: ", s);
+	ft_printf("[pile %s]: ", s->name);
 	if (from_top)
 	{
 		elm = s->top;

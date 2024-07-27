@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 20:50:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/26 18:48:17 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ typedef struct s_data
 	int					oldtype;
 	int					side;
 	pid_t				*pid;
+	char				**separators;
 	t_operator			*operators;
 	t_stack				*pile_ope;
 	t_stack				*pile_npi;
+	t_queue				*file_lex;
 	struct s_cmdtree	*cmdtree;
 	char				**splited_words;
 	int					debug_mode;
@@ -170,6 +172,8 @@ void 					close_exec(t_data *mshell);
 
 /*				PARSING					*/
 
+char					*lexer(t_data *ms, char *cmdline);
+
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);
 t_cmdtree				*parse_cmdline(t_data *ms, char *cmdline);
@@ -181,5 +185,9 @@ int						get_node_priority(t_data *ms, t_cmdtree *node);
 enum e_nodetype			get_node_type(t_data *ms, char *word);
 int						get_nb_args(t_data *ms, char **words);
 void					if_debug_print_npi_stack(t_data *ms);
+
+char					*get_env_var(t_data *ms, char *varname);
+
+int						print_minishell(void);
 
 #endif

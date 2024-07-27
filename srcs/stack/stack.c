@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/22 07:21:08 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:23:01 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*pop(t_stack *s)
 {
 	if (s->top < s->elems)
 	{
-		ft_printf("[stack: %p][pop] Erreur pile vide !\n", s, s->nb_max_elems);
+		ft_printf("[stack: %p][pop] Erreur pile vide !\n", s);
 		exit(-1);
 	}
 	return (*s->top--);

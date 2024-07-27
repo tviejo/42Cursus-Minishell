@@ -38,6 +38,10 @@ SRCS		+=	exec/wait.c
 SRCS		+=	signal/signal.c
 SRCS		+=	signal/signal_utils.c
 
+SRCS		+= lexing/lexer.c
+SRCS		+= lexing/lexer_utils.c
+SRCS		+= lexing/lexer_utils2.c
+
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c
 SRCS		+= parsing/parsing_utils.c
@@ -45,6 +49,11 @@ SRCS		+= parsing/parsing_print.c
 
 SRCS		+= stack/stack.c
 SRCS		+= stack/stack_utils.c
+
+SRCS		+= queue/queue.c
+SRCS		+= queue/queue_utils.c
+
+SRCS		+= print_logo.c
 SRCS		+= main.c
 
 vpath %.c $(SRC_DIR)
@@ -96,7 +105,7 @@ ${NAME}: 		${OBJS}
 
 $(OBJ_DIR)%.o: %.c
 				@echo "$(BLUE)Compiling: $@ $(END)"
-				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/ $(OBJ_DIR)signal/
+				mkdir -p $(OBJ_DIR) $(OBJ_DIR)builtin/ $(OBJ_DIR)env/ $(OBJ_DIR)exec/ $(OBJ_DIR)lexing/ $(OBJ_DIR)parsing/ $(OBJ_DIR)close/ $(OBJ_DIR)stack/ $(OBJ_DIR)queue/ $(OBJ_DIR)signal/
 				$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
