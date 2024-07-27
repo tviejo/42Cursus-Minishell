@@ -19,3 +19,42 @@ void    close_exec(t_data *mshell)
 	close(mshell->dupstdin);
 	ft_free_pid(mshell);
 }
+
+t_proccess	*ft_lstnew_int(int pid_index)
+{
+	t_proccess	*node;
+
+	node = (t_proccess *)malloc(sizeof(t_proccess));
+	if (node == NULL)
+		return (node);
+	node->pid_index = pid_index;
+	node->next = NULL;
+    return (node);
+}
+
+t_proccess	*ft_lstlast_process(t_proccess *lst)
+{
+	int	i;
+
+	if (lst != NULL)
+	{
+		i = 0;
+		while (lst->next != NULL)
+		{
+			lst = lst->next;
+			i++;
+		}
+	}
+	return (lst);
+}
+
+void	ft_lstadd_back_proccess(t_proccess **lst, t_proccess *new)
+{
+	if (new != NULL)
+	{
+		if (*lst != NULL)
+			ft_lstlast_process(*lst)->next = new;
+		else
+			*lst = new;
+	}
+}
