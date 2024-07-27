@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 23:07:51 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/27 23:14:50 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 	if (exec->pid[index] == 0)
 	{
 		close_std_fd(exec);
+		close (fdpipe[1]);
+		close (fdpipe[0]);
 		exec_cmd(tree, exec);
 	}
 	else
