@@ -24,6 +24,7 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
 		exit(2);
 	}
+	mshell->proccess = ft_lstnew_int(-10);
 	store_env(mshell, env);
 	rl_bind_key('\t', rl_complete);
 	using_history();

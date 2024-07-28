@@ -75,6 +75,12 @@ enum					e_nodetype
 	nt_exec_done
 };
 
+typedef struct s_proccess
+{
+	int							pid_index;
+	struct s_proccess			*next;
+}						t_proccess;
+
 typedef struct s_data
 {
 	int					error_code;
@@ -89,6 +95,7 @@ typedef struct s_data
 	int					oldtype;
 	int					side;
 	pid_t				*pid;
+	t_proccess			*proccess;
 	char				**separators;
 	t_operator			*operators;
 	t_stack				*pile_ope;
@@ -136,11 +143,11 @@ int						calloc_pid(t_data *exec, t_command_tree *tree);
 int						child_process(t_command_tree *tree, t_data *exec);
 int						close_fd(int fd, t_command_tree *tree, t_data *exec);
 int						duplicate_pipe(t_command_tree *tree, t_data *exec,
-							int mode);
+							int fdpipe, int mode);
 int						create_pipe(t_data *exec, t_cmdtree *tree);
 int						close_pipe(t_data *exec);
 int						last_child_process(t_command_tree *tree, t_data *exec);
-int						create_fork(t_command_tree *tree, t_data *exec);
+int						create_fork(t_command_tree *tree, t_data *exec, int index);
 int						redir_infile(t_command_tree *tree, t_data *exec);
 int						redir_outfile(t_command_tree *tree, t_data *exec);
 char	*create_here_doc(char *limiter);
@@ -156,7 +163,7 @@ char					**expand_env(t_data *exec);
 char					*find_cmd(char **cmd, char **paths);
 int						ft_free_pid(t_data *exec);
 void					wait_all_process(t_data *exec);
-bool					wait_one_process(t_data *exec, int index);
+bool					wait_one_process(t_data *exec);
 void					signal_handler(int sig);
 void					signal_handler_here_doc(int sig);
 int						dup_std(t_data *exec);
@@ -178,6 +185,9 @@ void	signal_here_doc(void);
 void					init_exec(t_data *mshell);
 void					close_exec(t_data *mshell);
 char					*find_wildcard(char *wildcard);
+int 					return_fork_index(t_data *exec);
+t_proccess				*ft_lstnew_int(int pid_index);
+void					ft_lstadd_back_proccess(t_proccess **lst, t_proccess *new);
 
 /*				PARSING					*/
 

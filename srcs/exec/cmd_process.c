@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:19 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 17:42:27 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/27 13:59:40 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 		exec_builtin(tree, exec);
 		return (EXIT_SUCCESS);
 	}
-	index = create_fork(tree, exec);
+	index = return_fork_index(exec);
+	ft_lstadd_back_proccess(&exec->proccess, ft_lstnew_int(index));
+	create_fork(tree, exec, index);
 	if (exec->pid[index] == 0)
 	{
 		exec_cmd(tree, exec);
