@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:26 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 19:24:52 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/28 11:47:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,19 @@ int	close_pipe(t_data *exec)
 	return (EXIT_SUCCESS);
 }
 
-int	duplicate_pipe(t_command_tree *tree, t_data *exec, int mode)
+int	duplicate_pipe(t_command_tree *tree, t_data *exec, int fdpipe, int mode)
 {
 	if (mode == 1)
 	{
-		if (dup2(exec->fdpipe[1], STDOUT_FILENO) == -1)
+		if (dup2(fdpipe, STDOUT_FILENO) == -1)
 			ft_close_error(tree, exec);
-		close(exec->fdpipe[1]);
-		exec->fdpipe[1] = -1;
+		close(fdpipe);
 	}
 	else
 	{
 		if (dup2(exec->fdpipe[0], STDIN_FILENO) == -1)
 			ft_close_error(tree, exec);
-		close(exec->fdpipe[0]);
-		exec->fdpipe[0] = -1;
+		close(fdpipe);
 	}
 	return (EXIT_SUCCESS);
 }
