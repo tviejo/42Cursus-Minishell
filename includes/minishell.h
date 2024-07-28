@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 04:04:37 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:33:05 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,13 @@ typedef struct s_cmdtree
 
 typedef t_command_tree	t_cmdtree;
 
+typedef struct s_here_doc
+{
+	int	fd;
+	char *name;
+} t_here_doc;
+
+
 /*				EXEC				*/
 
 int						ft_export(t_command_tree *tree, t_data *exec);
@@ -136,7 +143,7 @@ int						last_child_process(t_command_tree *tree, t_data *exec);
 int						create_fork(t_command_tree *tree, t_data *exec);
 int						redir_infile(t_command_tree *tree, t_data *exec);
 int						redir_outfile(t_command_tree *tree, t_data *exec);
-int						here_doc(t_command_tree *tree, t_data *exec);
+char	*create_here_doc(char *limiter);
 bool					is_and_or(t_command_tree *tree);
 int						exec_cmdtree(t_command_tree *tree, t_data *exec);
 int						store_env(t_data *exec, char **env);
@@ -167,6 +174,7 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler(int sig);
 void					signal_sigint(int sig);
 void					signal_sigquit(int sig);
+void	signal_here_doc(void);
 void					init_exec(t_data *mshell);
 void					close_exec(t_data *mshell);
 char					*find_wildcard(char *wildcard);
