@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/28 12:07:38 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 bool	ft_isnumber(char *str)
@@ -37,14 +49,14 @@ int	ft_exit(t_command_tree *tree, t_data *exec)
 	{
 		if (ft_isnumber(tree->argument[1]) == false)
 		{
-			ft_putstr_fd("exit\nminishell: exit: ", 2);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(tree->argument[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			exit_parameter(exec, 2);
 		}
 		else if (tree->argument[2] != NULL)
 		{
-			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			return (EXIT_FAILURE);
 		}
 		else if (ft_atoi(tree->argument[1]) > 255 || ft_atoi(tree->argument[1]) < 255)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 11:55:40 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/28 11:55:57 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	store_env(t_data *exec, char **env)
@@ -73,7 +85,7 @@ int    free_env(t_data *exec)
 
 int update_pwd(t_data *exec, char *pwd)
 {
-    int i;
+    int 	i;
 
     i = 0;
     while (exec->env[i])

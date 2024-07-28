@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 13:12:18 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/27 13:59:57 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ char	*handle_here_doc(t_command_tree *tree, t_data *exec)
 	char	*name;
 
 	name = open_here_document(&fd);
-	index = create_fork(tree, exec);
+	index = return_fork_index(exec);
+	ft_lstadd_back_proccess(&exec->proccess, ft_lstnew_int(index));
+	create_fork(tree, exec, index);
 	if (exec->pid[index] == 0)
 	{
 		get_line(tree, fd);
