@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/28 16:36:37 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 16:46:21 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
 		exit(2);
 	}
-	mshell->proccess = ft_lstnew_int(-10);
 	store_env(mshell, env);
 	rl_bind_key('\t', rl_complete);
 	using_history();

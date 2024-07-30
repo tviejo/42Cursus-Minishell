@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:19 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 13:59:40 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:04:20 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 	create_fork(tree, exec, index);
 	if (exec->pid[index] == 0)
 	{
+		ft_lstclear_process(&exec->proccess);
 		exec_cmd(tree, exec);
 	}
 	return (EXIT_SUCCESS);

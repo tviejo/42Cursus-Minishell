@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 12:03:26 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:59 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	wait_one_process(t_data *exec)
 {
-	int	status;
-	t_proccess *process;
+	int			status;
+	t_proccess	*process;
 
 	process = exec->proccess;
 	status = 0;
@@ -38,8 +38,8 @@ bool	wait_one_process(t_data *exec)
 
 void	wait_all_process(t_data *exec)
 {
-	int	status;
-	t_proccess *process;
+	int			status;
+	t_proccess	*process;
 
 	process = exec->proccess;
 	status = 0;

@@ -6,26 +6,29 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:53:25 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 11:53:27 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:16 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-void    init_exec(t_data *mshell)
+void	init_exec(t_data *mshell)
 {
-    mshell->end_exec = false;
-    mshell->error_code = 0;
-    mshell->oldtype = 0;
-    mshell->side = e_left;
-    calloc_pid(mshell, mshell->cmdtree);
-    mshell->dupstdin = dup(STDIN_FILENO);
-    mshell->dupstdout = dup(STDOUT_FILENO);
+	mshell->proccess = NULL;
+	mshell->end_exec = false;
+	mshell->error_code = 0;
+	mshell->oldtype = 0;
+	mshell->side = e_left;
+	calloc_pid(mshell, mshell->cmdtree);
+	mshell->dupstdin = dup(STDIN_FILENO);
+	mshell->dupstdout = dup(STDOUT_FILENO);
 }
 
-void    close_exec(t_data *mshell)
+void	close_exec(t_data *mshell)
 {
-    dup2(mshell->dupstdin, STDIN_FILENO);
+	ft_lstclear_process(&mshell->proccess);
+	free(mshell->proccess);
+	dup2(mshell->dupstdin, STDIN_FILENO);
 	dup2(mshell->dupstdout, STDOUT_FILENO);
 	close(mshell->dupstdout);
 	close(mshell->dupstdin);
@@ -41,7 +44,7 @@ t_proccess	*ft_lstnew_int(int pid_index)
 		return (node);
 	node->pid_index = pid_index;
 	node->next = NULL;
-    return (node);
+	return (node);
 }
 
 t_proccess	*ft_lstlast_process(t_proccess *lst)

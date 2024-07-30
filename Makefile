@@ -11,6 +11,7 @@ SRCS		+=	builtin/echo.c
 SRCS		+=	builtin/env.c
 SRCS		+=	builtin/exit.c
 SRCS		+=	builtin/export.c
+SRCS		+=	builtin/export_utils.c
 SRCS		+=	builtin/pwd.c
 SRCS		+=	builtin/unset.c
 

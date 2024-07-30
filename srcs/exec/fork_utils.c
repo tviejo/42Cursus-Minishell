@@ -6,13 +6,13 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 13:25:10 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:20 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int return_fork_index(t_data *exec)
+int	return_fork_index(t_data *exec)
 {
 	int	index;
 

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 16:39:53 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:32 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void	print_incorrect_delimiter_error(char *limiter, int nb_line)
 	ft_putstr_fd("')\n", 2);
 }
 
-static struct s_here_doc open_here_document()
+static struct s_here_doc	open_here_document(void)
 {
-	t_here_doc here_doc;
-	char	*number;
-	static int nb = 0;
+	t_here_doc	here_doc;
+	char		*number;
+	static int	nb = 0;
 
 	number = ft_itoa(nb);
 	here_doc.name = ft_strjoin("/tmp/here-document-", number);
@@ -43,7 +43,7 @@ static struct s_here_doc open_here_document()
 	return (here_doc);
 }
 
-static void get_line(t_here_doc here_doc, char *limiter)
+static void	get_line(t_here_doc here_doc, char *limiter)
 {
 	char	*output;
 	int		nb_line;
@@ -68,22 +68,24 @@ static void get_line(t_here_doc here_doc, char *limiter)
 
 char	*create_here_doc(char *limiter)
 {
-	t_here_doc here_doc;
+	t_here_doc	here_doc;
 
 	here_doc = open_here_document();
 	get_line(here_doc, limiter);
 	return (here_doc.name);
 }
 /*
-int main(void)
+int	main(void)
 {
-	char *limiter = "LIMITER";
-	char *file_name;
+	char	*limiter;
+	char	*file_name;
+	int		fd;
+	char	*str;
 
+	limiter = "LIMITER";
 	file_name = create_here_doc(limiter);
 	printf("file_name: %s\n", file_name);
-	int fd = open(file_name, O_RDONLY);
-	char *str;
+	fd = open(file_name, O_RDONLY);
 	str = get_next_line(fd);
 	while ( str != NULL)
 	{

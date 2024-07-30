@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 11:49:09 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:52 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	child_process(t_command_tree *tree, t_data *exec)
 {
 	int	index;
-	int fdpipe[2];
+	int	fdpipe[2];
 
 	signal_handler_process();
 	index = return_fork_index(exec);
@@ -25,7 +25,8 @@ int	child_process(t_command_tree *tree, t_data *exec)
 	if (exec->pid[index] == 0)
 	{
 		close_std_fd(exec);
-		close (fdpipe[0]);
+		ft_lstclear_process(&exec->proccess);
+		close(fdpipe[0]);
 		dup2(fdpipe[1], STDOUT_FILENO);
 		close(fdpipe[1]);
 		exec_cmd(tree, exec);
@@ -42,7 +43,7 @@ int	child_process(t_command_tree *tree, t_data *exec)
 int	last_child_process(t_command_tree *tree, t_data *exec)
 {
 	int	index;
-	int fdpipe[2];
+	int	fdpipe[2];
 
 	signal_handler_process();
 	index = return_fork_index(exec);
@@ -52,8 +53,9 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 	if (exec->pid[index] == 0)
 	{
 		close_std_fd(exec);
-		close (fdpipe[1]);
-		close (fdpipe[0]);
+		ft_lstclear_process(&exec->proccess);
+		close(fdpipe[1]);
+		close(fdpipe[0]);
 		exec_cmd(tree, exec);
 	}
 	else

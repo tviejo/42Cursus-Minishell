@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 12:07:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:14:10 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	exit_parameter(t_data *exec, int return_value)
 	ft_free_all(exec);
 	exit(return_value);
 }
+
 int	ft_exit(t_command_tree *tree, t_data *exec)
 {
 	printf("exit\n");
@@ -59,7 +60,8 @@ int	ft_exit(t_command_tree *tree, t_data *exec)
 			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			return (EXIT_FAILURE);
 		}
-		else if (ft_atoi(tree->argument[1]) > 255 || ft_atoi(tree->argument[1]) < 255)
+		else if (ft_atoi(tree->argument[1]) > 255
+			|| ft_atoi(tree->argument[1]) < 255)
 			exit_parameter(exec, ft_atoi(tree->argument[1]) % 256);
 		else if (ft_atoi(tree->argument[1]) < 0)
 			exit_parameter(exec, 256 + ft_atoi(tree->argument[1]));

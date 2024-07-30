@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 16:33:05 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 16:26:49 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ enum					e_nodetype
 
 typedef struct s_proccess
 {
-	int							pid_index;
-	struct s_proccess			*next;
+	int					pid_index;
+	struct s_proccess	*next;
 }						t_proccess;
 
 typedef struct s_data
@@ -119,14 +119,14 @@ typedef t_command_tree	t_cmdtree;
 
 typedef struct s_here_doc
 {
-	int	fd;
-	char *name;
-} t_here_doc;
-
+	int					fd;
+	char				*name;
+}						t_here_doc;
 
 /*				EXEC				*/
 
 int						ft_export(t_command_tree *tree, t_data *exec);
+void					ft_swap_env(char **env, int i, int j);
 int						ft_cd(t_command_tree *tree, t_data *exec);
 int						ft_env(t_data *exec, t_command_tree *tree);
 int						ft_pwd(t_data *exec);
@@ -147,10 +147,11 @@ int						duplicate_pipe(t_command_tree *tree, t_data *exec,
 int						create_pipe(t_data *exec, t_cmdtree *tree);
 int						close_pipe(t_data *exec);
 int						last_child_process(t_command_tree *tree, t_data *exec);
-int						create_fork(t_command_tree *tree, t_data *exec, int index);
+int						create_fork(t_command_tree *tree, t_data *exec,
+							int index);
 int						redir_infile(t_command_tree *tree, t_data *exec);
 int						redir_outfile(t_command_tree *tree, t_data *exec);
-char	*create_here_doc(char *limiter);
+char					*create_here_doc(char *limiter);
 bool					is_and_or(t_command_tree *tree);
 int						exec_cmdtree(t_command_tree *tree, t_data *exec);
 int						store_env(t_data *exec, char **env);
@@ -181,13 +182,15 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler(int sig);
 void					signal_sigint(int sig);
 void					signal_sigquit(int sig);
-void	signal_here_doc(void);
+void					signal_here_doc(void);
 void					init_exec(t_data *mshell);
 void					close_exec(t_data *mshell);
 char					*find_wildcard(char *wildcard);
-int 					return_fork_index(t_data *exec);
+int						return_fork_index(t_data *exec);
 t_proccess				*ft_lstnew_int(int pid_index);
-void					ft_lstadd_back_proccess(t_proccess **lst, t_proccess *new);
+void					ft_lstadd_back_proccess(t_proccess **lst,
+							t_proccess *new);
+void					ft_lstclear_process(t_proccess **lst);
 
 /*				PARSING					*/
 

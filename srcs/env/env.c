@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:40 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 11:55:57 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:16:32 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,33 @@ int	store_env(t_data *exec, char **env)
 		exec->env[i] = ft_strdup(env[i]);
 		i++;
 	}
-    exec->env_len = i;
+	exec->env_len = i;
 	exec->env[i] = NULL;
 	return (EXIT_SUCCESS);
 }
-char **expand_env(t_data *exec)
-{
-    int i;
-    char **new_env;
 
-    i = 0;
-    new_env = malloc(sizeof(char *) * (exec->env_len + 2));
-    while (exec->env[i])
-    {
-        new_env[i] = ft_strdup(exec->env[i]);
-        i++;
-    }
-    new_env[i] = NULL;
+char	**expand_env(t_data *exec)
+{
+	int		i;
+	char	**new_env;
+
+	i = 0;
+	new_env = malloc(sizeof(char *) * (exec->env_len + 2));
+	while (exec->env[i])
+	{
+		new_env[i] = ft_strdup(exec->env[i]);
+		i++;
+	}
+	new_env[i] = NULL;
 	new_env[i + 1] = NULL;
 	exec->env_len++;
-    free_env(exec);
-    return (new_env);
+	free_env(exec);
+	return (new_env);
 }
 
 char	*find_path(char *name, t_data *exec)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (exec->env[i])
@@ -67,42 +68,39 @@ char	*find_path(char *name, t_data *exec)
 	return (NULL);
 }
 
-int    free_env(t_data *exec)
+int	free_env(t_data *exec)
 {
-    int i;
-    //int j;
+	int	i;
 
-    i = 0;
-    while (exec->env[i] != NULL)
-    {
-        //j = 0;
-        free(exec->env[i]);
-        i++;
-    }
-    free(exec->env);
-    return (EXIT_SUCCESS);
+	i = 0;
+	while (exec->env[i] != NULL)
+	{
+		free(exec->env[i]);
+		i++;
+	}
+	free(exec->env);
+	return (EXIT_SUCCESS);
 }
 
-int update_pwd(t_data *exec, char *pwd)
+int	update_pwd(t_data *exec, char *pwd)
 {
-    int 	i;
+	int	i;
 
-    i = 0;
-    while (exec->env[i])
-    {
-        if (ft_strncmp(exec->env[i], "PWD=", 4) == 0)
-        {
-            free(exec->env[i]);
-            exec->env[i] = ft_strdup(pwd);
-            return (EXIT_SUCCESS);
-        }
-        i++;
-    }
-    if (exec->env[i] == NULL)
-    {
-        exec->env = expand_env(exec);
-        exec->env[i] = ft_strdup(pwd);
-    }
-    return (EXIT_FAILURE);
+	i = 0;
+	while (exec->env[i])
+	{
+		if (ft_strncmp(exec->env[i], "PWD=", 4) == 0)
+		{
+			free(exec->env[i]);
+			exec->env[i] = ft_strdup(pwd);
+			return (EXIT_SUCCESS);
+		}
+		i++;
+	}
+	if (exec->env[i] == NULL)
+	{
+		exec->env = expand_env(exec);
+		exec->env[i] = ft_strdup(pwd);
+	}
+	return (EXIT_FAILURE);
 }
-
