@@ -40,7 +40,8 @@ SRCS		+=	signal/signal_utils.c
 
 SRCS		+= lexing/lexer.c
 SRCS		+= lexing/lexer_utils.c
-SRCS		+= lexing/lexer_utils2.c
+SRCS		+= lexing/lexer_stradd.c
+SRCS		+= lexing/lexer_int2str.c
 
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c

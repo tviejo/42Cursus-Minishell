@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/27 04:16:32 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:30:47 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,13 @@
 
 #define WORD_MAXLEN 511
 
-/* Recupère un element de la ligne de commande (fin de la chaine identifiée par
- * un des element du tableau de separateurs 'seps')
-*/
-char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
-{
-	char**const	seps = ms->separators;
-	char		*str;
-	int			i;
-
-	str = *cmdline;
-	while (*str)
-	{
-		i = 0;
-		while (seps[i] && (ft_strncmp(str, seps[i], ft_strlen(seps[i])) != 0))
-			i++;
-		if (seps[i] != NULL)
-		{
-			if (str == *cmdline)
-				str += ft_strlen(seps[i]);
-			break ;
-		}
-		else
-			str++;
-	}
-	if (str - *cmdline + 1 > maxlen)
-		return (NULL);
-	ft_strlcpy(outstr, *cmdline, str - *cmdline + 1);
-	*cmdline = str;
-	if (ms->debug_mode > 0)
-		ft_printf("  get_string returns: %s\n", outstr);
-	return (outstr);
-}
-
-bool	lex_quote(enum e_quote_state *quote_state, char *cmdline,
+bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 					char **newcmdline)
 {
 	if (*cmdline == '\'')
 	{
 		if (*quote_state == simple_quote)
-			*quote_state = no_quote;
+			*quote_state = end_quote(ms, newcmdline);
 		else if (*quote_state == double_quote)
 			*newcmdline = ft_straddchar(*newcmdline, '\'');
 		else
@@ -63,7 +30,7 @@ bool	lex_quote(enum e_quote_state *quote_state, char *cmdline,
 	else if (*cmdline == '"')
 	{
 		if (*quote_state == double_quote)
-			*quote_state = no_quote;
+			*quote_state = end_quote(ms, newcmdline);
 		else if (*quote_state == simple_quote)
 			*newcmdline = ft_straddchar(*newcmdline, '"');
 		else
@@ -73,7 +40,7 @@ bool	lex_quote(enum e_quote_state *quote_state, char *cmdline,
 	return (false);
 }
 
-bool	lex_bslash_n_dollar(t_data *ms,  enum e_quote_state quote_state,
+bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
 							char **cmdline, char **newcmdline)
 {
 	static char			word[WORD_MAXLEN + 1];
@@ -102,7 +69,7 @@ bool	lex_bslash_n_dollar(t_data *ms,  enum e_quote_state quote_state,
 	return (false);
 }
 
-void	lex_others(t_data *ms,  enum e_quote_state quote_state,
+void	lex_others(t_data *ms, enum e_quote_state quote_state,
 							char **cmdline, char **newcmdline)
 {
 	static char			word[WORD_MAXLEN + 1];
@@ -112,17 +79,31 @@ void	lex_others(t_data *ms,  enum e_quote_state quote_state,
 	{
 		get_string(ms, cmdline, word, WORD_MAXLEN);
 		ntype = get_node_type(ms, word);
-		if (ntype != nt_command)
+		/*if (ntype != nt_command)
 			*newcmdline = ft_straddchar(*newcmdline, ' ');
 		*newcmdline = ft_stradd(*newcmdline, word);
 		if (ntype != nt_command)
-			*newcmdline = ft_straddchar(*newcmdline, ' ');
+			*newcmdline = ft_straddchar(*newcmdline, ' ');*/
+		if (ntype != nt_command || *word == ' ')
+		{
+			if (*newcmdline)
+			{
+				enqueue(ms->file_lex, *newcmdline);
+				*newcmdline = NULL;
+			}
+			if (ntype != nt_command)
+				enqueue(ms->file_lex, ft_strdup(word));
+		}
+		else
+			*newcmdline = ft_stradd(*newcmdline, word);
 	}
 	else
 		*newcmdline = ft_straddchar(*newcmdline, *(*cmdline)++);
 }
 
-char	*lexer(t_data *ms, char *cmdline)
+//char	*lexer(t_data *ms, char *cmdline)
+
+void	lexer(t_data *ms, char *cmdline)
 {
 	char				*newcmdline;
 	enum e_quote_state	quote_state;
@@ -131,12 +112,14 @@ char	*lexer(t_data *ms, char *cmdline)
 	quote_state = no_quote;
 	while (*cmdline)
 	{
-		if (lex_quote(&quote_state, cmdline, &newcmdline))
+		if (lex_quote(ms, &quote_state, cmdline, &newcmdline))
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &newcmdline))
 			;
 		else
 			lex_others(ms, quote_state, &cmdline, &newcmdline);
 	}
-	return (newcmdline);
+	if (newcmdline)
+		enqueue(ms->file_lex, newcmdline);
+	//return (newcmdline);
 }

@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 20:42:22 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:15:16 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_cmdtree_node(t_cmdtree *cmdtree, t_operator *ope, int depth)
 		args = cmdtree->argument;
 		if (args)
 			while (*args)
-				ft_printf(" %s", *args++);
+				ft_printf(" '%s'", *args++);
 		ft_printf("\n");
 		if (cmdtree->left)
 			print_cmdtree_node(cmdtree->left, ope, depth + 1);

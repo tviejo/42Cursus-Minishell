@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 20:38:19 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 09:51:20 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	stack_print(t_stack *s, bool from_top,
 {
 	void	**elm;
 
-	ft_printf("[pile %s]: ", s->name);
+	ft_printf("[pile '%s']: ", s->name);
 	if (from_top)
 	{
 		elm = s->top;

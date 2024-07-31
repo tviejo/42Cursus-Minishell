@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 01:43:33 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:10:38 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	depiler_operateurs_restants(t_data *p)
 	}
 }
 
-t_cmdtree	*parse_cmdline(t_data *p, char *cmdline)
+/*t_cmdtree	*parse_cmdline(t_data *p, char *cmdline)
 {
 	char **const	words = ft_split(cmdline, ' ');
 	t_cmdtree		*node;
@@ -108,6 +108,34 @@ t_cmdtree	*parse_cmdline(t_data *p, char *cmdline)
 	while (*words)
 	{
 		node = new_node(p, (char ***)&words);
+		if (node == NULL)
+			return (NULL);
+		if (node->type == nt_command)
+			push(p->pile_npi, node);
+		else if (node->type == nt_open_parenth)
+			push(p->pile_ope, node);
+		else if (node->type == nt_close_parenth)
+			process_close_parenth(p);
+		else
+			process_operator(p, node);
+	}
+	depiler_operateurs_restants(p);
+	if_debug_print_npi_stack(p);
+	build_tree(p, &p->cmdtree, false);
+	return (p->cmdtree);
+}*/
+
+t_cmdtree	*parser(t_data *p)
+{
+	t_cmdtree	*node;
+	char		*str;
+
+	p->cmdtree = NULL;
+	while (q_getsize(p->file_lex) > 0)
+	{
+		str = dequeue(p->file_lex);
+		node = new_node(p, str);
+		free(str);
 		if (node == NULL)
 			return (NULL);
 		if (node->type == nt_command)

@@ -5,62 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 17:41:37 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 19:55:34 by ade-sarr         ###   ########.fr       */
+/*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
+/*   Updated: 2024/07/31 11:20:06 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen2(const char *str)
-{
-	const char	*s = str;
-
-	if (!str)
-		return (0);
-	while (*s)
-		s++;
-	return (s - str);
-}
-
-char	*ft_strjoin2(char const *s1, char const *s2)
-{
-	int		s1len;
-	int		s2len;
-	char	*concat;
-
-	s1len = ft_strlen2(s1);
-	s2len = ft_strlen2(s2);
-	concat = malloc(s1len + s2len + 1);
-	if (concat == NULL)
-		return (NULL);
-	concat[0] = '\0';
-	if (s1)
-		ft_strlcpy(concat, s1, s1len + 1);
-	if (s2)
-		ft_strlcpy(concat + s1len, s2, s2len + 1);
-	return (concat);
-}
-
-/* Ajoute 'toadd' à la chaine 's' et renvoie la nouvelle chaine formée.
- * Attention: à la difference de strjoin, le 's' (initial) sera désalloué;
- * il doit donc obligatoirement avoir été préalablement malloc (sauf si NULL).
- * La valeur renvoyée peut etre vue comme la nouvelle adresse de 's' après
- * ajout de 'toadd'.
+/* Recupère un element de la ligne de commande (fin de la chaine identifiée par
+ * un des element du tableau de separateurs 'seps')
 */
-char	*ft_stradd(char *s, char const *toadd)
+char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 {
-	char	*concat;
+	char**const	seps = ms->separators;
+	char		*str;
+	int			i;
 
-	concat = ft_strjoin2(s, toadd);
-	if (concat != NULL && s != NULL)
-		free(s);
-	return (concat);
+	str = *cmdline;
+	while (*str)
+	{
+		i = 0;
+		while (seps[i] && (ft_strncmp(str, seps[i], ft_strlen(seps[i])) != 0))
+			i++;
+		if (seps[i] != NULL)
+		{
+			if (str == *cmdline)
+				str += ft_strlen(seps[i]);
+			break ;
+		}
+		else
+			str++;
+	}
+	if (str - *cmdline + 1 > maxlen)
+		return (NULL);
+	ft_strlcpy(outstr, *cmdline, str - *cmdline + 1);
+	*cmdline = str;
+	if (ms->debug_mode >= 2)
+		ft_printf("  get_string returns: '%s'\n", outstr);
+	return (outstr);
 }
 
-char	*ft_straddchar(char *s, char const c)
+enum e_quote_state	end_quote(t_data *ms, char **newcmdline)
 {
-	const char	toadd[] = {c, '\0'};
-
-	return (ft_stradd(s, toadd));
+	enqueue(ms->file_lex, *newcmdline);
+	*newcmdline = NULL;
+	return (no_quote);
 }

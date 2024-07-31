@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   lexer_int2str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:46:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/27 01:52:31 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:27:03 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ static char	*int2str(int nbr, unsigned int base, char *buf)
 	return (buf);
 }
 
+/* Conversion int vers string.
+ * Ecrit dans un buffer static et renvoie l'adresse du buffer
+*/
 char	*ft_int2str(int n)
 {
 	static char	snum[12];

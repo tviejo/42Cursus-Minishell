@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 19:12:40 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:58:13 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	enqueue(t_queue *q, void *obj)
 {
 	if (q->nb_elems == q->nb_max_elems)
 	{
-		ft_printf("[pile: %p][enqueue] Dépassement de capacité \
-(max: %d éléments)\n", q, q->nb_max_elems);
+		ft_printf("[file '%s' (%p)][enqueue] Dépassement de capacité \
+(max: %d éléments)\n", q->name, q, q->nb_max_elems);
 		exit(-1);
 	}
 	*q->in++ = obj;
@@ -35,9 +35,10 @@ void	*dequeue(t_queue *q)
 
 	if (q->nb_elems == 0)
 	{
-		ft_printf("[pile: %p][dequeue] Erreur file vide !\n", q);
+		ft_printf("[file '%s' (%p)][dequeue] Erreur file vide !\n", q->name, q);
 		exit(-1);
 	}
+	//ft_printf("[dequeue] *q->out: '%s'\n", *q->out);
 	elmout = *q->out;
 	q->out++;
 	if (q->out >= q->elems + q->nb_max_elems)
@@ -51,6 +52,18 @@ void	*q_getout(t_queue *q)
 	if (q->nb_elems == 0)
 		return (NULL);
 	return (*q->out);
+}
+
+void	*q_get(t_queue *q, int pos)
+{
+	void	**elm;
+
+	if (q->nb_elems <= pos)
+		return (NULL);
+	elm = q->out + pos;
+	if (elm >= q->elems + q->nb_max_elems)
+		elm -= q->nb_max_elems;
+	return (*elm);
 }
 
 int	q_getsize(t_queue *q)
