@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:20:29 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 04:49:43 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:18:29 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+typedef void	(*t_q_prn_elem_fct)(void *elm, void *ctx);
+
 typedef struct s_queue
 {
-	int		nb_max_elems;
-	int		nb_elems;
-	void	**in;
-	void	**out;
-	void	**elems;
-	char	*name;
+	int					nb_max_elems;
+	int					nb_elems;
+	void				**in;
+	void				**out;
+	void				**elems;
+	char				*name;
+	t_q_prn_elem_fct	print_elem_fct;
+	void				*print_elem_ctxarg;
 }	t_queue;
-
-typedef void	(*t_q_prn_elem_fct)(void *elm, void *ctx);
 
 t_queue	*queue_new(int capacity, char *name);
 void	queue_delete(t_queue *s);

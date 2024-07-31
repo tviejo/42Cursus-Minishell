@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_utils.c                                     :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 17:18:34 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:18:45 by tviejo           ###   ########.fr       */
+/*   Created: 2024/07/30 16:15:26 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/30 17:15:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	signal_sigint(int sig)
+void	ft_swap_env(char **env, int i, int j)
 {
-	(void)sig;
-	g_signal = 128 + SIGINT;
-	ft_putstr_fd("\n", 1);
-}
+	char	*tmp;
 
-void	signal_sigquit(int sig)
-{
-	(void)sig;
-	g_signal = 128 + SIGINT;
-	ft_putstr_fd("Quit (core dumped)\n", 2);
-}
-
-void	signal_handler(int sig)
-{
-	(void)sig;
-	g_signal = 128 + SIGINT;
-	write(STDIN_FILENO, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	tmp = env[i];
+	env[i] = env[j];
+	env[j] = tmp;
 }

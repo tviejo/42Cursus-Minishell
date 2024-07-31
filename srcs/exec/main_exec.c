@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 19:34:01 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:42 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 	else if (exec->error_code == 0 || exec->oldtype == nt_OR)
 	{
 		cmd_process_and_or(tree, exec);
-		wait_all_process(exec);
+		wait_one_process(exec);
 	}
 }
 

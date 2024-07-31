@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/31 03:54:05 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:52:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ enum					e_nodetype
 	nt_exec_done
 };
 
+typedef struct s_proccess
+{
+	int					pid_index;
+	struct s_proccess	*next;
+}						t_proccess;
+
 typedef struct s_data
 {
 	int					error_code;
@@ -89,6 +95,7 @@ typedef struct s_data
 	int					oldtype;
 	int					side;
 	pid_t				*pid;
+	t_proccess			*proccess;
 	char				**separators;
 	t_operator			*operators;
 	t_stack				*pile_ope;
@@ -110,9 +117,16 @@ typedef struct s_cmdtree
 
 typedef t_command_tree	t_cmdtree;
 
+typedef struct s_here_doc
+{
+	int					fd;
+	char				*name;
+}						t_here_doc;
+
 /*				EXEC				*/
 
 int						ft_export(t_command_tree *tree, t_data *exec);
+void					ft_swap_env(char **env, int i, int j);
 int						ft_cd(t_command_tree *tree, t_data *exec);
 int						ft_env(t_data *exec, t_command_tree *tree);
 int						ft_pwd(t_data *exec);
@@ -129,14 +143,15 @@ int						calloc_pid(t_data *exec, t_command_tree *tree);
 int						child_process(t_command_tree *tree, t_data *exec);
 int						close_fd(int fd, t_command_tree *tree, t_data *exec);
 int						duplicate_pipe(t_command_tree *tree, t_data *exec,
-							int mode);
+							int fdpipe, int mode);
 int						create_pipe(t_data *exec, t_cmdtree *tree);
 int						close_pipe(t_data *exec);
 int						last_child_process(t_command_tree *tree, t_data *exec);
-int						create_fork(t_command_tree *tree, t_data *exec);
+int						create_fork(t_command_tree *tree, t_data *exec,
+							int index);
 int						redir_infile(t_command_tree *tree, t_data *exec);
 int						redir_outfile(t_command_tree *tree, t_data *exec);
-int						here_doc(t_command_tree *tree, t_data *exec);
+char					*create_here_doc(char *limiter);
 bool					is_and_or(t_command_tree *tree);
 int						exec_cmdtree(t_command_tree *tree, t_data *exec);
 int						store_env(t_data *exec, char **env);
@@ -149,7 +164,7 @@ char					**expand_env(t_data *exec);
 char					*find_cmd(char **cmd, char **paths);
 int						ft_free_pid(t_data *exec);
 void					wait_all_process(t_data *exec);
-bool					wait_one_process(t_data *exec, int index);
+bool					wait_one_process(t_data *exec);
 void					signal_handler(int sig);
 void					signal_handler_here_doc(int sig);
 int						dup_std(t_data *exec);
@@ -167,9 +182,15 @@ void					signal_handler_here_doc(int sig);
 void					signal_handler(int sig);
 void					signal_sigint(int sig);
 void					signal_sigquit(int sig);
+void					signal_here_doc(void);
 void					init_exec(t_data *mshell);
 void					close_exec(t_data *mshell);
 char					*find_wildcard(char *wildcard);
+int						return_fork_index(t_data *exec);
+t_proccess				*ft_lstnew_int(int pid_index);
+void					ft_lstadd_back_proccess(t_proccess **lst,
+							t_proccess *new);
+void					ft_lstclear_process(t_proccess **lst);
 
 /*				PARSING					*/
 
@@ -185,6 +206,7 @@ void					free_parsing(t_data *ms);
 t_cmdtree				*parser(t_data *ms);
 void					print_cmdtree(t_data *ms);
 void					free_cmdtree(t_data *ms);
+void					print_queue_node(char *str, t_data *ms);
 //t_cmdtree				*new_node(t_data *ms, char ***words);
 t_cmdtree				*new_node(t_data *ms, char *word);
 void					print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
@@ -193,6 +215,7 @@ enum e_nodetype			get_node_type(t_data *ms, char *word);
 //int						get_nb_args(t_data *ms, char **words);
 int						get_nb_args(t_data *p);
 void					if_debug_print_npi_stack(t_data *ms);
+void					process_here_doc(t_cmdtree *node);
 
 char					*get_env_var(t_data *ms, char *varname);
 

@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 10:30:47 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:02:39 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,29 @@ bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
 	return (false);
 }
 
+bool	lex_wildcard(t_data *ms, enum e_quote_state quote_state,
+							char **cmdline, char **newcmdline)
+{
+	char		*filenames;
+	char		**splited;
+	char		**spnames;
+
+	(void)newcmdline;
+	if (quote_state == no_quote && **cmdline == '*' && (*cmdline)[1] == '\0')
+	{
+		filenames = find_wildcard(*cmdline);
+		splited = ft_split(filenames, ' ');
+		spnames = splited;
+		while (*spnames)
+			enqueue(ms->file_lex, ft_strdup(*spnames++));
+		ft_free_split(splited);
+		free(filenames);
+		(*cmdline)++;
+		return (true);
+	}
+	return (false);
+}
+
 void	lex_others(t_data *ms, enum e_quote_state quote_state,
 							char **cmdline, char **newcmdline)
 {
@@ -79,11 +102,6 @@ void	lex_others(t_data *ms, enum e_quote_state quote_state,
 	{
 		get_string(ms, cmdline, word, WORD_MAXLEN);
 		ntype = get_node_type(ms, word);
-		/*if (ntype != nt_command)
-			*newcmdline = ft_straddchar(*newcmdline, ' ');
-		*newcmdline = ft_stradd(*newcmdline, word);
-		if (ntype != nt_command)
-			*newcmdline = ft_straddchar(*newcmdline, ' ');*/
 		if (ntype != nt_command || *word == ' ')
 		{
 			if (*newcmdline)
@@ -101,8 +119,6 @@ void	lex_others(t_data *ms, enum e_quote_state quote_state,
 		*newcmdline = ft_straddchar(*newcmdline, *(*cmdline)++);
 }
 
-//char	*lexer(t_data *ms, char *cmdline)
-
 void	lexer(t_data *ms, char *cmdline)
 {
 	char				*newcmdline;
@@ -116,10 +132,11 @@ void	lexer(t_data *ms, char *cmdline)
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &newcmdline))
 			;
+		else if (lex_wildcard(ms, quote_state, &cmdline, &newcmdline))
+			;
 		else
 			lex_others(ms, quote_state, &cmdline, &newcmdline);
 	}
 	if (newcmdline)
 		enqueue(ms->file_lex, newcmdline);
-	//return (newcmdline);
 }

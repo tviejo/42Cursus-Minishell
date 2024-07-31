@@ -6,18 +6,25 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 11:53:20 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/30 17:17:59 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool	wait_one_process(t_data *exec, int index)
+bool	wait_one_process(t_data *exec)
 {
-	int	status;
+	int			status;
+	t_proccess	*process;
 
+	process = exec->proccess;
 	status = 0;
-	waitpid(exec->pid[index], &status, 0);
+	while (process != NULL && process->pid_index == -10)
+		process = process->next;
+	if (process == NULL)
+		return (true);
+	waitpid(exec->pid[process->pid_index], &status, WUNTRACED);
+	process->pid_index = -10;
 	if (WIFEXITED(status))
 	{
 		exec->error_code = WEXITSTATUS(status);
@@ -31,11 +38,17 @@ bool	wait_one_process(t_data *exec, int index)
 
 void	wait_all_process(t_data *exec)
 {
-	int	status;
+	int			status;
+	t_proccess	*process;
 
+	process = exec->proccess;
 	status = 0;
-	while (waitpid(-1, &status, 0) > 0)
+	while (process != NULL && process->pid_index == -10)
+		process = process->next;
+	while (process)
 	{
+		waitpid(exec->pid[process->pid_index], &status, WUNTRACED);
+		process->pid_index = -10;
 		if (WIFEXITED(status))
 		{
 			exec->error_code = WEXITSTATUS(status);
@@ -44,5 +57,6 @@ void	wait_all_process(t_data *exec)
 		{
 			exec->error_code = 128 + WTERMSIG(status);
 		}
+		process = process->next;
 	}
 }

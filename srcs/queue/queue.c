@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 10:58:13 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:24:12 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	*dequeue(t_queue *q)
 		ft_printf("[file '%s' (%p)][dequeue] Erreur file vide !\n", q->name, q);
 		exit(-1);
 	}
-	//ft_printf("[dequeue] *q->out: '%s'\n", *q->out);
 	elmout = *q->out;
 	q->out++;
 	if (q->out >= q->elems + q->nb_max_elems)

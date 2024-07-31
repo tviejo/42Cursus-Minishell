@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 04:39:14 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:00:11 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,14 @@ void	free_cmdtree(t_data *p)
 	if (p)
 	{
 		free_node(p->cmdtree);
-		/*if (p->splited_words)
-			ft_free_split(p->splited_words);*/
 	}
+}
+
+void	process_here_doc(t_cmdtree *node)
+{
+	char *const	redirname = create_here_doc(*node->argument);
+
+	free(*node->argument);
+	node->type = nt_infile;
+	*node->argument = redirname;
 }

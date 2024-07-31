@@ -8,8 +8,7 @@
 {
    ignore_cmd
    Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
+   ...
    obj:*/bin/*
 }
 

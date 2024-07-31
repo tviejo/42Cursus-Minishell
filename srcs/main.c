@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 10:19:42 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:41:16 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,13 @@ char	*read_prompt(void)
 	return (cmdline);
 }
 
-void	print_queue_node(char *str, t_data *ms)
-{
-	(void)ms;
-	ft_printf("'%s'", str);
-}
-
 void	lex_and_parse(t_data *ms, char *cmdline)
 {
-	//char	*lexcmdline;
-
-	//lexcmdline = lexer(ms, cmdline);
 	lexer(ms, cmdline);
 	if (ms->debug_mode > 0)
-	{
-		//ft_printf("  lexcmdline: %s\n", lexcmdline);
-		//enqueue(ms->file_lex, "Aurélien");
-		queue_print(ms->file_lex, false, (t_q_prn_elem_fct)print_queue_node, ms);
-	}
-	//parse_cmdline(ms, lexcmdline);
+		queue_print(ms->file_lex, false,
+			(t_q_prn_elem_fct)print_queue_node, ms);
 	parser(ms);
-	//free(lexcmdline);
 	if (ms->debug_mode > 0)
 		print_cmdtree(ms);
 }
@@ -82,7 +68,8 @@ int	main(int argc, char **argv, char **env)
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
-		mshell.error_code = g_signal;
+		if (g_signal != 0)
+			mshell.error_code = g_signal;
 		signal_init();
 		cmdline = read_prompt();
 		if (cmdline == NULL)
