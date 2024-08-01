@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:17:32 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 11:41:24 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,18 @@ static void	get_line(t_here_doc here_doc, char *limiter)
 
 	nb_line = 1;
 	signal_here_doc();
-	output = readline("> ");
-	while (output != NULL && ft_strncmp(output, limiter,
-			ft_strlen(limiter)) != 0)
+	while (1)
 	{
+		output = readline("> ");
+		if (output == NULL || ft_strncmp(output, limiter,
+				ft_strlen(limiter)) == 0 || g_signal != 0)
+			break ;
 		write(here_doc.fd, output, ft_strlen(output));
 		write(here_doc.fd, "\n", 1);
 		free(output);
-		output = readline("> ");
 		nb_line++;
 	}
-	if (output == NULL)
+	if (output == NULL && g_signal == 0)
 		print_incorrect_delimiter_error(limiter, nb_line);
 	free(output);
 	close(here_doc.fd);

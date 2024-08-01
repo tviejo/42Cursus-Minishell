@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:17:42 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 11:51:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_redir(t_command_tree *tree, t_data *exec)
 	{
 		redir_outfile(tree, exec);
 	}
-	if (tree->type == nt_infile)
+	if (tree->type == nt_infile || tree->type == nt_here_doc)
 	{
 		redir_infile(tree, exec);
 	}
