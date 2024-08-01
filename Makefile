@@ -35,6 +35,7 @@ SRCS		+=	exec/free_exec.c
 SRCS		+=	exec/fork_utils.c
 SRCS		+=	exec/heredoc.c
 SRCS		+=	exec/wait.c
+SRCS		+=	exec/subshell.c
 
 SRCS		+=	signal/signal.c
 SRCS		+=	signal/signal_utils.c
