@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 13:00:43 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 13:27:00 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ enum					e_nodetype
 	nt_open_parenth,
 	nt_close_parenth,
 	nt_number_of_nodetype,
-	nt_exec_done
+	nt_subshell
 };
 
 typedef struct s_proccess
@@ -192,6 +192,10 @@ void					ft_lstadd_back_proccess(t_proccess **lst,
 void					ft_lstclear_process(t_proccess **lst);
 size_t					strlenpro(const char *str);
 char					*join_with_space(char *str1, char *str2);
+int						exec_subshell(char *cmdline, t_data *mshell);
+void					lex_and_parse(t_data *ms, char *cmdline);
+void					execute(t_data *mshell);
+char					**ft_strdup_env(char **env);
 
 /*				PARSING					*/
 
