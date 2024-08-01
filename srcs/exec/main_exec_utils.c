@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:59 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/25 18:43:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 11:51:33 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	is_redir(t_command_tree *tree)
 	else if (tree->type == nt_out_append)
 		return (true);
 	else if (tree->type == nt_infile)
+		return (true);
+	else if (tree->type == nt_here_doc)
 		return (true);
 	else
 		return (false);
