@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:12:41 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 12:34:40 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,34 @@ int	cd_go_path(t_data *exec, char *path)
 	return (EXIT_SUCCESS);
 }
 
+int cd_go_back(t_data *exec)
+{
+	char	*pwd;
+	int		i;
+
+	i = 0;
+	while (exec->env[i])
+	{
+		if (ft_strncmp(exec->env[i], "OLDPWD=", 7) == 0)
+		{
+			pwd = ft_strdup(exec->env[i] + 7);
+			break ;
+		}
+		i++;
+	}
+	if (exec->env[i] == NULL)
+	{
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		exec->error_code = 1;
+		return (EXIT_FAILURE);
+	}
+	update_oldpwm(exec);
+	update_pwd(exec, pwd);
+	chdir(pwd);
+	return (EXIT_SUCCESS);
+}
+
+
 int	ft_cd(t_command_tree *tree, t_data *exec)
 {
 	if (tree->argument[1] != NULL && tree->argument[2] != NULL)
@@ -82,6 +110,11 @@ int	ft_cd(t_command_tree *tree, t_data *exec)
 	{
 		update_oldpwm(exec);
 		cd_go_home(exec);
+		return (EXIT_SUCCESS);
+	}
+	else if (ft_strncmp(tree->argument[1], "-", 1) == 0)
+	{
+		cd_go_back(exec);
 		return (EXIT_SUCCESS);
 	}
 	else

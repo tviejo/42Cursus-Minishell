@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 11:41:06 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 12:05:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void					ft_lstclear_process(t_proccess **lst);
 
 /*				PARSING					*/
 
-//char					*lexer(t_data *ms, char *cmdline);
+// char					*lexer(t_data *ms, char *cmdline);
 void					lexer(t_data *ms, char *cmdline);
 char					*get_string(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
@@ -201,17 +201,17 @@ enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);
-//t_cmdtree				*parse_cmdline(t_data *ms, char *cmdline);
+// t_cmdtree				*parse_cmdline(t_data *ms, char *cmdline);
 t_cmdtree				*parser(t_data *ms);
 void					print_cmdtree(t_data *ms);
 void					free_cmdtree(t_data *ms);
 void					print_queue_node(char *str, t_data *ms);
-//t_cmdtree				*new_node(t_data *ms, char ***words);
+// t_cmdtree				*new_node(t_data *ms, char ***words);
 t_cmdtree				*new_node(t_data *ms, char *word);
 void					print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
 int						get_node_priority(t_data *ms, t_cmdtree *node);
 enum e_nodetype			get_node_type(t_data *ms, char *word);
-//int						get_nb_args(t_data *ms, char **words);
+// int						get_nb_args(t_data *ms, char **words);
 int						get_nb_args(t_data *p);
 void					if_debug_print_npi_stack(t_data *ms);
 void					process_here_doc(t_cmdtree *node);

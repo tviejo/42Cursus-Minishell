@@ -6,11 +6,25 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:15:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 11:59:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static bool find_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 int	ft_unset(t_command_tree *tree, t_data *exec)
 {
@@ -18,6 +32,8 @@ int	ft_unset(t_command_tree *tree, t_data *exec)
 
 	i = 0;
 	if (tree->argument[1] == NULL)
+		return (EXIT_FAILURE);
+	if (find_equal(tree->argument[1]) == true)
 		return (EXIT_FAILURE);
 	while (exec->env[i] != NULL)
 	{
