@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/31 17:52:22 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:41:06 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_data
 	t_stack				*pile_npi;
 	t_queue				*file_lex;
 	struct s_cmdtree	*cmdtree;
-	//char				**splited_words;
 	int					debug_mode;
 }						t_data;
 
