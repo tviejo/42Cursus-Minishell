@@ -6,13 +6,13 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 11:59:36 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 13:01:52 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static bool find_equal(char *str)
+static bool	find_equal(char *str)
 {
 	int	i;
 
