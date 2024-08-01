@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:52:21 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/26 18:52:22 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 13:01:17 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 /*
 #include <dirent.h>
 #include <errno.h>
@@ -19,44 +20,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 */
-static char	*join_with_space(char *str1, char *str2)
-{
-	char	*return_str;
-	int		i;
-	int		j;
-
-	return_str = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 2));
-	i = 0;
-	j = 0;
-	while (str1[i])
-	{
-		return_str[j] = str1[i];
-		i++;
-		j++;
-	}
-	return_str[j] = ' ';
-	j++;
-	i = 0;
-	while (str2[i])
-	{
-		return_str[j] = str2[i];
-		i++;
-		j++;
-	}
-	return_str[j] = '\0';
-	return (return_str);
-}
 
 bool	is_match(char *wcard, char *str)
 {
@@ -74,7 +38,7 @@ static char	*read_directory(DIR *dir, char *wildcard)
 	struct dirent	*names;
 	char			*return_str;
 
-	return_str = "";
+	return_str = NULL;
 	names = readdir(dir);
 	while (names != NULL)
 	{
@@ -106,6 +70,7 @@ char	*find_wildcard(char *wildcard)
 	}
 	return (return_str);
 }
+
 /*
 int	main(int argc, char **argv)
 {
