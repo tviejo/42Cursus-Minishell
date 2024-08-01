@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:52:21 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 13:01:17 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 15:05:50 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*read_directory(DIR *dir, char *wildcard)
 	names = readdir(dir);
 	while (names != NULL)
 	{
-		if (is_match(wildcard, names->d_name))
+		if (is_match(wildcard, names->d_name) && names->d_name[0] != '.')
 		{
 			return_str = join_with_space(return_str, names->d_name);
 		}
