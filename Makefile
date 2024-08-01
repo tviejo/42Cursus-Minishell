@@ -59,6 +59,7 @@ SRCS		+= print_logo.c
 SRCS		+= main.c
 
 SRCS 		+= wildcard/wildcard.c
+SRCS 		+= wildcard/wildcard_utils.c
 
 vpath %.c $(SRC_DIR)
 

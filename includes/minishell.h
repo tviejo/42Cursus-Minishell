@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 12:05:23 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 13:00:43 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ t_proccess				*ft_lstnew_int(int pid_index);
 void					ft_lstadd_back_proccess(t_proccess **lst,
 							t_proccess *new);
 void					ft_lstclear_process(t_proccess **lst);
+size_t					strlenpro(const char *str);
+char					*join_with_space(char *str1, char *str2);
 
 /*				PARSING					*/
 

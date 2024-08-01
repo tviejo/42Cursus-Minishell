@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 12:34:40 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 13:01:44 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	cd_go_path(t_data *exec, char *path)
 	return (EXIT_SUCCESS);
 }
 
-int cd_go_back(t_data *exec)
+int	cd_go_back(t_data *exec)
 {
 	char	*pwd;
 	int		i;
@@ -96,7 +96,6 @@ int cd_go_back(t_data *exec)
 	chdir(pwd);
 	return (EXIT_SUCCESS);
 }
-
 
 int	ft_cd(t_command_tree *tree, t_data *exec)
 {
