@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 14:20:40 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:33:21 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	free_node(t_cmdtree *node)
 		if (node->argument)
 		{
 			args = node->argument;
-			while (*args++)
-				free(*args);
+			while (*args)
+				free(*args++);
 			free(node->argument);
 		}
 		free(node);
