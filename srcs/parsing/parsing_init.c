@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 18:00:11 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:20:40 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	free_node(t_cmdtree *node)
 
 	if (node)
 	{
+		if (node->type == nt_here_doc)
+			unlink(*node->argument);
 		if (node->left)
 			free_node(node->left);
 		if (node->right)
@@ -75,6 +77,5 @@ void	process_here_doc(t_cmdtree *node)
 	char *const	redirname = create_here_doc(*node->argument);
 
 	free(*node->argument);
-	node->type = nt_infile;
 	*node->argument = redirname;
 }

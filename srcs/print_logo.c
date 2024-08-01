@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/26 18:47:37 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/01 10:27:34 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int	print_minishell(void)
 	ft_printf("  / /|_/ // //  |/ // / |__ |/ /_/ / __/ / /   / /  \n");
 	ft_printf(" / /  / // // /|  // / ___/ / __  / /___/ /___/ /___\n");
 	ft_printf("/_/  /_/___/_/ |_/___//____/_/ /_/_____/_____/_____/\n\n");
+	ft_printf("Thomas Viejo & Aurélien de Sarrau (juillet-aout 2024)\n\n");
 	return (0);
 }

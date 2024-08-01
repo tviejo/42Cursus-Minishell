@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 13:27:00 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:30:56 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* Etapes du Parsing
  * =================
+ *
  * Objectif: ligne de commande (string) -> arbre binaire AST (t_cmdtree):
  * la ligne de commande saisie par l'utilisateur sera transformée en une
  * répresentation syntaxique abstraite sous forme d'un arbre binaire (AST).
@@ -40,6 +41,10 @@
  * descendance (left + right).
  * Si une commande se trouve dans la descendance gauche d'au moins un pipe son
  * type est nt_piped_cmd (sinon nt_command).
+ * 
+ * I.   {char *cmdline}     -> lexer()      -> {t_queue *file_lex}
+ * II.  {t_queue *file_lex} -> parser()     -> {t_stack* pile_npi}
+ * III. {t_stack* pile_npi} -> build_tree() -> {t_cmdtree *cmdtree}
  */
 
 # include "mini_ade_sarr.h"
@@ -199,7 +204,6 @@ char					**ft_strdup_env(char **env);
 
 /*				PARSING					*/
 
-// char					*lexer(t_data *ms, char *cmdline);
 void					lexer(t_data *ms, char *cmdline);
 char					*get_string(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
@@ -207,17 +211,14 @@ enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);
-// t_cmdtree				*parse_cmdline(t_data *ms, char *cmdline);
 t_cmdtree				*parser(t_data *ms);
 void					print_cmdtree(t_data *ms);
 void					free_cmdtree(t_data *ms);
 void					print_queue_node(char *str, t_data *ms);
-// t_cmdtree				*new_node(t_data *ms, char ***words);
 t_cmdtree				*new_node(t_data *ms, char *word);
 void					print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
 int						get_node_priority(t_data *ms, t_cmdtree *node);
 enum e_nodetype			get_node_type(t_data *ms, char *word);
-// int						get_nb_args(t_data *ms, char **words);
 int						get_nb_args(t_data *p);
 void					if_debug_print_npi_stack(t_data *ms);
 void					process_here_doc(t_cmdtree *node);

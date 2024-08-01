@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 18:02:39 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:59:34 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,23 @@ bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
 	return (false);
 }
 
-bool	lex_wildcard(t_data *ms, enum e_quote_state quote_state,
-							char **cmdline, char **newcmdline)
+bool	lex_wildcard(t_data *ms, char *word)
 {
 	char		*filenames;
 	char		**splited;
 	char		**spnames;
 
-	(void)newcmdline;
-	if (quote_state == no_quote && **cmdline == '*' && (*cmdline)[1] == '\0')
+	if (ft_strchr(word, '*') || ft_strchr(word, '?'))
 	{
-		filenames = find_wildcard(*cmdline);
+		filenames = find_wildcard(word);
+		if (!filenames || *filenames == '\0')
+			return (false);
 		splited = ft_split(filenames, ' ');
 		spnames = splited;
 		while (*spnames)
 			enqueue(ms->file_lex, ft_strdup(*spnames++));
 		ft_free_split(splited);
 		free(filenames);
-		(*cmdline)++;
 		return (true);
 	}
 	return (false);
@@ -112,7 +111,7 @@ void	lex_others(t_data *ms, enum e_quote_state quote_state,
 			if (ntype != nt_command)
 				enqueue(ms->file_lex, ft_strdup(word));
 		}
-		else
+		else if (!lex_wildcard(ms, word))
 			*newcmdline = ft_stradd(*newcmdline, word);
 	}
 	else
@@ -131,8 +130,6 @@ void	lexer(t_data *ms, char *cmdline)
 		if (lex_quote(ms, &quote_state, cmdline, &newcmdline))
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &newcmdline))
-			;
-		else if (lex_wildcard(ms, quote_state, &cmdline, &newcmdline))
 			;
 		else
 			lex_others(ms, quote_state, &cmdline, &newcmdline);
