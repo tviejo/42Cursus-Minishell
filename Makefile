@@ -48,6 +48,7 @@ SRCS		+= lexing/lexer_int2str.c
 SRCS		+= parsing/parsing.c
 SRCS		+= parsing/parsing_init.c
 SRCS		+= parsing/parsing_utils.c
+SRCS		+= parsing/parsing_utils2.c
 SRCS		+= parsing/parsing_print.c
 
 SRCS		+= stack/stack.c

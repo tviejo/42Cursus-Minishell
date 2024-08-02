@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 13:01:22 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:33:00 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	lex_and_parse(t_data *ms, char *cmdline)
 	parser(ms);
 	if (ms->debug_mode > 0)
 		print_cmdtree(ms);
+	purger_lexqueue(ms->file_lex);
+	purger_npistack(ms->pile_npi);
 }
 
 void	execute(t_data *mshell)
