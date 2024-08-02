@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:47:56 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:29:16 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int	ft_exit(t_command_tree *tree, t_data *exec)
 		else
 			exit_parameter(exec, ft_atoi(tree->argument[1]));
 	}
-	exit_parameter(exec, 0);
+	exit_parameter(exec, exec->error_code);
 	return (EXIT_SUCCESS);
 }

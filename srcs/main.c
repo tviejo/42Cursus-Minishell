@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 17:11:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:38:17 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init(t_data *mshell, int argc, char **argv, char **env)
 {
-	mshell->error_code = 0;
 	if (argc > 1)
 		mshell->debug_mode = atoi(argv[1]);
 	else
@@ -36,7 +35,10 @@ char	*read_prompt(void)
 
 	cmdline = readline("minishell> ");
 	while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
+	{
+		free(cmdline);
 		cmdline = readline("minishell> ");
+	}
 	return (cmdline);
 }
 
@@ -68,9 +70,7 @@ int	main(int argc, char **argv, char **env)
 
 	init(&mshell, argc, argv, env);
 	while (true)
-	{
-		if (g_signal != 0)
-			mshell.error_code = g_signal;
+	{	
 		signal_init();
 		cmdline = read_prompt();
 		if (cmdline == NULL)
@@ -78,6 +78,8 @@ int	main(int argc, char **argv, char **env)
 			mshell.error_code = 131;
 			break ;
 		}
+		if (g_signal != 0)
+			mshell.error_code = g_signal;
 		add_history(cmdline);
 		lex_and_parse(&mshell, cmdline);
 		free(cmdline);

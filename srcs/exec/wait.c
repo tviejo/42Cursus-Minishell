@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:17:59 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:36:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	wait_one_process(t_data *exec)
 
 	process = exec->proccess;
 	status = 0;
+	exec->error_code = 0;
 	while (process != NULL && process->pid_index == -10)
 		process = process->next;
 	if (process == NULL)
@@ -43,6 +44,7 @@ void	wait_all_process(t_data *exec)
 
 	process = exec->proccess;
 	status = 0;
+	exec->error_code = 0;
 	while (process != NULL && process->pid_index == -10)
 		process = process->next;
 	while (process)
