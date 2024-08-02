@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:48:35 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:57:27 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	exec_cmd(t_command_tree *tree, t_data *exec)
 	{
 		exec_builtin(tree, exec);
 		close_std_fd(exec);
+		ft_close_error(tree, exec);
 		exit(exec->error_code);
 	}
 	else
