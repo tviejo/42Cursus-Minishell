@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:16:46 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:46:31 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <dirent.h>
+
+# define NO_FILES "No such file or directory"
+# define MINI "minishell: "
 
 enum		e_builtin
 {

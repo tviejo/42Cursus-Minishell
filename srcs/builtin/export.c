@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:21 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:14:45 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:33:10 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	print_sorted_env(t_data *exec)
 				ft_swap_env(temp_env, i, j);
 			j++;
 		}
-		ft_putstr_fd("export ", 1);
-		ft_putstr_fd(temp_env[i], 1);
-		ft_putstr_fd("\n", 1);
+		ft_dprintf(1, "export %s\n", temp_env[i]);
 		i++;
 	}
 	ft_free_split(temp_env);

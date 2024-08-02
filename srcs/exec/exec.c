@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 14:50:47 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:48:35 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 static void	print_no_file_error(t_command_tree *tree)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(tree->argument[0], 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	ft_dprintf(2, "%s%s: %s\n", MINI, tree->argument[0], NO_FILES);
 }
 
 static void	print_command_not_found_error(t_command_tree *tree)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(tree->argument[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_dprintf(2, "%s%s: command not found\n", MINI, tree->argument[0]);
 }
 
 static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)

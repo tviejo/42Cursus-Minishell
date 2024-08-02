@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 13:01:44 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:47:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	cd_go_home(t_data *exec)
 	pwd = find_path("HOME=", exec);
 	if (pwd == NULL)
 	{
-		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		ft_dprintf(2, "%scd: HOME not set\n", MINI);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
@@ -58,9 +58,7 @@ int	cd_go_path(t_data *exec, char *path)
 
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_dprintf(2, "cd: %s: %s\n", path, NO_FILES);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
