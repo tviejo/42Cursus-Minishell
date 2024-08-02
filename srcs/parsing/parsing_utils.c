@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 15:33:53 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:32:52 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
 	int		i;
 	char	*str;
 
+	nb_args = 0;
 	if (cmdnode->type == nt_command)
 		nb_args = get_nb_args(p) + 1;
-	else
+	else if (q_getsize(p->file_lex) > 0)
 		nb_args = 1;
 	cmdnode->argument = malloc((nb_args + 1) * sizeof(char *));
 	cmdnode->argument[nb_args] = NULL;

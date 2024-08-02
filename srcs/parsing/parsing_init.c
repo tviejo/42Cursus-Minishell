@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 15:33:21 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:17:16 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,12 @@ void	free_cmdtree(t_data *p)
 
 void	process_here_doc(t_cmdtree *node)
 {
-	char *const	redirname = create_here_doc(*node->argument);
+	char	*redirname;
 
-	free(*node->argument);
-	*node->argument = redirname;
+	if (node->argument && *node->argument)
+	{
+		redirname = create_here_doc(*node->argument);
+		free(*node->argument);
+		*node->argument = redirname;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 11:59:34 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:53:53 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 					char **newcmdline)
 {
+	(void)ms;
 	if (*cmdline == '\'')
 	{
 		if (*quote_state == simple_quote)
-			*quote_state = end_quote(ms, newcmdline);
+			*quote_state = no_quote;
 		else if (*quote_state == double_quote)
 			*newcmdline = ft_straddchar(*newcmdline, '\'');
 		else
@@ -30,7 +31,7 @@ bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 	else if (*cmdline == '"')
 	{
 		if (*quote_state == double_quote)
-			*quote_state = end_quote(ms, newcmdline);
+			*quote_state = no_quote;
 		else if (*quote_state == simple_quote)
 			*newcmdline = ft_straddchar(*newcmdline, '"');
 		else
@@ -136,4 +137,5 @@ void	lexer(t_data *ms, char *cmdline)
 	}
 	if (newcmdline)
 		enqueue(ms->file_lex, newcmdline);
+	validate_lexqueue(ms);
 }
