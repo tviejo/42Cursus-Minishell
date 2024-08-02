@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 11:02:31 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 14:05:03 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	if_debug_print_outstr(t_data *ms, char *outstr)
 
 /* Recupère un element de la ligne de commande (fin de la chaine identifiée par
  * un des element du tableau de separateurs 'seps')
-*/
+ */
 char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 {
-	char**const	seps = ms->separators;
-	char		*str;
-	int			i;
+	char	*str;
+	int		i;
 
+	char **const seps = ms->separators;
 	str = *cmdline;
 	while (*str)
 	{
@@ -59,7 +59,6 @@ char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 	}
 	return (no_quote);
 }*/
-
 void	print_queue_node(char *str, t_data *ms)
 {
 	(void)ms;
@@ -76,6 +75,7 @@ void	validate_lexqueue(t_data *ms)
 		laststr = q_get(ms->file_lex, q_getsize(ms->file_lex) - 1);
 		type = get_node_type(ms, laststr);
 		if (type >= nt_infile && type <= nt_AND)
-			ft_printf("Erreur: opérateur '%s' sans opérande.\n", laststr);
+			ft_dprintf(2, "%ssyntax error near unexpected token '%s'\n", MINI,
+				laststr);
 	}
 }
