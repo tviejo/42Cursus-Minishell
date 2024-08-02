@@ -216,6 +216,7 @@ void					free_parsing(t_data *ms);
 t_cmdtree				*parser(t_data *ms);
 void					print_cmdtree(t_data *ms);
 void					free_cmdtree(t_data *ms);
+void					free_node(t_cmdtree *node);
 void					print_queue_node(char *str, t_data *ms);
 t_cmdtree				*new_node(t_data *ms, char *word);
 void					print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
@@ -224,6 +225,8 @@ enum e_nodetype			get_node_type(t_data *ms, char *word);
 int						get_nb_args(t_data *p);
 void					if_debug_print_npi_stack(t_data *ms);
 void					process_here_doc(t_cmdtree *node);
+void					purger_npistack(t_stack *s);
+void					purger_lexqueue(t_queue *q);
 
 char					*get_env_var(t_data *ms, char *varname);
 

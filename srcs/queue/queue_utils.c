@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 18:28:07 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:15:45 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,31 @@ void	queue_print_elem(t_queue *q, void ***elm, bool reverse)
 		*elm = q->elems + q->nb_max_elems;
 }
 
-void	queue_print(t_queue *s, bool reverse,
+void	queue_print(t_queue *q, bool reverse,
 					t_q_prn_elem_fct print_elem, void *ctx)
 {
 	void	**elm;
 
-	s->print_elem_fct = print_elem;
-	s->print_elem_ctxarg = ctx;
-	ft_printf("[file '%s']: ", s->name);
+	q->print_elem_fct = print_elem;
+	q->print_elem_ctxarg = ctx;
+	ft_printf("[file '%s']: ", q->name);
+	if (q_getsize(q) == 0)
+		ft_printf("<vide>");
 	if (reverse)
 	{
-		elm = s->in;
-		if (elm != s->out)
+		elm = q->in;
+		if (elm != q->out)
 			print_elem(*elm--, ctx);
-		while (elm != s->out)
-			queue_print_elem(s, &elm, reverse);
+		while (elm != q->out)
+			queue_print_elem(q, &elm, reverse);
 	}
 	else
 	{
-		elm = s->out;
-		if (elm != s->in)
+		elm = q->out;
+		if (elm != q->in)
 			print_elem(*elm++, ctx);
-		while (elm != s->in)
-			queue_print_elem(s, &elm, reverse);
+		while (elm != q->in)
+			queue_print_elem(q, &elm, reverse);
 	}
 	ft_printf("\n");
 }

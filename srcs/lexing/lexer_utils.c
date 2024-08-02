@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 14:05:03 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:30:13 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	print_queue_node(char *str, t_data *ms)
 	ft_printf("'%s'", str);
 }
 
+void	purger_lexqueue(t_queue *q)
+{
+	while (q_getsize(q) > 0)
+		free(dequeue(q));
+}
+
 void	validate_lexqueue(t_data *ms)
 {
 	enum e_nodetype	type;
@@ -75,7 +81,10 @@ void	validate_lexqueue(t_data *ms)
 		laststr = q_get(ms->file_lex, q_getsize(ms->file_lex) - 1);
 		type = get_node_type(ms, laststr);
 		if (type >= nt_infile && type <= nt_AND)
+		{
 			ft_dprintf(2, "%ssyntax error near unexpected token '%s'\n", MINI,
 				laststr);
+			purger_lexqueue(ms->file_lex);
+		}
 	}
 }

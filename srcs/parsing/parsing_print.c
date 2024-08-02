@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/29 00:15:16 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:09:54 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	print_cmdtree_node(t_cmdtree *cmdtree, t_operator *ope, int depth)
 
 void	print_cmdtree(t_data *ms)
 {
-	print_cmdtree_node(ms->cmdtree, ms->operators, 0);
+	if (ms->cmdtree == NULL)
+		ft_printf("  [cmdtree is NULL]\n");
+	else
+		print_cmdtree_node(ms->cmdtree, ms->operators, 0);
 }
 
 void	print_stack_node(t_cmdtree *cmdtree, t_operator *ope)
