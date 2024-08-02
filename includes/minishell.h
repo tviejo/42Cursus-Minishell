@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 10:54:14 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:25:31 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum					e_side
  * redirigée vers l'entrée de la commande suivante (elle même de type
  * nt_piped_cmd ou nt_command si dernière commande de son groupe).
  */
-
+	
 enum					e_nodetype
 {
 	nt_command,
