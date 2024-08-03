@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 16:33:00 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 02:26:05 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	init(t_data *mshell, int argc, char **argv, char **env)
 {
+	mshell->error_fd = STDERR_FILENO;
+	mshell->debug_fd = STDERR_FILENO;
+	mshell->info_fd = STDERR_FILENO;
 	mshell->error_code = 0;
 	if (argc > 1)
 		mshell->debug_mode = atoi(argv[1]);
@@ -21,7 +24,8 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 		mshell->debug_mode = 0;
 	if (!init_parsing(mshell))
 	{
-		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
+		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n",
+			mshell->error_fd);
 		exit(2);
 	}
 	store_env(mshell, env);
@@ -48,7 +52,7 @@ void	lex_and_parse(t_data *ms, char *cmdline)
 			(t_q_prn_elem_fct)print_queue_node, ms);
 	parser(ms);
 	if (ms->debug_mode > 0)
-		print_cmdtree(ms);
+		print_cmdtree(ms, ms->debug_fd);
 	purger_lexqueue(ms->file_lex);
 	purger_npistack(ms->pile_npi);
 }

@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 10:32:52 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 04:56:21 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	get_node_priority(t_data *p, t_cmdtree *node)
 {
 	if (p->debug_mode >= 3)
-		ft_printf("[get_node_priority] node->type = %d\n", node->type);
+		ft_dprintf(p->debug_fd, "[get_node_priority] node->type = %d\n",
+			node->type);
 	return (p->operators[node->type].priority);
 }
 
@@ -24,7 +25,7 @@ enum e_nodetype	get_node_type(t_data *p, char *word)
 	enum e_nodetype	type;
 
 	if (p->debug_mode >= 3)
-		ft_printf("[get_node_type] word: '%s'\n", word);
+		ft_dprintf(p->debug_fd, "[get_node_type] word: '%s'\n", word);
 	type = 0;
 	while (++type < nt_number_of_nodetype)
 	{
@@ -51,7 +52,6 @@ int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
 {
 	int		nb_args;
 	int		i;
-	char	*str;
 
 	nb_args = 0;
 	if (cmdnode->type == nt_command)
@@ -66,14 +66,16 @@ int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
 		if (i == 0 && arg0 != NULL)
 			cmdnode->argument[0] = ft_strdup(arg0);
 		else
+			cmdnode->argument[i] = dequeue(p->file_lex);
+	}
+	return (nb_args);
+}
+		/*else
 		{
 			str = dequeue(p->file_lex);
 			cmdnode->argument[i] = ft_strdup(str);
 			free(str);
-		}
-	}
-	return (nb_args);
-}
+		}*/
 
 t_cmdtree	*new_node(t_data *p, char *word)
 {
@@ -88,11 +90,13 @@ t_cmdtree	*new_node(t_data *p, char *word)
 		return (&close_parenthesis);
 	node = malloc(sizeof(t_cmdtree));
 	if (node == NULL)
-		return (ft_putstr_fd("[new_node] malloc fails !\n", 2), NULL);
+		return (ft_putstr_fd("[new_node] error: malloc fails !\n", p->error_fd),
+			NULL);
 	node->type = type;
 	node->argument = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->subshell = false;
 	if (node->type == nt_command)
 		fill_cmd_args(p, word, node);
 	else if (node->type < nt_pipe)

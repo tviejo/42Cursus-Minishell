@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 17:24:12 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 02:11:47 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	enqueue(t_queue *q, void *obj)
 {
 	if (q->nb_elems == q->nb_max_elems)
 	{
-		ft_printf("[file '%s' (%p)][enqueue] Dépassement de capacité \
-(max: %d éléments)\n", q->name, q, q->nb_max_elems);
+		ft_dprintf(q->print_fd, "[file '%s' (%p)][enqueue] Dépassement de \
+capacité (max: %d éléments)\n", q->name, q, q->nb_max_elems);
 		exit(-1);
 	}
 	*q->in++ = obj;
@@ -35,7 +35,8 @@ void	*dequeue(t_queue *q)
 
 	if (q->nb_elems == 0)
 	{
-		ft_printf("[file '%s' (%p)][dequeue] Erreur file vide !\n", q->name, q);
+		ft_dprintf(q->print_fd, "[file '%s' (%p)][dequeue] Erreur file vide !\
+\n", q->name, q);
 		exit(-1);
 	}
 	elmout = *q->out;

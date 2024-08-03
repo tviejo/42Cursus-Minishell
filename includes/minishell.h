@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 16:30:26 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 04:54:55 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ typedef struct s_data
 	t_queue				*file_lex;
 	struct s_cmdtree	*cmdtree;
 	int					debug_mode;
+	int					debug_fd;
+	int					error_fd;
+	int					info_fd;
 }						t_data;
 
 typedef struct s_cmdtree
@@ -117,6 +120,7 @@ typedef struct s_cmdtree
 	int					nb_command;
 	struct s_cmdtree	*left;
 	struct s_cmdtree	*right;
+	bool				subshell;
 }						t_command_tree;
 
 typedef t_command_tree	t_cmdtree;
@@ -208,17 +212,17 @@ void					lexer(t_data *ms, char *cmdline);
 void					validate_lexqueue(t_data *ms);
 char					*get_string(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
-enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
+//enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);
 t_cmdtree				*parser(t_data *ms);
-void					print_cmdtree(t_data *ms);
+void					print_cmdtree(t_data *ms, int fd);
 void					free_cmdtree(t_data *ms);
 void					free_node(t_cmdtree *node);
 void					print_queue_node(char *str, t_data *ms);
 t_cmdtree				*new_node(t_data *ms, char *word);
-void					print_stack_node(t_cmdtree *cmdtree, t_operator *ope);
+void					print_stack_node(t_cmdtree *cmdtree, t_data *ms);
 int						get_node_priority(t_data *ms, t_cmdtree *node);
 enum e_nodetype			get_node_type(t_data *ms, char *word);
 int						get_nb_args(t_data *p);
@@ -226,6 +230,8 @@ void					if_debug_print_npi_stack(t_data *ms);
 void					process_here_doc(t_cmdtree *node);
 void					purger_npistack(t_stack *s);
 void					purger_lexqueue(t_queue *q);
+void					depiler_operateurs_restants(t_data *p);
+void					exit_parser(t_data *ms);
 
 char					*get_env_var(t_data *ms, char *varname);
 

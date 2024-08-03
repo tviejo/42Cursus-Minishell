@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 17:15:45 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 00:53:31 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "queue.h"
 
-t_queue	*queue_new(int capacity, char *name)
+t_queue	*queue_new(int capacity, char *name, int print_fd)
 {
 	t_queue *const	queue = malloc(sizeof(t_queue));
 
@@ -29,6 +29,7 @@ t_queue	*queue_new(int capacity, char *name)
 		queue->out = queue->elems;
 		queue->nb_elems = 0;
 		queue->name = name;
+		queue->print_fd = print_fd;
 	}
 	return (queue);
 }
@@ -48,7 +49,7 @@ void	queue_print_elem(t_queue *q, void ***elm, bool reverse)
 	void *const				ctx = q->print_elem_ctxarg;
 	const t_q_prn_elem_fct	print_elem = q->print_elem_fct;
 
-	ft_printf(",");
+	ft_dprintf(q->print_fd, ",");
 	if (reverse)
 		print_elem(*(*elm)--, ctx);
 	else
@@ -66,9 +67,9 @@ void	queue_print(t_queue *q, bool reverse,
 
 	q->print_elem_fct = print_elem;
 	q->print_elem_ctxarg = ctx;
-	ft_printf("[file '%s']: ", q->name);
+	ft_dprintf(q->print_fd, "[file '%s']: ", q->name);
 	if (q_getsize(q) == 0)
-		ft_printf("<vide>");
+		ft_dprintf(q->print_fd, "<vide>");
 	if (reverse)
 	{
 		elm = q->in;
@@ -85,5 +86,5 @@ void	queue_print(t_queue *q, bool reverse,
 		while (elm != q->in)
 			queue_print_elem(q, &elm, reverse);
 	}
-	ft_printf("\n");
+	ft_dprintf(q->print_fd, "\n");
 }

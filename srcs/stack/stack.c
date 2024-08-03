@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:43:34 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 09:52:06 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 02:06:52 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	push(t_stack *s, void *obj)
 {
 	if (s->top - s->elems >= s->nb_max_elems - 1)
 	{
-		ft_printf("[stack '%s' (%p)][push] Dépassement de capacité (max: %d éléments)\
-\n", s->name, s, s->nb_max_elems);
+		ft_dprintf(s->print_fd, "[stack '%s' (%p)][push] Dépassement de \
+capacité (max: %d éléments)\n", s->name, s, s->nb_max_elems);
 		exit(-1);
 	}
 	*++s->top = obj;
@@ -30,7 +30,8 @@ void	*pop(t_stack *s)
 {
 	if (s->top < s->elems)
 	{
-		ft_printf("[stack '%s' (%p)][pop] Erreur pile vide !\n", s->name, s);
+		ft_dprintf(s->print_fd, "[stack '%s' (%p)][pop] Erreur pile vide !\n",
+			s->name, s);
 		exit(-1);
 	}
 	return (*s->top--);

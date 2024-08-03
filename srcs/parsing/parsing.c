@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/07/31 18:02:03 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 05:52:56 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,19 @@ int	build_tree(t_data *p, t_cmdtree **node, bool piped)
 void	process_close_parenth(t_data *p)
 {
 	t_cmdtree	*ope;
+	t_cmdtree	*lastope;
 
+	lastope = NULL;
 	while (getsize(p->pile_ope))
 	{
 		ope = pop(p->pile_ope);
 		if (ope->type == nt_open_parenth)
-			return ;
+			break ;
 		push(p->pile_npi, ope);
+		lastope = ope;
 	}
+	if (lastope)
+		lastope->subshell = true;
 }
 
 void	process_operator(t_data *p, t_cmdtree *ope)
@@ -108,7 +113,7 @@ t_cmdtree	*parser(t_data *p)
 		node = new_node(p, str);
 		free(str);
 		if (node == NULL)
-			return (NULL);
+			return (exit_parser(p), NULL);
 		if (node->type == nt_command)
 			push(p->pile_npi, node);
 		else if (node->type == nt_open_parenth)

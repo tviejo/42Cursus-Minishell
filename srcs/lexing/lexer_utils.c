@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 16:30:13 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 02:54:46 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	if_debug_print_outstr(t_data *ms, char *outstr)
 {
 	if (ms->debug_mode >= 2)
-		ft_printf("  get_string returns: '%s'\n", outstr);
+		ft_dprintf(ms->debug_fd, "  get_string returns: '%s'\n", outstr);
 }
 
 /* Recupère un element de la ligne de commande (fin de la chaine identifiée par
@@ -23,10 +23,10 @@ void	if_debug_print_outstr(t_data *ms, char *outstr)
  */
 char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 {
-	char	*str;
-	int		i;
+	char **const	seps = ms->separators;
+	char			*str;
+	int				i;
 
-	char **const seps = ms->separators;
 	str = *cmdline;
 	while (*str)
 	{
@@ -61,8 +61,7 @@ char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
 }*/
 void	print_queue_node(char *str, t_data *ms)
 {
-	(void)ms;
-	ft_printf("'%s'", str);
+	ft_dprintf(ms->debug_fd, "'%s'", str);
 }
 
 void	purger_lexqueue(t_queue *q)
@@ -82,9 +81,10 @@ void	validate_lexqueue(t_data *ms)
 		type = get_node_type(ms, laststr);
 		if (type >= nt_infile && type <= nt_AND)
 		{
-			ft_dprintf(2, "%ssyntax error near unexpected token '%s'\n", MINI,
-				laststr);
+			ft_dprintf(ms->error_fd, "%ssyntax error after token '%s': \
+missing operand\n", MINI, laststr);
 			purger_lexqueue(ms->file_lex);
+			ms->error_code = 1;
 		}
 	}
 }
