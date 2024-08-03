@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:26 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:16:57 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/03 14:58:58 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 void	*ft_calloc_pid(t_command_tree *tree, t_data *exec)
 {
-	exec->pid = ft_calloc(tree->nb_command, sizeof(pid_t));
+	exec->pid = ft_calloc((tree->nb_command + 1) * 3, sizeof(pid_t));
 	if (exec->pid == NULL)
 		ft_close_error(tree, exec);
-	ft_memset(exec->pid, -10, tree->nb_command);
+	ft_memset(exec->pid, -10, (tree->nb_command + 1 ) * 3);
 	exec->oldtype = nt_command;
 	exec->side = e_left;
 	return (exec->pid);
