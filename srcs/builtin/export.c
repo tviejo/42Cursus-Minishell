@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:21 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:33:10 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 18:01:22 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ bool	is_env_var(char *env_var)
 	int	i;
 
 	i = 0;
-	while (env_var[i])
+	if (ft_isalpha(env_var[i]) == 0 && env_var[i] != '_')
+		return (false);
+	i++;
+	while (env_var[i] != '\0' && env_var[i] != '=')
 	{
-		if (env_var[i] == '=')
-			return (true);
+		if (ft_isalnum(env_var[i]) == 0 && env_var[i] != '_')
+			return (false);
 		i++;
 	}
+	if (env_var[i] == '=')
+		return (true);
 	return (false);
 }
 
@@ -97,7 +102,7 @@ int	ft_export(t_command_tree *tree, t_data *exec)
 		return (EXIT_SUCCESS);
 	}
 	if (is_env_var(tree->argument[1]) == false)
-		return (EXIT_FAILURE);
+		return (print_exp_error(tree->argument[1]), EXIT_FAILURE);
 	i = 0;
 	while (exec->env[i])
 	{

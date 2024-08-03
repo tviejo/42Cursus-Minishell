@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:53:25 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:17:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:34:51 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	init_exec(t_data *mshell)
 {
 	mshell->proccess = NULL;
 	mshell->end_exec = false;
-	mshell->error_code = 0;
 	mshell->oldtype = 0;
 	mshell->side = e_left;
 	calloc_pid(mshell, mshell->cmdtree);

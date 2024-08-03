@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:17:52 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:58:38 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 	{
 		close_std_fd(exec);
 		ft_lstclear_process(&exec->proccess);
-		close(fdpipe[1]);
 		close(fdpipe[0]);
+		close(fdpipe[1]);
 		exec_cmd(tree, exec);
 	}
 	else

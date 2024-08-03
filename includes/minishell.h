@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 04:54:55 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 06:10:20 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
  * descendance (left + right).
  * Si une commande se trouve dans la descendance gauche d'au moins un pipe son
  * type est nt_piped_cmd (sinon nt_command).
- * 
+ *
  * I.   {char *cmdline}     -> lexer()      -> {t_queue *file_lex}
  * II.  {t_queue *file_lex} -> parser()     -> {t_stack* pile_npi}
  * III. {t_stack* pile_npi} -> build_tree() -> {t_cmdtree *cmdtree}
@@ -205,6 +205,7 @@ int						exec_subshell(char *cmdline, t_data *mshell);
 void					lex_and_parse(t_data *ms, char *cmdline);
 void					execute(t_data *mshell);
 char					**ft_strdup_env(char **env);
+void					print_exp_error(char *varname);
 
 /*				PARSING					*/
 
