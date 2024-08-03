@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 15:13:58 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/03 18:58:48 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
-	ft_dprintf(2, "cmd: %s\n", tree->argument[0]);
 	if (tree->type == nt_piped_cmd && exec->error_code == 0)
 	{
-		ft_dprintf(2, "piped_cmd\n");
 		child_process(tree, exec);
 	}
 	else if (exec->oldtype == nt_pipe && exec->error_code == 0)
@@ -28,12 +26,12 @@ void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 	else if (exec->error_code == 0 || exec->oldtype == nt_OR)
 	{
 		cmd_process_and_or(tree, exec);
-		wait_one_process(exec);
+		wait_all_process(exec);
 	}
 	else
 	{
 		cmd_process_and_or(tree, exec);
-		wait_one_process(exec);
+		wait_all_process(exec);
 	}
 }
 
@@ -63,11 +61,11 @@ int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 		return (EXIT_SUCCESS);
 	else if (tree->type == nt_command || tree->type == nt_piped_cmd)
 		ft_is_cmd(tree, exec);
-	if (is_node(tree) == true && tree->left != NULL && tree->subshell == false)
+	if (is_node(tree) == true && tree->left != NULL && tree->subshell == ss_NO)
 		exec_node_left(tree, exec);
-	if (is_node(tree) == true && tree->right != NULL && tree->subshell == false)
+	if (is_node(tree) == true && tree->right != NULL && tree->subshell == ss_NO)
 		exec_node_right(tree, exec);
-	if (tree->subshell == true)
+	if (tree->subshell >= ss_YES)
 		exec_subshell(tree, exec);
 	return (EXIT_SUCCESS);
 }
