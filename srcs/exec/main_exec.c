@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 17:34:28 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/03 15:13:58 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
+	ft_dprintf(2, "cmd: %s\n", tree->argument[0]);
 	if (tree->type == nt_piped_cmd && exec->error_code == 0)
+	{
+		ft_dprintf(2, "piped_cmd\n");
 		child_process(tree, exec);
-	else if (tree->type == nt_subshell)
-		exec_subshell(tree->argument[0], exec);
+	}
 	else if (exec->oldtype == nt_pipe && exec->error_code == 0)
 	{
 		last_child_process(tree, exec);
@@ -49,13 +51,23 @@ void	ft_redir(t_command_tree *tree, t_data *exec)
 
 int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 {
+	// static int index = 0;
+
+	// ft_dprintf(2, "exec_cmdtree\n");
+	// if (index == 0)
+	// {
+	// 	tree->subshell = true;
+	// 	index = 1;
+	// }
 	if (tree == NULL)
 		return (EXIT_SUCCESS);
 	else if (tree->type == nt_command || tree->type == nt_piped_cmd)
 		ft_is_cmd(tree, exec);
-	if (is_node(tree) == true && tree->left != NULL)
+	if (is_node(tree) == true && tree->left != NULL && tree->subshell == false)
 		exec_node_left(tree, exec);
-	if (is_node(tree) == true && tree->right != NULL)
+	if (is_node(tree) == true && tree->right != NULL && tree->subshell == false)
 		exec_node_right(tree, exec);
+	if (tree->subshell == true)
+		exec_subshell(tree, exec);
 	return (EXIT_SUCCESS);
 }
