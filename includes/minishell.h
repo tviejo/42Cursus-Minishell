@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 16:55:34 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:22:06 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ enum					e_nodetype
 	nt_open_parenth,
 	nt_close_parenth,
 	nt_number_of_nodetype,
-	nt_subshell
+	nt_executed
 };
 
 enum					e_subshell
@@ -209,11 +209,12 @@ void					ft_lstadd_back_proccess(t_proccess **lst,
 void					ft_lstclear_process(t_proccess **lst);
 size_t					strlenpro(const char *str);
 char					*join_with_space(char *str1, char *str2);
-int						exec_subshell(char *cmdline, t_data *mshell);
 void					lex_and_parse(t_data *ms, char *cmdline);
 void					execute(t_data *mshell);
 char					**ft_strdup_env(char **env);
 void					print_exp_error(char *varname);
+void 					exec_subshell(t_command_tree *tree, t_data *exec);
+void 					exec_piped_subshell(t_command_tree *tree, t_data *exec);
 
 /*				PARSING					*/
 

@@ -6,35 +6,85 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:11:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:51:12 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/03 15:10:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	init_sub_mshell(t_data *sub_mshell, t_data *mshell)
+void	exec_normal_subshell(t_command_tree *tree, t_data *exec)
 {
-	sub_mshell->error_code = 0;
-	sub_mshell->env_len = mshell->env_len;
-	sub_mshell->debug_mode = 0;
-	if (!init_parsing(sub_mshell))
+	int		index;
+	int		dupstdin;
+	int		dupstdout;
+
+	ft_dprintf(2, "exec_normal_subshell\n");
+	dupstdin = dup(STDIN_FILENO);
+	dupstdout = dup(STDOUT_FILENO);
+	index = return_fork_index(exec);
+	ft_lstadd_back_proccess(&exec->proccess, ft_lstnew_int(index));
+	create_fork(tree, exec, index);
+	if (exec->pid[index] == 0)
 	{
-		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n", 2);
-		exit(2);
+		exec_cmdtree(tree, exec);
+		close(dupstdin);
+		close(dupstdout);
+		ft_close_error(tree, exec);
+		exit(exec->error_code);
 	}
-	sub_mshell->env = ft_strdup_env(mshell->env);
-	return (EXIT_SUCCESS);
+	else
+	{
+		dup2(dupstdin, STDIN_FILENO);
+		dup2(dupstdout, STDOUT_FILENO);
+		close(dupstdout);
+		close(dupstdin);
+	}
 }
 
-int	exec_subshell(char *cmdline, t_data *mshell)
+void exec_piped_subshell(t_command_tree *tree, t_data *exec)
 {
-	t_data	sub_mshell;
+	int		index;
+	int		dupstdin;
+	int		dupstdout;
+	int fdpipe[2];
 
-	init_sub_mshell(&sub_mshell, mshell);
-	lex_and_parse(&sub_mshell, cmdline);
-	execute(&sub_mshell);
-	free_cmdtree(&sub_mshell);
-	free_parsing(&sub_mshell);
-	free_env(&sub_mshell);
-	return (sub_mshell.error_code);
+	dupstdin = dup(STDIN_FILENO);
+	dupstdout = dup(STDOUT_FILENO);
+	index = return_fork_index(exec);
+	ft_lstadd_back_proccess(&exec->proccess, ft_lstnew_int(index));
+	create_fork(tree, exec, index);
+	pipe(fdpipe);
+	if (exec->pid[index] == 0)
+	{
+		close(fdpipe[0]);
+		dup2(fdpipe[1], STDOUT_FILENO);
+		close(fdpipe[1]);
+		exec_cmdtree(tree, exec);
+		close(dupstdin);
+		close(dupstdout);
+		ft_close_error(tree, exec);
+		exit(exec->error_code);
+	}
+	else
+	{
+		dup2(fdpipe[0], STDIN_FILENO);
+		close(fdpipe[0]);
+		close(fdpipe[1]);
+		dup2(dupstdin, STDIN_FILENO);
+		dup2(dupstdout, STDOUT_FILENO);
+		close(dupstdout);
+		close(dupstdin);
+	}
+}
+
+void exec_subshell(t_command_tree *tree, t_data *exec)
+{
+	if (tree->subshell == true)
+	{
+		tree->subshell = false;
+		if (exec->oldtype == nt_piped_cmd)
+			exec_piped_subshell(tree, exec);
+		else
+			exec_normal_subshell(tree, exec);
+	}
 }
