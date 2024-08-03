@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 02:54:46 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:25:57 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	if_debug_print_outstr(t_data *ms, char *outstr)
 /* Recupère un element de la ligne de commande (fin de la chaine identifiée par
  * un des element du tableau de separateurs 'seps')
  */
-char	*get_string(t_data *ms, char **cmdline, char *outstr, int maxlen)
+char	*get_token(t_data *ms, char **cmdline, char *outstr, int maxlen)
 {
 	char **const	seps = ms->separators;
 	char			*str;

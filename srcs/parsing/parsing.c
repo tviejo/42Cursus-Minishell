@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 05:52:56 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:08:24 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
  * Si une commande se trouve dans la descendance gauche d'au moins un pipe son
  * type est nt_piped_cmd (sinon nt_command).
 */
-int	build_tree(t_data *p, t_cmdtree **node, bool piped)
+int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd)
 {
 	t_cmdtree	*n;
 
@@ -38,15 +38,19 @@ int	build_tree(t_data *p, t_cmdtree **node, bool piped)
 		n = pop(p->pile_npi);
 		*node = n;
 		n->nb_command = 0;
-		if (piped && n->type == nt_command)
+		if (n->subshell == ss_YES && piped_cmd)
+			n->subshell = ss_piped;
+		if (n->type == nt_command && piped_cmd)
 			n->type = nt_piped_cmd;
+		if (n->subshell)
+			piped_cmd = false;
 		if (n->type <= nt_piped_cmd)
 			n->nb_command++;
 		else
-			n->nb_command += build_tree(p, &n->right, piped);
+			n->nb_command += build_tree(p, &n->right, piped_cmd);
 		if (n->type >= nt_pipe)
 			n->nb_command += build_tree(p, &n->left,
-					piped || n->type == nt_pipe);
+					piped_cmd || n->type == nt_pipe);
 		return (n->nb_command);
 	}
 	return (0);
@@ -67,7 +71,7 @@ void	process_close_parenth(t_data *p)
 		lastope = ope;
 	}
 	if (lastope)
-		lastope->subshell = true;
+		lastope->subshell = ss_YES;
 }
 
 void	process_operator(t_data *p, t_cmdtree *ope)

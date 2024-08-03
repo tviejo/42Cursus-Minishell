@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 01:01:28 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:45:32 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	init_parsing(t_data *p)
 	{"<", PRI_REDIR}, {"<<", PRI_REDIR}, {">", PRI_REDIR}, {">>", PRI_REDIR},
 	{"|", PRI_PIPE}, {"||", PRI_LOGIC}, {"&&", PRI_LOGIC},
 	{"(", -1}, {")", -1}, {NULL, 0}};
-	static char			*separators[] = {" ", "$", "'", "\"", "\\",
+	static char			*separators[] = {" ", "\t", "\n", "$", "'", "\"", "\\",
 		"<<", "<", ">>", ">", "||", "|", "&&", "(", ")", NULL};
 
 	p->operators = operators;

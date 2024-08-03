@@ -6,16 +6,16 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/02 10:53:53 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:30:33 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define WORD_MAXLEN 511
+#define TOKEN_MAXLEN 511
 
 bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
-					char **newcmdline)
+					char **lexstring)
 {
 	(void)ms;
 	if (*cmdline == '\'')
@@ -23,7 +23,7 @@ bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 		if (*quote_state == simple_quote)
 			*quote_state = no_quote;
 		else if (*quote_state == double_quote)
-			*newcmdline = ft_straddchar(*newcmdline, '\'');
+			*lexstring = ft_straddchar(*lexstring, '\'');
 		else
 			*quote_state = simple_quote;
 		return (true);
@@ -33,7 +33,7 @@ bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 		if (*quote_state == double_quote)
 			*quote_state = no_quote;
 		else if (*quote_state == simple_quote)
-			*newcmdline = ft_straddchar(*newcmdline, '"');
+			*lexstring = ft_straddchar(*lexstring, '"');
 		else
 			*quote_state = double_quote;
 		return (true);
@@ -42,14 +42,14 @@ bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 }
 
 bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
-							char **cmdline, char **newcmdline)
+							char **cmdline, char **lexstring)
 {
-	static char			word[WORD_MAXLEN + 1];
+	static char			token[TOKEN_MAXLEN + 1];
 
 	if (**cmdline == '\\' && (*cmdline)[1] && quote_state != simple_quote)
 	{
 		(*cmdline)++;
-		*newcmdline = ft_straddchar(*newcmdline, *(*cmdline)++);
+		*lexstring = ft_straddchar(*lexstring, *(*cmdline)++);
 		return (true);
 	}
 	else if (**cmdline == '$' && (*cmdline)[1] && quote_state != simple_quote)
@@ -57,28 +57,28 @@ bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
 		(*cmdline)++;
 		if (**cmdline == '?')
 		{
-			*newcmdline = ft_stradd(*newcmdline, ft_int2str(ms->error_code));
+			*lexstring = ft_stradd(*lexstring, ft_int2str(ms->error_code));
 			(*cmdline)++;
 		}
 		else
 		{
-			get_string(ms, cmdline, word, WORD_MAXLEN);
-			*newcmdline = ft_stradd(*newcmdline, get_env_var(ms, word));
+			get_token(ms, cmdline, token, TOKEN_MAXLEN);
+			*lexstring = ft_stradd(*lexstring, get_env_var(ms, token));
 		}
 		return (true);
 	}
 	return (false);
 }
 
-bool	lex_wildcard(t_data *ms, char *word)
+bool	lex_wildcard(t_data *ms, char *token)
 {
 	char		*filenames;
 	char		**splited;
 	char		**spnames;
 
-	if (ft_strchr(word, '*') || ft_strchr(word, '?'))
+	if (ft_strchr(token, '*') || ft_strchr(token, '?'))
 	{
-		filenames = find_wildcard(word);
+		filenames = find_wildcard(token);
 		if (!filenames || *filenames == '\0')
 			return (false);
 		splited = ft_split(filenames, ' ');
@@ -93,49 +93,50 @@ bool	lex_wildcard(t_data *ms, char *word)
 }
 
 void	lex_others(t_data *ms, enum e_quote_state quote_state,
-							char **cmdline, char **newcmdline)
+							char **cmdline, char **lexstring)
 {
-	static char			word[WORD_MAXLEN + 1];
+	static char			token[TOKEN_MAXLEN + 1];
 	enum e_nodetype		ntype;
 
 	if (quote_state == no_quote)
 	{
-		get_string(ms, cmdline, word, WORD_MAXLEN);
-		ntype = get_node_type(ms, word);
-		if (ntype != nt_command || *word == ' ')
+		get_token(ms, cmdline, token, TOKEN_MAXLEN);
+		ntype = get_node_type(ms, token);
+		if (ntype != nt_command
+			|| *token == ' ' || *token == '\t' || *token == '\n')
 		{
-			if (*newcmdline)
+			if (*lexstring)
 			{
-				enqueue(ms->file_lex, *newcmdline);
-				*newcmdline = NULL;
+				enqueue(ms->file_lex, *lexstring);
+				*lexstring = NULL;
 			}
 			if (ntype != nt_command)
-				enqueue(ms->file_lex, ft_strdup(word));
+				enqueue(ms->file_lex, ft_strdup(token));
 		}
-		else if (!lex_wildcard(ms, word))
-			*newcmdline = ft_stradd(*newcmdline, word);
+		else if (!lex_wildcard(ms, token))
+			*lexstring = ft_stradd(*lexstring, token);
 	}
 	else
-		*newcmdline = ft_straddchar(*newcmdline, *(*cmdline)++);
+		*lexstring = ft_straddchar(*lexstring, *(*cmdline)++);
 }
 
 void	lexer(t_data *ms, char *cmdline)
 {
-	char				*newcmdline;
+	char				*lexstring;
 	enum e_quote_state	quote_state;
 
-	newcmdline = NULL;
+	lexstring = NULL;
 	quote_state = no_quote;
 	while (*cmdline)
 	{
-		if (lex_quote(ms, &quote_state, cmdline, &newcmdline))
+		if (lex_quote(ms, &quote_state, cmdline, &lexstring))
 			cmdline++;
-		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &newcmdline))
+		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &lexstring))
 			;
 		else
-			lex_others(ms, quote_state, &cmdline, &newcmdline);
+			lex_others(ms, quote_state, &cmdline, &lexstring);
 	}
-	if (newcmdline)
-		enqueue(ms->file_lex, newcmdline);
+	if (lexstring)
+		enqueue(ms->file_lex, lexstring);
 	validate_lexqueue(ms);
 }

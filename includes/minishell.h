@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 06:10:20 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:55:34 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ enum					e_nodetype
 	nt_subshell
 };
 
+enum					e_subshell
+{
+	ss_NO,
+	ss_YES,
+	ss_piped,
+	ss_redir_out
+};
+
 typedef struct s_proccess
 {
 	int					pid_index;
@@ -120,7 +128,7 @@ typedef struct s_cmdtree
 	int					nb_command;
 	struct s_cmdtree	*left;
 	struct s_cmdtree	*right;
-	bool				subshell;
+	enum e_subshell		subshell;
 }						t_command_tree;
 
 typedef t_command_tree	t_cmdtree;
@@ -211,7 +219,7 @@ void					print_exp_error(char *varname);
 
 void					lexer(t_data *ms, char *cmdline);
 void					validate_lexqueue(t_data *ms);
-char					*get_string(t_data *ms, char **cmdline, char *outstr,
+char					*get_token(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
 //enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 

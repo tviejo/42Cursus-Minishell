@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 04:56:21 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:06:07 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_cmdtree	*new_node(t_data *p, char *word)
 	node->argument = NULL;
 	node->left = NULL;
 	node->right = NULL;
-	node->subshell = false;
+	node->subshell = ss_NO;
 	if (node->type == nt_command)
 		fill_cmd_args(p, word, node);
 	else if (node->type < nt_pipe)
