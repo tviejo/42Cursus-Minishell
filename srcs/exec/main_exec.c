@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 18:58:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/04 11:33:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_cmdtree(t_command_tree *tree, t_data *exec)
 	// }
 	if (tree == NULL)
 		return (EXIT_SUCCESS);
-	else if (tree->type == nt_command || tree->type == nt_piped_cmd)
+	if (tree->type == nt_command || tree->type == nt_piped_cmd)
 		ft_is_cmd(tree, exec);
 	if (is_node(tree) == true && tree->left != NULL && tree->subshell == ss_NO)
 		exec_node_left(tree, exec);
