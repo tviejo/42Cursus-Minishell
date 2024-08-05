@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 17:22:06 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/05 21:58:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,12 @@ typedef struct s_data
 	int					debug_fd;
 	int					error_fd;
 	int					info_fd;
+	bool				subshell;
+	bool				redirected_infile;
+	bool				redirected_outfile;
+	char				*subshell_infile;
+	char				*subshell_outfile;
+	bool				end;
 }						t_data;
 
 typedef struct s_cmdtree
@@ -213,8 +219,8 @@ void					lex_and_parse(t_data *ms, char *cmdline);
 void					execute(t_data *mshell);
 char					**ft_strdup_env(char **env);
 void					print_exp_error(char *varname);
-void 					exec_subshell(t_command_tree *tree, t_data *exec);
-void 					exec_piped_subshell(t_command_tree *tree, t_data *exec);
+void					exec_subshell(t_command_tree *tree, t_data *exec);
+void					exec_piped_subshell(t_command_tree *tree, t_data *exec);
 
 /*				PARSING					*/
 
@@ -222,7 +228,7 @@ void					lexer(t_data *ms, char *cmdline);
 void					validate_lexqueue(t_data *ms);
 char					*get_token(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
-//enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
+// enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);

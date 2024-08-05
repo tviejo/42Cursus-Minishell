@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:45:55 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:53:53 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	redir_outfile(t_command_tree *tree, t_data *exec)
 	{
 		ft_putstr_fd("open failed\n", 2);
 		ft_close_error(tree, exec);
+		exec->end = true;
 		return (EXIT_FAILURE);
 	}
 	dup2(exec->outfile, STDOUT_FILENO);
@@ -38,6 +39,7 @@ int	redir_infile(t_command_tree *tree, t_data *exec)
 	{
 		ft_dprintf(2, "minishel: %s: %s\n", tree->argument[0], NO_FILES);
 		exec->error_code = 1;
+		exec->end = true;
 		return (EXIT_FAILURE);
 	}
 	dup2(exec->infile, STDIN_FILENO);

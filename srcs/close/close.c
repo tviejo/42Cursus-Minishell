@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:34 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:16:23 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/05 20:01:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	ft_close_error(t_command_tree *tree, t_data *exec)
 	free_cmdtree(exec);
 	free_env(exec);
 	free_parsing(exec);
+	ft_lstclear_process(&exec->proccess);
 	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:11:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/04 11:34:18 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/05 21:57:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec_normal_subshell(t_command_tree *tree, t_data *exec)
 	}
 }
 
-void exec_piped_subshell(t_command_tree *tree, t_data *exec)
+void	exec_piped_subshell(t_command_tree *tree, t_data *exec)
 {
 	int		index;
 	int		fdpipe[2];
@@ -52,12 +52,13 @@ void exec_piped_subshell(t_command_tree *tree, t_data *exec)
 	}
 }
 
-void exec_subshell(t_command_tree *tree, t_data *exec)
+void	exec_subshell(t_command_tree *tree, t_data *exec)
 {
 	if (is_redir(tree) == true)
 		ft_redir(tree, exec);
 	if (tree->subshell >= ss_YES)
 	{
+		exec->subshell = true;
 		if (tree->subshell == ss_piped)
 		{
 			tree->subshell = ss_NO;
