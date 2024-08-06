@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 19:53:53 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 17:33:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int	redir_outfile(t_command_tree *tree, t_data *exec)
 				0644);
 	if (exec->outfile == -1)
 	{
-		ft_putstr_fd("open failed\n", 2);
-		ft_close_error(tree, exec);
+		ft_dprintf(2, "minishell: %s: Permission denied\n", tree->argument[0]);
+		exec->error_code = 1;
 		exec->end = true;
-		return (EXIT_FAILURE);
 	}
 	dup2(exec->outfile, STDOUT_FILENO);
 	close(exec->outfile);
