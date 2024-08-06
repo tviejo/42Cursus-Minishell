@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/05 21:56:27 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:54:37 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	execute(t_data *mshell)
 		return ;
 	init_exec(mshell);
 	exec_cmdtree(mshell->cmdtree, mshell);
-	wait_all_process(mshell);
 	close_exec(mshell);
 }
 

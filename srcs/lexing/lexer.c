@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 16:30:33 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:43:16 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define TOKEN_MAXLEN 511
 
 bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
-					char **lexstring)
+		char **lexstring)
 {
 	(void)ms;
 	if (*cmdline == '\'')
@@ -42,9 +42,9 @@ bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 }
 
 bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
-							char **cmdline, char **lexstring)
+		char **cmdline, char **lexstring)
 {
-	static char			token[TOKEN_MAXLEN + 1];
+	static char	token[TOKEN_MAXLEN + 1];
 
 	if (**cmdline == '\\' && (*cmdline)[1] && quote_state != simple_quote)
 	{
@@ -72,9 +72,9 @@ bool	lex_bslash_n_dollar(t_data *ms, enum e_quote_state quote_state,
 
 bool	lex_wildcard(t_data *ms, char *token)
 {
-	char		*filenames;
-	char		**splited;
-	char		**spnames;
+	char	*filenames;
+	char	**splited;
+	char	**spnames;
 
 	if (ft_strchr(token, '*') || ft_strchr(token, '?'))
 	{
@@ -92,18 +92,18 @@ bool	lex_wildcard(t_data *ms, char *token)
 	return (false);
 }
 
-void	lex_others(t_data *ms, enum e_quote_state quote_state,
-							char **cmdline, char **lexstring)
+void	lex_others(t_data *ms, enum e_quote_state quote_state, char **cmdline,
+		char **lexstring)
 {
-	static char			token[TOKEN_MAXLEN + 1];
-	enum e_nodetype		ntype;
+	static char		token[TOKEN_MAXLEN + 1];
+	enum e_nodetype	ntype;
 
 	if (quote_state == no_quote)
 	{
 		get_token(ms, cmdline, token, TOKEN_MAXLEN);
 		ntype = get_node_type(ms, token);
-		if (ntype != nt_command
-			|| *token == ' ' || *token == '\t' || *token == '\n')
+		if (ntype != nt_command || *token == ' ' || *token == '\t'
+			|| *token == '\n')
 		{
 			if (*lexstring)
 			{
@@ -129,7 +129,9 @@ void	lexer(t_data *ms, char *cmdline)
 	quote_state = no_quote;
 	while (*cmdline)
 	{
-		if (lex_quote(ms, &quote_state, cmdline, &lexstring))
+		if (bad_token(cmdline, ms))
+			break ;
+		else if (lex_quote(ms, &quote_state, cmdline, &lexstring))
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &lexstring))
 			;

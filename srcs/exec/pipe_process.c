@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 16:58:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:53:13 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	child_process(t_command_tree *tree, t_data *exec)
 		dup2(fdpipe[1], STDOUT_FILENO);
 		close(fdpipe[1]);
 		exec_cmd(tree, exec);
+		exit(exec->error_code);
 	}
 	else
 	{
@@ -57,6 +58,7 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 		close(fdpipe[0]);
 		close(fdpipe[1]);
 		exec_cmd(tree, exec);
+		exit(exec->error_code);
 	}
 	else
 	{

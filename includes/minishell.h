@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 21:58:30 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 17:33:42 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ char					**ft_strdup_env(char **env);
 void					print_exp_error(char *varname);
 void					exec_subshell(t_command_tree *tree, t_data *exec);
 void					exec_piped_subshell(t_command_tree *tree, t_data *exec);
+void					ft_redirect_subshell(t_data *exec);
 
 /*				PARSING					*/
 
@@ -248,6 +249,7 @@ void					purger_npistack(t_stack *s);
 void					purger_lexqueue(t_queue *q);
 void					depiler_operateurs_restants(t_data *p);
 void					exit_parser(t_data *ms);
+bool					bad_token(char *cmdline, t_data *ms);
 
 char					*get_env_var(t_data *ms, char *varname);
 
