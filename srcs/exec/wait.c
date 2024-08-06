@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 17:36:30 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 11:20:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	wait_all_process(t_data *exec)
 	t_proccess	*process;
 
 	process = exec->proccess;
-	status = 0;
-	exec->error_code = 0;
 	while (process != NULL && process->pid_index == -10)
 		process = process->next;
 	while (process)

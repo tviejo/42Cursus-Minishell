@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:11:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 21:57:30 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 11:18:56 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	exec_subshell(t_command_tree *tree, t_data *exec)
 		{
 			tree->subshell = ss_NO;
 			exec_normal_subshell(tree, exec);
+			wait_all_process(exec);
 		}
 	}
 }

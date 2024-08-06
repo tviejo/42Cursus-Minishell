@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:53:25 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 19:54:30 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/06 11:15:10 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	init_exec(t_data *mshell)
 	mshell->dupstdin = dup(STDIN_FILENO);
 	mshell->dupstdout = dup(STDOUT_FILENO);
 	mshell->subshell = false;
-	mshell->redirected = false;
+	mshell->redirected_infile = false;
+	mshell->redirected_outfile = false;
 	mshell->subshell_infile = NULL;
 	mshell->subshell_outfile = NULL;
 	mshell->end = false;
