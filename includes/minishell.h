@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 16:03:23 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:14:05 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_data
 	int					fdpipe[2];
 	int					oldtype;
 	int					side;
+	int					max_pid;
 	pid_t				*pid;
 	t_proccess			*proccess;
 	char				**separators;
@@ -225,6 +226,10 @@ void					print_exp_error(char *varname);
 void					exec_subshell(t_command_tree *tree, t_data *exec);
 void					exec_piped_subshell(t_command_tree *tree, t_data *exec);
 void					ft_redirect_subshell(t_data *exec);
+void					signal_sigpipe(int sig);
+void					wait_process_index(t_data *exec, int index);
+int						return_fork_index_subshell(t_data *exec);
+void					wait_subshell(t_data *exec);
 
 /*				PARSING					*/
 

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:02 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 16:19:10 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 17:14:53 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 {
-	if (exec->subshell == true && exec->oldtype != nt_pipe)
-		ft_redirect_subshell(exec);
 	if (tree->type == nt_piped_cmd && exec->end == false)
 		child_process(tree, exec);
 	else if (exec->oldtype == nt_pipe && exec->end == false)
@@ -28,8 +26,6 @@ void	ft_is_cmd(t_command_tree *tree, t_data *exec)
 		cmd_process_and_or(tree, exec);
 		wait_all_process(exec);
 	}
-	exec->redirected_infile = false;
-	exec->redirected_outfile = false;
 }
 
 void	ft_redir(t_command_tree *tree, t_data *exec)
@@ -37,18 +33,10 @@ void	ft_redir(t_command_tree *tree, t_data *exec)
 	if (tree->type == nt_out_truncate || tree->type == nt_out_append)
 	{
 		redir_outfile(tree, exec);
-		if (exec->subshell == true)
-			exec->redirected_outfile = true;
-		else
-			exec->subshell_outfile = tree->argument[0];
 	}
 	if (tree->type == nt_infile || tree->type == nt_here_doc)
 	{
 		redir_infile(tree, exec);
-		if (exec->subshell == true)
-			exec->redirected_infile = true;
-		else
-			exec->subshell_infile = tree->argument[0];
 	}
 }
 

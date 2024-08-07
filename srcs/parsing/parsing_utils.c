@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 12:53:31 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:39:33 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	fill_cmd_args_core(t_data *p, char *arg0, t_cmdtree *cmdnode,
 							int nb_args)
 {
 	int		i;
-	int 	iarg;
+	int		iarg;
 	char	*str;
 
 	i = 0;
