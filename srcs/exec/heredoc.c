@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:51:46 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 15:17:20 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ static struct s_here_doc	open_here_document(void)
 	return (here_doc);
 }
 
+static bool	find_limiter(char *str, char *limiter)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' || limiter[i] != '\0')
+	{
+		if (str[i] != limiter[i])
+			return (false);
+		i++;
+	}
+	if (str[i] == '\0' && limiter[i] == '\0')
+		return (true);
+	return (false);
+}
+
 static void	get_line(t_here_doc here_doc, char *limiter)
 {
 	char	*output;
@@ -50,8 +66,8 @@ static void	get_line(t_here_doc here_doc, char *limiter)
 	while (1)
 	{
 		output = readline("> ");
-		if (output == NULL || ft_strncmp(output, limiter,
-				ft_strlen(limiter)) == 0 || g_signal != 0)
+		if (output == NULL || find_limiter(output, limiter) == true
+			|| g_signal != 0)
 			break ;
 		write(here_doc.fd, output, ft_strlen(output));
 		write(here_doc.fd, "\n", 1);
