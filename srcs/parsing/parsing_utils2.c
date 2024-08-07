@@ -6,11 +6,19 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:15:39 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 02:52:38 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:41:20 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_node_priority(t_data *p, t_cmdtree *node)
+{
+	if (p->debug_mode >= 3)
+		ft_dprintf(p->debug_fd, "[get_node_priority] node->type = %d\n",
+			node->type);
+	return (p->operators[node->type].priority);
+}
 
 void	purger_npistack(t_stack *s)
 {
@@ -30,13 +38,14 @@ void	process_here_doc(t_cmdtree *node)
 	}
 }
 
-/* Quitter proprement sur erreur (malloc fails)
-*/
-void	exit_parser(t_data *ms)
+void	depiler_operateurs_restants(t_data *p)
 {
-	depiler_operateurs_restants(ms);
-	purger_lexqueue(ms->file_lex);
-	purger_npistack(ms->pile_npi);
-	ms->cmdtree = NULL;
-	ms->error_code = 2;
+	t_cmdtree	*ope;
+
+	while (gettop(p->pile_ope))
+	{
+		ope = pop(p->pile_ope);
+		if (ope->type != nt_open_parenth)
+			push(p->pile_npi, ope);
+	}
 }

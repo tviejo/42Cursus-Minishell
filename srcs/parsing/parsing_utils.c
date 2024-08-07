@@ -6,19 +6,11 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 17:06:07 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:53:31 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_node_priority(t_data *p, t_cmdtree *node)
-{
-	if (p->debug_mode >= 3)
-		ft_dprintf(p->debug_fd, "[get_node_priority] node->type = %d\n",
-			node->type);
-	return (p->operators[node->type].priority);
-}
 
 enum e_nodetype	get_node_type(t_data *p, char *word)
 {
@@ -37,18 +29,26 @@ enum e_nodetype	get_node_type(t_data *p, char *word)
 
 int	get_nb_args(t_data *p)
 {
+	int	i;
 	int	nb_args;
 
 	nb_args = 0;
-	while (q_get(p->file_lex, nb_args)
-		&& get_node_type(p, q_get(p->file_lex, nb_args)) == nt_command)
+	i = 0;
+	while (q_get(p->file_lex, i)
+		&& get_node_type(p, q_get(p->file_lex, i)) <= nt_out_append)
 	{
-		nb_args++;
+		if (get_node_type(p, q_get(p->file_lex, i)) == nt_command)
+			nb_args++;
+		else
+			nb_args--;
+		i++;
 	}
+	if (p->debug_mode >= 3)
+		ft_printf("nb_args: %d\n", nb_args);
 	return (nb_args);
 }
 
-int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
+/*int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
 {
 	int		nb_args;
 	int		i;
@@ -69,13 +69,52 @@ int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
 			cmdnode->argument[i] = dequeue(p->file_lex);
 	}
 	return (nb_args);
-}
-		/*else
+}*/
+
+void	fill_cmd_args_core(t_data *p, char *arg0, t_cmdtree *cmdnode,
+							int nb_args)
+{
+	int		i;
+	int 	iarg;
+	char	*str;
+
+	i = 0;
+	iarg = 0;
+	while (iarg < nb_args)
+	{
+		if (iarg == 0 && arg0 != NULL)
+			cmdnode->argument[iarg++] = ft_strdup(arg0);
+		else
 		{
-			str = dequeue(p->file_lex);
-			cmdnode->argument[i] = ft_strdup(str);
-			free(str);
-		}*/
+			str = q_get(p->file_lex, i++);
+			if (get_node_type(p, str) == nt_command)
+				cmdnode->argument[iarg++] = str;
+			else
+				i++;
+		}
+		if (p->debug_mode >= 3)
+			ft_printf("arg[%d]= '%s'\n", iarg - 1, cmdnode->argument[iarg - 1]);
+	}
+	p->nextcmdpos = i + 1;
+}
+
+int	fill_cmd_args(t_data *p, char *arg0, t_cmdtree *cmdnode)
+{
+	int	nb_args;
+
+	nb_args = 0;
+	if (cmdnode->type == nt_command)
+		nb_args = get_nb_args(p) + 1;
+	else if (q_getsize(p->file_lex) > 0)
+		nb_args = 1;
+	cmdnode->argument = malloc((nb_args + 1) * sizeof(char *));
+	cmdnode->argument[nb_args] = NULL;
+	if (cmdnode->type == nt_command)
+		fill_cmd_args_core(p, arg0, cmdnode, nb_args);
+	else
+		cmdnode->argument[0] = dequeue(p->file_lex);
+	return (nb_args);
+}
 
 t_cmdtree	*new_node(t_data *p, char *word)
 {
@@ -100,8 +139,8 @@ t_cmdtree	*new_node(t_data *p, char *word)
 	if (node->type == nt_command)
 		fill_cmd_args(p, word, node);
 	else if (node->type < nt_pipe)
-		fill_cmd_args(p, NULL, node);
+		p->nextcmdpos -= fill_cmd_args(p, NULL, node);
 	if (node->type == nt_here_doc)
 		process_here_doc(node);
-	return (node);
+	return (p->nextcmdpos--, node);
 }

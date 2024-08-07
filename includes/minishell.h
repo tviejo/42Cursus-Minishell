@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/03 17:22:06 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 10:22:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_data
 	t_stack				*pile_npi;
 	t_queue				*file_lex;
 	struct s_cmdtree	*cmdtree;
+	int					nextcmdpos;
 	int					debug_mode;
 	int					debug_fd;
 	int					error_fd;
@@ -129,6 +130,8 @@ typedef struct s_cmdtree
 	struct s_cmdtree	*left;
 	struct s_cmdtree	*right;
 	enum e_subshell		subshell;
+	int					prnxpos;
+	struct s_cmdtree	*parent;
 }						t_command_tree;
 
 typedef t_command_tree	t_cmdtree;

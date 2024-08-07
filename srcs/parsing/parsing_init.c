@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 15:45:32 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:43:51 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,15 @@ void	free_cmdtree(t_data *p)
 	{
 		free_node(p->cmdtree);
 	}
+}
+
+/* Quitter proprement sur erreur (malloc fails)
+*/
+void	exit_parser(t_data *ms)
+{
+	depiler_operateurs_restants(ms);
+	purger_lexqueue(ms->file_lex);
+	purger_npistack(ms->pile_npi);
+	ms->cmdtree = NULL;
+	ms->error_code = 2;
 }

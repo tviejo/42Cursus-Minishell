@@ -50,6 +50,7 @@ SRCS		+= parsing/parsing_init.c
 SRCS		+= parsing/parsing_utils.c
 SRCS		+= parsing/parsing_utils2.c
 SRCS		+= parsing/parsing_print.c
+SRCS		+= parsing/parsing_print2.c
 
 SRCS		+= stack/stack.c
 SRCS		+= stack/stack_utils.c

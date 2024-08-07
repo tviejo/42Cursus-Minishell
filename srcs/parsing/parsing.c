@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 17:08:24 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:28:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
  * Si une commande se trouve dans la descendance gauche d'au moins un pipe son
  * type est nt_piped_cmd (sinon nt_command).
 */
-int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd)
+int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd, t_cmdtree *parent)
 {
 	t_cmdtree	*n;
 
@@ -37,6 +37,7 @@ int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd)
 	{
 		n = pop(p->pile_npi);
 		*node = n;
+		n->parent = parent;
 		n->nb_command = 0;
 		if (n->subshell == ss_YES && piped_cmd)
 			n->subshell = ss_piped;
@@ -47,10 +48,10 @@ int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd)
 		if (n->type <= nt_piped_cmd)
 			n->nb_command++;
 		else
-			n->nb_command += build_tree(p, &n->right, piped_cmd);
+			n->nb_command += build_tree(p, &n->right, piped_cmd, n);
 		if (n->type >= nt_pipe)
 			n->nb_command += build_tree(p, &n->left,
-					piped_cmd || n->type == nt_pipe);
+					piped_cmd || n->type == nt_pipe, n);
 		return (n->nb_command);
 	}
 	return (0);
@@ -93,16 +94,16 @@ void	process_operator(t_data *p, t_cmdtree *ope)
 	push(p->pile_ope, ope);
 }
 
-void	depiler_operateurs_restants(t_data *p)
+void	parser_core(t_data *p, t_cmdtree *node)
 {
-	t_cmdtree	*ope;
-
-	while (gettop(p->pile_ope))
-	{
-		ope = pop(p->pile_ope);
-		if (ope->type != nt_open_parenth)
-			push(p->pile_npi, ope);
-	}
+	if (node->type == nt_command)
+		push(p->pile_npi, node);
+	else if (node->type == nt_open_parenth)
+		push(p->pile_ope, node);
+	else if (node->type == nt_close_parenth)
+		process_close_parenth(p);
+	else
+		process_operator(p, node);
 }
 
 t_cmdtree	*parser(t_data *p)
@@ -110,25 +111,21 @@ t_cmdtree	*parser(t_data *p)
 	t_cmdtree	*node;
 	char		*str;
 
+	p->nextcmdpos = 0;
 	p->cmdtree = NULL;
 	while (q_getsize(p->file_lex) > 0)
 	{
 		str = dequeue(p->file_lex);
+		if (get_node_type(p, str) == nt_command && p->nextcmdpos-- > 0)
+			continue ;
 		node = new_node(p, str);
 		free(str);
 		if (node == NULL)
 			return (exit_parser(p), NULL);
-		if (node->type == nt_command)
-			push(p->pile_npi, node);
-		else if (node->type == nt_open_parenth)
-			push(p->pile_ope, node);
-		else if (node->type == nt_close_parenth)
-			process_close_parenth(p);
-		else
-			process_operator(p, node);
+		parser_core(p, node);
 	}
 	depiler_operateurs_restants(p);
 	if_debug_print_npi_stack(p);
-	build_tree(p, &p->cmdtree, false);
+	build_tree(p, &p->cmdtree, false, NULL);
 	return (p->cmdtree);
 }

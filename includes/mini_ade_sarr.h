@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_ade_sarr.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/01 11:40:59 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 08:18:40 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,20 @@ enum e_quote_state
 	double_quote
 };
 
+typedef struct s_printcmdtree
+{
+	int			targetdepth;
+	int			fd;
+	t_operator	*ope;
+	int			xpos;
+	bool		prnbranch;
+}	t_printcmdtree;
+
 char	*ft_strjoin2(char const *s1, char const *s2);
 char	*ft_stradd(char *s, char const *toadd);
 char	*ft_straddchar(char *s, char const c);
 char	*ft_int2str(int n);
+void	print_char_xtimes(int fd, char c, int times);
+void	print_str_xtimes(int fd, char *s, int times);
 
 #endif
