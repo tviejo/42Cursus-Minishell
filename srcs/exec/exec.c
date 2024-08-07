@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/06 19:06:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 23:03:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	is_a_directory(char *tmp, t_data *exec, t_cmdtree *tree)
 	}
 	if (tmp[i] == '\0')
 		directory_error(tree, exec, false);
+	else
+		directory_error(tree, exec, true);
 }
 
 static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)

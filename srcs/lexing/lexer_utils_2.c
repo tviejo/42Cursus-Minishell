@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/06 19:06:17 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 22:53:55 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	bad_token(char *cmdline, t_data *ms)
 {
-	if (*cmdline == '\\' || *cmdline == '!' || *cmdline == ':'
+	if ( *cmdline == '!' || *cmdline == ':'
 		|| *cmdline == ';')
 	{
 		ft_dprintf(2, "minishell: bad token '%c'\n", *cmdline);

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/06 15:43:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 22:54:19 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,7 @@ void	lexer(t_data *ms, char *cmdline)
 	quote_state = no_quote;
 	while (*cmdline)
 	{
-		if (bad_token(cmdline, ms))
-			break ;
-		else if (lex_quote(ms, &quote_state, cmdline, &lexstring))
+		if (lex_quote(ms, &quote_state, cmdline, &lexstring))
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &lexstring))
 			;
