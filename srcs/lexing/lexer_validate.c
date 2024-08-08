@@ -6,11 +6,11 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 15:32:22 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:40:54 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 bool	bad_token(char *cmdline, t_data *ms)
 {

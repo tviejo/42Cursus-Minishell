@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:15 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 21:59:09 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 17:49:26 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	signal_handler_process(void)
 {
 	signal(SIGINT, signal_sigint);
 	signal(SIGQUIT, signal_sigquit);
+	signal(SIGPIPE, signal_sigpipe);
 }
 
 void	signal_sigint_heredoc(int sig)

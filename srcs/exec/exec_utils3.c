@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:53:25 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/06 17:41:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/07 18:43:22 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@ void	init_exec(t_data *mshell)
 	mshell->oldtype = 0;
 	mshell->side = e_left;
 	calloc_pid(mshell, mshell->cmdtree);
+	mshell->max_pid = mshell->cmdtree->nb_command + 1;
 	mshell->dupstdin = dup(STDIN_FILENO);
 	mshell->dupstdout = dup(STDOUT_FILENO);
 	mshell->subshell = false;
-	mshell->redirected_infile = false;
-	mshell->redirected_outfile = false;
-	mshell->subshell_infile = NULL;
-	mshell->subshell_outfile = NULL;
 	mshell->end = false;
 }
 

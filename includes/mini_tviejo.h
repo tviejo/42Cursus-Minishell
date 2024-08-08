@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/06 16:39:03 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:21:09 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define NO_FILES "No such file or directory"
 # define MINI "minishell: "

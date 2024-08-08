@@ -1,4 +1,4 @@
-NAME		=	Minishell
+NAME		=	minishell
 
 SRC_DIR		=	srcs/
 
