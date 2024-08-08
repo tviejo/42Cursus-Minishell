@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 16:03:23 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:56:11 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void					ft_redirect_subshell(t_data *exec);
 /*				PARSING					*/
 
 void					lexer(t_data *ms, char *cmdline);
-void					validate_lexqueue(t_data *ms);
+bool					validate_lexqueue(t_data *ms);
 char					*get_token(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
 // enum e_quote_state		end_quote(t_data *ms, char **newcmdline);

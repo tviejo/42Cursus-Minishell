@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 16:25:57 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:48:59 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,4 @@ void	purger_lexqueue(t_queue *q)
 {
 	while (q_getsize(q) > 0)
 		free(dequeue(q));
-}
-
-void	validate_lexqueue(t_data *ms)
-{
-	enum e_nodetype	type;
-	char			*laststr;
-
-	if (q_getsize(ms->file_lex) > 0)
-	{
-		laststr = q_get(ms->file_lex, q_getsize(ms->file_lex) - 1);
-		type = get_node_type(ms, laststr);
-		if (type >= nt_infile && type <= nt_AND)
-		{
-			ft_dprintf(ms->error_fd, "%ssyntax error after token '%s': \
-missing operand\n", MINI, laststr);
-			purger_lexqueue(ms->file_lex);
-			ms->error_code = 1;
-		}
-	}
 }
