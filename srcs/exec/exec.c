@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 23:03:45 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:22:04 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,17 @@ static void	directory_error(t_command_tree *tree, t_data *exec, bool no_files)
 	}
 }
 
-static void	is_a_directory(char *tmp, t_data *exec, t_cmdtree *tree)
+static void	is_a_directory(char *path, t_data *exec, t_command_tree *tree)
 {
-	int	nb_point;
-	int	i;
+	struct stat	buf;
 
-	i = 0;
-	nb_point = 0;
-	while (tmp[i] != '\0' && (tmp[i] == '/' || tmp[i] == '.'))
+	if (stat(path, &buf) == 0)
 	{
-		if (tmp[i] == '.')
-			nb_point++;
-		else if (tmp[i] == '/')
-			nb_point = 0;
-		if (nb_point > 2)
+		if (S_ISDIR(buf.st_mode))
+			directory_error(tree, exec, false);
+		else
 			directory_error(tree, exec, true);
-		i++;
 	}
-	if (tmp[i] == '\0')
-		directory_error(tree, exec, false);
 	else
 		directory_error(tree, exec, true);
 }
