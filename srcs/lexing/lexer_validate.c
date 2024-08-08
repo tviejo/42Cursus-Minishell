@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 15:40:54 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:15:47 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 bool	bad_token(char *cmdline, t_data *ms)
 {
-	if (*cmdline == '!' || *cmdline == ':' || *cmdline == ';')
+	if ((*cmdline == '&' && cmdline[1] != '&')
+		|| *cmdline == '!' || *cmdline == ':' || *cmdline == ';')
 	{
-		ft_dprintf(2, "minishell: bad token '%c'\n", *cmdline);
+		ft_dprintf(2, "minishell: unsupported token '%c'\n", *cmdline);
 		purger_lexqueue(ms->file_lex);
 		ms->error_code = 2;
 		return (true);

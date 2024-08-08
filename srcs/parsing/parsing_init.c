@@ -6,12 +6,14 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:36 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/06 15:43:51 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:21:12 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* NB: unsuported tokens : '&',':',';','!'
+*/
 bool	init_parsing(t_data *p)
 {
 	static t_operator	operators[] = {{"cmd", 255}, {"piped", 255},
@@ -19,7 +21,8 @@ bool	init_parsing(t_data *p)
 	{"|", PRI_PIPE}, {"||", PRI_LOGIC}, {"&&", PRI_LOGIC},
 	{"(", -1}, {")", -1}, {NULL, 0}};
 	static char			*separators[] = {" ", "\t", "\n", "$", "'", "\"", "\\",
-		"<<", "<", ">>", ">", "||", "|", "&&", "(", ")", NULL};
+		"<<", "<", ">>", ">", "||", "|", "&&", "(", ")",
+		"&", ":", ";", "!", NULL};
 
 	p->operators = operators;
 	p->separators = separators;
