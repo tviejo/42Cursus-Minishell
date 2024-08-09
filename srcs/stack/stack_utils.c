@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 00:56:43 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:52:02 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	stack_print(t_stack *s, bool from_top,
 
 	s->print_elem_fct = print_elem;
 	s->print_elem_ctxarg = ctx;
-	ft_dprintf(s->print_fd, "[pile '%s']: ", s->name);
+	ft_dprintf(s->print_fd, "pile '%s': ", s->name);
 	if (getsize(s) == 0)
 		ft_dprintf(s->print_fd, "<vide>");
 	else if (from_top)

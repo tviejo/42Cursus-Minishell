@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 15:45:56 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:24:43 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	print_cmdtree(t_data *ms, int fd)
 	t_printcmdtree	pct;
 
 	if (ms->cmdtree == NULL)
-		ft_dprintf(fd, "  [cmdtree is NULL]\n");
+		ft_dprintf(fd, " [cmdtree is NULL]\n");
 	else
 	{
 		pct = (t_printcmdtree){.targetdepth = 0, fd, ms->operators, .xpos = 1,
@@ -117,5 +117,7 @@ void	print_cmdtree(t_data *ms, int fd)
 			pct.targetdepth++;
 			pct.xpos = 1;
 		}
+		if (ms->debug_mode > 1)
+			print_cmdtree_node_v1(ms->cmdtree, ms->operators, 0, fd);
 	}
 }

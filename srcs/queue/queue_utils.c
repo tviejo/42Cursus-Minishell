@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 00:53:31 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:51:45 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	queue_print(t_queue *q, bool reverse,
 
 	q->print_elem_fct = print_elem;
 	q->print_elem_ctxarg = ctx;
-	ft_dprintf(q->print_fd, "[file '%s']: ", q->name);
+	ft_dprintf(q->print_fd, "file '%s': ", q->name);
 	if (q_getsize(q) == 0)
 		ft_dprintf(q->print_fd, "<vide>");
 	if (reverse)

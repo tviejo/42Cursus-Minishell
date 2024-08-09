@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/08 14:48:59 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:57:25 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ char	*get_token(t_data *ms, char **cmdline, char *outstr, int maxlen)
 	return (outstr);
 }
 
-/*enum e_quote_state	end_quote(t_data *ms, char **newcmdline)
+void	if_debug_print_lex_queue(t_data *ms)
 {
-	if (*newcmdline)
+	if (ms->debug_mode > 0)
 	{
-		enqueue(ms->file_lex, *newcmdline);
-		*newcmdline = NULL;
+		ft_dprintf(ms->file_lex->print_fd, " ");
+		queue_print(ms->file_lex, false,
+			(t_q_prn_elem_fct)print_queue_node, ms);
 	}
-	return (no_quote);
-}*/
+}
+
 void	print_queue_node(char *str, t_data *ms)
 {
 	ft_dprintf(ms->debug_fd, "'%s'", str);

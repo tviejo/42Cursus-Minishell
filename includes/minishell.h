@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 16:01:04 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:29:12 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,17 +231,17 @@ void					wait_process_index(t_data *exec, int index);
 int						return_fork_index_subshell(t_data *exec);
 void					wait_subshell(t_data *exec);
 
-/*				PARSING					*/
+/*				Lexer & Parser					*/
 
-void					lexer(t_data *ms, char *cmdline);
+bool					lexer(t_data *ms, char *cmdline);
+void					if_debug_print_lex_queue(t_data *ms);
 bool					validate_lexqueue(t_data *ms);
 char					*get_token(t_data *ms, char **cmdline, char *outstr,
 							int maxlen);
-// enum e_quote_state		end_quote(t_data *ms, char **newcmdline);
 
+t_cmdtree				*parser(t_data *ms);
 bool					init_parsing(t_data *ms);
 void					free_parsing(t_data *ms);
-t_cmdtree				*parser(t_data *ms);
 void					print_cmdtree(t_data *ms, int fd);
 void					free_cmdtree(t_data *ms);
 void					free_node(t_cmdtree *node);
@@ -257,7 +257,7 @@ void					purger_npistack(t_stack *s);
 void					purger_lexqueue(t_queue *q);
 void					depiler_operateurs_restants(t_data *p);
 void					exit_parser(t_data *ms);
-bool					bad_token(char *cmdline, t_data *ms);
+bool					unsupported_token(t_data *ms, char *cmdline);
 
 char					*get_env_var(t_data *ms, char *varname);
 

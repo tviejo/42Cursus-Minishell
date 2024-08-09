@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 08:16:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 08:24:11 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 09:59:18 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	if_debug_print_npi_stack(t_data *p)
 {
 	if (p->debug_mode > 0)
 	{
-		ft_dprintf(p->pile_npi->print_fd, "  ");
+		ft_dprintf(p->pile_npi->print_fd, " ");
 		stack_print(p->pile_npi, false,
 			(t_print_elem_fct)print_stack_node, p);
 	}

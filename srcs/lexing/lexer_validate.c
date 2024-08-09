@@ -6,13 +6,13 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 16:15:47 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:11:02 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	bad_token(char *cmdline, t_data *ms)
+bool	unsupported_token(t_data *ms, char *cmdline)
 {
 	if ((*cmdline == '&' && cmdline[1] != '&')
 		|| *cmdline == '!' || *cmdline == ':' || *cmdline == ';')

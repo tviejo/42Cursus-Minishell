@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:19:40 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 11:28:22 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:37:02 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
  * Si une commande se trouve dans la descendance gauche d'au moins un pipe son
  * type est nt_piped_cmd (sinon nt_command).
 */
-int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd, t_cmdtree *parent)
+int	build_tree(t_data *ms, t_cmdtree **node, bool piped_cmd, t_cmdtree *parent)
 {
 	t_cmdtree	*n;
 
-	if (getsize(p->pile_npi))
+	if (getsize(ms->pile_npi))
 	{
-		n = pop(p->pile_npi);
+		n = pop(ms->pile_npi);
 		*node = n;
 		n->parent = parent;
 		n->nb_command = 0;
@@ -48,84 +48,94 @@ int	build_tree(t_data *p, t_cmdtree **node, bool piped_cmd, t_cmdtree *parent)
 		if (n->type <= nt_piped_cmd)
 			n->nb_command++;
 		else
-			n->nb_command += build_tree(p, &n->right, piped_cmd, n);
+			n->nb_command += build_tree(ms, &n->right, piped_cmd, n);
 		if (n->type >= nt_pipe)
-			n->nb_command += build_tree(p, &n->left,
+			n->nb_command += build_tree(ms, &n->left,
 					piped_cmd || n->type == nt_pipe, n);
 		return (n->nb_command);
 	}
 	return (0);
 }
 
-void	process_close_parenth(t_data *p)
+void	process_close_parenth(t_data *ms)
 {
 	t_cmdtree	*ope;
 	t_cmdtree	*lastope;
+	t_cmdtree	*cmd;
 
 	lastope = NULL;
-	while (getsize(p->pile_ope))
+	while (getsize(ms->pile_ope))
 	{
-		ope = pop(p->pile_ope);
+		ope = pop(ms->pile_ope);
 		if (ope->type == nt_open_parenth)
 			break ;
-		push(p->pile_npi, ope);
+		push(ms->pile_npi, ope);
 		lastope = ope;
 	}
 	if (lastope)
 		lastope->subshell = ss_YES;
+	else
+	{
+		cmd = gettop(ms->pile_npi);
+		if (cmd && cmd->argument
+			&& ft_strncmp(cmd->argument[0], "exit", 1024) == 0)
+			cmd->subshell = true;
+	}
 }
 
-void	process_operator(t_data *p, t_cmdtree *ope)
+void	process_operator(t_data *ms, t_cmdtree *ope)
 {
-	const int	priority = get_node_priority(p, ope);
+	const int	priority = get_node_priority(ms, ope);
 
 	if (priority == PRI_REDIR)
 	{
-		push(p->pile_ope, ope);
+		push(ms->pile_ope, ope);
 		return ;
 	}
-	while (gettop(p->pile_ope))
+	while (gettop(ms->pile_ope))
 	{
-		if (priority <= get_node_priority(p, gettop(p->pile_ope)))
-			push(p->pile_npi, pop(p->pile_ope));
+		if (priority <= get_node_priority(ms, gettop(ms->pile_ope)))
+			push(ms->pile_npi, pop(ms->pile_ope));
 		else
 			break ;
 	}
-	push(p->pile_ope, ope);
+	push(ms->pile_ope, ope);
 }
 
-void	parser_core(t_data *p, t_cmdtree *node)
+void	parser_core(t_data *ms, t_cmdtree *node)
 {
 	if (node->type == nt_command)
-		push(p->pile_npi, node);
+		push(ms->pile_npi, node);
 	else if (node->type == nt_open_parenth)
-		push(p->pile_ope, node);
+		push(ms->pile_ope, node);
 	else if (node->type == nt_close_parenth)
-		process_close_parenth(p);
+		process_close_parenth(ms);
 	else
-		process_operator(p, node);
+		process_operator(ms, node);
 }
 
-t_cmdtree	*parser(t_data *p)
+t_cmdtree	*parser(t_data *ms)
 {
 	t_cmdtree	*node;
 	char		*str;
 
-	p->nextcmdpos = 0;
-	p->cmdtree = NULL;
-	while (q_getsize(p->file_lex) > 0)
+	ms->nextcmdpos = 0;
+	ms->cmdtree = NULL;
+	while (q_getsize(ms->file_lex) > 0)
 	{
-		str = dequeue(p->file_lex);
-		if (get_node_type(p, str) == nt_command && p->nextcmdpos-- > 0)
+		str = dequeue(ms->file_lex);
+		if (get_node_type(ms, str) == nt_command && ms->nextcmdpos-- > 0)
 			continue ;
-		node = new_node(p, str);
+		node = new_node(ms, str);
 		free(str);
 		if (node == NULL)
-			return (exit_parser(p), NULL);
-		parser_core(p, node);
+			return (exit_parser(ms), NULL);
+		parser_core(ms, node);
 	}
-	depiler_operateurs_restants(p);
-	if_debug_print_npi_stack(p);
-	build_tree(p, &p->cmdtree, false, NULL);
-	return (p->cmdtree);
+	depiler_operateurs_restants(ms);
+	if_debug_print_npi_stack(ms);
+	build_tree(ms, &ms->cmdtree, false, NULL);
+	if (ms->debug_mode > 0)
+		print_cmdtree(ms, ms->debug_fd);
+	return (ms->cmdtree);
 }
