@@ -6,11 +6,31 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 11:16:36 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 17:54:58 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	do_all_redir(t_command_tree *tree, t_data *exec)
+{
+	while (tree != NULL && is_redir(tree) == true && tree->subshell == ss_NO)
+	{
+		if (ft_redir(tree, exec) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		tree = tree->right;
+	}
+	return (EXIT_SUCCESS);
+}
+
+t_command_tree	*get_next_command(t_command_tree *tree)
+{
+	if (tree->type == nt_command || tree->type == nt_piped_cmd)
+		return (tree);
+	if (tree->right != NULL)
+		return (get_next_command(tree->right));
+	return (tree);
+}
 
 int	redir_outfile(t_command_tree *tree, t_data *exec)
 {
@@ -24,6 +44,7 @@ int	redir_outfile(t_command_tree *tree, t_data *exec)
 	{
 		ft_dprintf(2, "minishell: %s: Permission denied\n", tree->argument[0]);
 		exec->error_code = 1;
+		return (EXIT_FAILURE);
 	}
 	dup2(exec->outfile, STDOUT_FILENO);
 	close(exec->outfile);
@@ -32,10 +53,16 @@ int	redir_outfile(t_command_tree *tree, t_data *exec)
 
 int	redir_infile(t_command_tree *tree, t_data *exec)
 {
+	if (access(tree->argument[0], F_OK) == -1)
+	{
+		ft_dprintf(2, "minishell: %s: %s\n", tree->argument[0], NO_FILES);
+		exec->error_code = 1;
+		return (EXIT_FAILURE);
+	}
 	exec->infile = open(tree->argument[0], O_RDONLY);
 	if (exec->infile == -1)
 	{
-		ft_dprintf(2, "minishel: %s: %s\n", tree->argument[0], NO_FILES);
+		ft_dprintf(2, "minishel: %s: %s\n", tree->argument[0], NO_PERM);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}

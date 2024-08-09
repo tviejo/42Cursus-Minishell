@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 13:29:12 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:13:05 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct s_data
 	bool				redirected_outfile;
 	char				*subshell_infile;
 	char				*subshell_outfile;
+	int					pid_len;
 	bool				end;
 }						t_data;
 
@@ -201,7 +202,7 @@ int						exec_node_left(t_cmdtree *tree, t_data *exec);
 int						exec_node_right(t_cmdtree *tree, t_data *exec);
 bool					is_node(t_cmdtree *tree);
 bool					is_redir(t_cmdtree *tree);
-void					ft_redir(t_command_tree *tree, t_data *exec);
+int						ft_redir(t_command_tree *tree, t_data *exec);
 void					signal_init(void);
 void					signal_handler_process(void);
 void					signal_handler_here_doc(int sig);
@@ -230,6 +231,10 @@ void					signal_sigpipe(int sig);
 void					wait_process_index(t_data *exec, int index);
 int						return_fork_index_subshell(t_data *exec);
 void					wait_subshell(t_data *exec);
+int						do_all_redir(t_command_tree *tree, t_data *exec);
+t_command_tree			*get_next_command(t_command_tree *tree);
+int						find_closest_subshell(t_command_tree *tree);
+void					close_pipe_2(int *fdpipe);
 
 /*				Lexer & Parser					*/
 

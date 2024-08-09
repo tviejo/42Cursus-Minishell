@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 19:14:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 13:55:05 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	return_fork_index_subshell(t_data *exec)
 {
 	int	index;
 
-	index = exec->max_pid + 1;
+	index = exec->max_pid;
 	while (exec->pid[index] != -10)
 		index++;
 	return (index);
