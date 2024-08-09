@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 21:49:35 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:01:51 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 char	*read_prompt(t_data *mshell)
 {
 	char	*cmdline;
-	char *prompt;
+	char	*prompt;
 
 	prompt = create_prompt(mshell);
 	cmdline = readline(prompt);
@@ -54,8 +54,8 @@ void	lex_and_parse(t_data *ms, char *cmdline)
 {
 	lexer(ms, cmdline);
 	if (ms->debug_mode > 0)
-		queue_print(ms->file_lex, false,
-			(t_q_prn_elem_fct)print_queue_node, ms);
+		queue_print(ms->file_lex, false, (t_q_prn_elem_fct)print_queue_node,
+			ms);
 	parser(ms);
 	if (ms->debug_mode > 0)
 		print_cmdtree(ms, ms->debug_fd);
