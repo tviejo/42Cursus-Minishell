@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 16:48:42 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 19:38:11 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	child_process(t_command_tree *tree, t_data *exec)
 		else
 			tree = get_next_command(tree);
 		exec_cmd(tree, exec);
+		ft_close_error(tree, exec);
 		exit(exec->error_code);
 	}
 	else
@@ -74,6 +75,7 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 		else
 			tree = get_next_command(tree);
 		exec_cmd(tree, exec);
+		ft_close_error(tree, exec);
 		exit(exec->error_code);
 	}
 	else

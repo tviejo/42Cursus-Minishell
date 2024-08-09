@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/05 20:02:07 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 19:35:48 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	exit_parameter(t_data *exec, int return_value)
 
 int	ft_exit(t_command_tree *tree, t_data *exec)
 {
-	printf("exit\n");
+	if (exec->oldtype != nt_pipe)
+		ft_putstr_fd("exit\n", 1);
 	if (tree->argument[1] != NULL)
 	{
 		if (ft_isnumber(tree->argument[1]) == false)
