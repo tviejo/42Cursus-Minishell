@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 04:05:33 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/27 04:09:39 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:49:00 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*get_env_var(t_data *ms, char *varname)
 
 	i = -1;
 	while (ms->env[++i])
-		if (ft_strncmp(ms->env[i], varname, namelen) == 0)
+		if (ft_strncmp(ms->env[i], varname, namelen) == 0
+			&& ms->env[i][namelen] == '=')
 			return (ms->env[i] + namelen + 1);
 	return (NULL);
 }

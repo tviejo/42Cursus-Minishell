@@ -6,19 +6,13 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:03:34 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:19:35 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define TOKEN_MAXLEN 511
-
-enum e_quote_state	lex_quote_open(enum e_quote_state qstate, char **lexstring)
-{
-	*lexstring = ft_stradd(*lexstring, "");
-	return (qstate);
-}
 
 bool	lex_quote(t_data *ms, enum e_quote_state *quote_state, char *cmdline,
 		char **lexstring)

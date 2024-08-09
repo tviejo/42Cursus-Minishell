@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 20:13:05 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:20:37 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,8 @@ void					close_pipe_2(int *fdpipe);
 /*				Lexer & Parser					*/
 
 bool					lexer(t_data *ms, char *cmdline);
+enum e_quote_state		lex_quote_open(enum e_quote_state qstate,
+							char **lexstring);
 void					if_debug_print_lex_queue(t_data *ms);
 bool					validate_lexqueue(t_data *ms);
 char					*get_token(t_data *ms, char **cmdline, char *outstr,
