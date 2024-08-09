@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 21:57:07 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:02:25 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	print_minishell(void)
 	return (0);
 }
 
-char *create_prompt(t_data *mshell)
+char	*create_prompt(t_data *mshell)
 {
-	char *prompt;
-	char *prompt2;
-	char buffer[4096];
+	char	*prompt;
+	char	*prompt2;
+	char	buffer[4096];
 
 	getcwd(buffer, 4096);
 	prompt2 = ft_strjoin(CBLUE CBOLD, buffer);
