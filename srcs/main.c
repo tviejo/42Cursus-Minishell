@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 22:01:51 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:47:39 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **env)
 	char	*cmdline;
 	t_data	mshell;
 
+	clear_terminal(env);
 	init(&mshell, argc, argv, env);
 	while (true)
 	{
@@ -96,5 +97,6 @@ int	main(int argc, char **argv, char **env)
 		free_cmdtree(&mshell);
 	}
 	ft_printf("exit\n");
+	clear_terminal(env);
 	return (free_env(&mshell), free_parsing(&mshell), mshell.error_code);
 }
