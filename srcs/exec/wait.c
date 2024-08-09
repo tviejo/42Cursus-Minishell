@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 19:10:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 14:05:43 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	wait_all_process(t_data *exec)
 		process = process->next;
 	while (process && process->pid_index != -10)
 	{
-		while (process->pid_index > exec->max_pid)
+		while (process && process->pid_index > exec->max_pid
+			&& process->pid_index != -10)
 			process = process->next;
 		waitpid(exec->pid[process->pid_index], &status, 0);
 		process->pid_index = -10;
@@ -48,7 +49,7 @@ void	wait_subshell(t_data *exec)
 		process = process->next;
 	while (process && process->pid_index != -10)
 	{
-		while (process->pid_index < exec->max_pid)
+		while (process->pid_index < exec->max_pid && process->pid_index != -10)
 			process = process->next;
 		waitpid(exec->pid[process->pid_index], &status, 0);
 		process->pid_index = -10;

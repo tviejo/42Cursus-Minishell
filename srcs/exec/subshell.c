@@ -6,11 +6,18 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:11:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 18:54:01 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 14:06:17 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static t_command_tree	*get_next_subshell(t_command_tree *tree)
+{
+	while (tree->subshell == ss_NO)
+		tree = tree->right;
+	return (tree);
+}
 
 void	exec_normal_subshell(t_command_tree *tree, t_data *exec)
 {
@@ -22,6 +29,10 @@ void	exec_normal_subshell(t_command_tree *tree, t_data *exec)
 	create_fork(tree, exec, index);
 	if (exec->pid[index] == 0)
 	{
+		if (do_all_redir(tree, exec) == EXIT_FAILURE)
+			exit(EXIT_FAILURE);
+		else
+			tree = get_next_subshell(tree);
 		tree->subshell = ss_NO;
 		exec->subshell = true;
 		exec_cmdtree(tree, exec);
@@ -45,26 +56,25 @@ void	exec_piped_subshell(t_command_tree *tree, t_data *exec)
 		close(fdpipe[0]);
 		dup2(fdpipe[1], STDOUT_FILENO);
 		close(fdpipe[1]);
+		if (do_all_redir(tree, exec) == EXIT_FAILURE)
+			exit(EXIT_FAILURE);
+		else
+			tree = get_next_subshell(tree);
 		tree->subshell = ss_NO;
 		exec->subshell = true;
 		exec_cmdtree(tree, exec);
+		ft_close_error(tree, exec);
 		exit(exec->error_code);
 	}
 	else
-	{
-		dup2(fdpipe[0], STDIN_FILENO);
-		close(fdpipe[0]);
-		close(fdpipe[1]);
-	}
+		close_pipe_2(fdpipe);
 }
 
 void	exec_subshell(t_command_tree *tree, t_data *exec)
 {
-	if (is_redir(tree) == true)
-		ft_redir(tree, exec);
-	if (tree->subshell >= ss_YES)
+	if (find_closest_subshell(tree) >= ss_YES)
 	{
-		if (tree->subshell == ss_piped)
+		if (find_closest_subshell(tree) == ss_piped)
 		{
 			exec_piped_subshell(tree, exec);
 		}

@@ -6,11 +6,31 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 11:16:36 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 14:05:14 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	do_all_redir(t_command_tree *tree, t_data *exec)
+{
+	while (tree != NULL && is_redir(tree) == true && tree->subshell == ss_NO)
+	{
+		if (ft_redir(tree, exec) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		tree = tree->right;
+	}
+	return (EXIT_SUCCESS);
+}
+
+t_command_tree	*get_next_command(t_command_tree *tree)
+{
+	if (tree->type == nt_command || tree->type == nt_piped_cmd)
+		return (tree);
+	if (tree->right != NULL)
+		return (get_next_command(tree->right));
+	return (tree);
+}
 
 int	redir_outfile(t_command_tree *tree, t_data *exec)
 {

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:19 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/06 19:02:46 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 13:21:41 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	cmd_process_and_or(t_command_tree *tree, t_data *exec)
 	int	index;
 
 	signal_handler_process();
+	if (do_all_redir(tree, exec) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	else
+		tree = get_next_command(tree);
 	if (find_builtin(tree) > 0 && exec->oldtype != nt_pipe)
 	{
 		exec_builtin(tree, exec);

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/06 18:54:37 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 13:38:24 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	lex_and_parse(t_data *ms, char *cmdline)
 
 void	execute(t_data *mshell)
 {
-	if (mshell->cmdtree == NULL || mshell->cmdtree->nb_command == 0)
+	if (mshell->cmdtree == NULL)
 		return ;
 	init_exec(mshell);
 	exec_cmdtree(mshell->cmdtree, mshell);
