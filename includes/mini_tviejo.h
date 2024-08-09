@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 22:01:30 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:51:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define MINI "minishell: "
 # define IS_DIR "is a directory"
 # define NO_PERM "Permission denied"
-
+# define CLEAR_MODE true
 # define CRED "\001\e[0;31m\002"
 # define CGREEN "\001\e[0;32m\002"
 # define CBLUE "\001\e[0;34m\002"

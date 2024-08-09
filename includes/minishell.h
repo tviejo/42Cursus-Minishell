@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 21:28:47 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:45:30 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ t_command_tree			*get_next_command(t_command_tree *tree);
 int						find_closest_subshell(t_command_tree *tree);
 void					close_pipe_2(int *fdpipe);
 char					*create_prompt(t_data *mshell);
+void					clear_terminal(char **env);
 
 /*				PARSING					*/
 
