@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 21:31:39 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:57:07 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	print_minishell(void)
 {
-	ft_dprintf(2, CYELLOW CBOLD);
+	ft_dprintf(2, CBLUE CBOLD);
 	ft_dprintf(2, "    __  ________   ___________ __  __________    __ \n");
 	ft_dprintf(2, "   /  |/  /  _/ | / /  _/ ___// / / / ____/ /   / / \n");
 	ft_dprintf(2, "  / /|_/ // //  |/ // / |__ |/ /_/ / __/ / /   / /  \n");
@@ -32,7 +32,7 @@ char *create_prompt(t_data *mshell)
 	char buffer[4096];
 
 	getcwd(buffer, 4096);
-	prompt2 = ft_strjoin(CBLUE, buffer);
+	prompt2 = ft_strjoin(CBLUE CBOLD, buffer);
 	prompt = ft_strjoin(prompt2, RESET);
 	free(prompt2);
 	if (mshell->error_code != 0)
