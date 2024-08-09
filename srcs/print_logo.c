@@ -6,11 +6,28 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 22:02:25 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 23:03:46 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clear_terminal(char **env)
+{
+	char	*arg[2];
+
+	arg[0] = "/usr/bin/clear";
+	arg[1] = NULL;
+	if (CLEAR_MODE)
+	{
+		if (fork() == 0)
+		{
+			execve(arg[0], arg, env);
+			exit(0);
+		}
+		wait(NULL);
+	}
+}
 
 int	print_minishell(void)
 {

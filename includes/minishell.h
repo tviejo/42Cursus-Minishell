@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 23:04:00 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 23:20:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 
 # include "mini_ade_sarr.h"
 # include "mini_tviejo.h"
+
+# define CLEAR_MODE true
 
 extern int				g_signal;
 
@@ -236,6 +238,7 @@ t_command_tree			*get_next_command(t_command_tree *tree);
 int						find_closest_subshell(t_command_tree *tree);
 void					close_pipe_2(int *fdpipe);
 char					*create_prompt(t_data *mshell);
+void					clear_terminal(char **env);
 
 /*				Lexer & Parser					*/
 
