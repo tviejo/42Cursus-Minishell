@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 19:35:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:02:38 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	ft_exit(t_command_tree *tree, t_data *exec)
 	{
 		if (ft_isnumber(tree->argument[1]) == false)
 		{
-			ft_dprintf(2, "%sexit: %s: numeric argument required\n", MINI,
-				tree->argument[1]);
+			ft_dprintf(2, CRED "%sexit: %s: numeric argument required\n" RESET,
+				MINI, tree->argument[1]);
 			exit_parameter(exec, 2);
 		}
 		else if (tree->argument[2] != NULL)

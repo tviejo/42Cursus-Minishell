@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 20:20:37 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 23:04:00 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ int						do_all_redir(t_command_tree *tree, t_data *exec);
 t_command_tree			*get_next_command(t_command_tree *tree);
 int						find_closest_subshell(t_command_tree *tree);
 void					close_pipe_2(int *fdpipe);
+char					*create_prompt(t_data *mshell);
 
 /*				Lexer & Parser					*/
 

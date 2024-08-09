@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 17:44:48 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 22:02:51 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ static void	directory_error(t_command_tree *tree, t_data *exec, bool no_files)
 {
 	if (no_files == true)
 	{
-		ft_dprintf(2, "%s%s: %s\n", MINI, tree->argument[0], NO_FILES);
+		ft_dprintf(2, CRED "%s%s: %s\n" RESET, MINI, tree->argument[0],
+			NO_FILES);
 		ft_close_error(tree, exec);
 		exec->error_code = 127;
 		exit(exec->error_code);
 	}
 	else
 	{
-		ft_dprintf(2, "%s%s: %s\n", MINI, tree->argument[0], IS_DIR);
+		ft_dprintf(2, CRED "%s%s: %s\n" RESET, MINI, tree->argument[0], IS_DIR);
 		ft_close_error(tree, exec);
 		exec->error_code = 126;
 		exit(exec->error_code);
@@ -55,7 +56,8 @@ static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 	{
 		if (access(tree->argument[0], F_OK | X_OK) == 0)
 			return (tree->argument[0]);
-		ft_dprintf(2, "%s%s: %s\n", MINI, tree->argument[0], NO_FILES);
+		ft_dprintf(2, CRED "%s%s: %s\n" RESET, MINI, tree->argument[0],
+			NO_FILES);
 		free(path);
 		return (NULL);
 	}

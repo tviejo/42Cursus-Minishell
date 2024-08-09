@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 13:11:02 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 23:09:34 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ bool	unsupported_token(t_data *ms, char *cmdline)
 	if ((*cmdline == '&' && cmdline[1] != '&')
 		|| *cmdline == '!' || *cmdline == ':' || *cmdline == ';')
 	{
-		ft_dprintf(2, "minishell: unsupported token '%c'\n", *cmdline);
+		ft_dprintf(ms->error_fd, "minishell: unsupported token '%c'\n",
+			*cmdline);
 		purger_lexqueue(ms->file_lex);
 		ms->error_code = 2;
 		return (true);

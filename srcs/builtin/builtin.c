@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:01 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 11:55:02 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:33:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	exec_builtin(t_command_tree *tree, t_data *exec)
 {
 	int	builtin;
 
+	exec->error_code = 0;
 	builtin = find_builtin(tree);
 	if (builtin == b_echo)
 		return (ft_echo(tree));
