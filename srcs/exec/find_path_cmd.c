@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:40 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 18:46:22 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:20:39 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*find_cmd(char **cmd, char **paths)
 			return (cmd[0]);
 		else
 		{
-			ft_dprintf(2, "%s%s: %s\n", MINI, cmd[0], NO_PERM);
+			ft_dprintf(2, CRED "%s%s: %s\n" RESET, MINI, cmd[0], NO_PERM);
 			return (NULL);
 		}
 	}
@@ -76,6 +76,6 @@ char	*find_cmd(char **cmd, char **paths)
 	ft_free_split(paths);
 	if (tmp != NULL)
 		return (tmp);
-	ft_dprintf(2, "%s%s: command not found\n", MINI, cmd[0]);
+	ft_dprintf(2, CRED "%s%s: command not found\n" RESET, MINI, cmd[0]);
 	return (NULL);
 }

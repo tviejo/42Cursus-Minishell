@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:13 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:45:06 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:19:27 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(t_data *exec, t_command_tree *tree)
 	i = 0;
 	if (tree->argument[1] != NULL)
 	{
-		ft_dprintf(2, "env: '%s': %s\n", tree->argument[1], NO_FILES);
+		ft_dprintf(2, CRED "env: '%s': %s\n" RESET, tree->argument[1], NO_FILES);
 		exec->error_code = 127;
 		return (EXIT_FAILURE);
 	}

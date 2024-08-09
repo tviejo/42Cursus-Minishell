@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_print.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 15:45:56 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/09 21:18:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	print_cmdtree_node_v1(t_cmdtree *cmdtree, t_operator *ope, int depth,
 
 	if (cmdtree)
 	{
-		ft_dprintf(fd, "[depth:%d][nbcmd:%d][sub:%d][%s]", depth,
+		ft_dprintf(fd,  "[depth:%d][nbcmd:%d][sub:%d][%s]" , depth,
 			cmdtree->nb_command, cmdtree->subshell, ope[cmdtree->type].token);
 		args = cmdtree->argument;
 		if (args)
 			while (*args)
-				ft_dprintf(fd, " '%s'", *args++);
-		ft_dprintf(fd, "\n");
+				ft_dprintf(fd, " '%s'" , *args++);
+		ft_dprintf(fd, "\n" );
 		if (cmdtree->left)
 			print_cmdtree_node_v1(cmdtree->left, ope, depth + 1, fd);
 		if (cmdtree->right)

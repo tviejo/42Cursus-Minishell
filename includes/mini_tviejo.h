@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 17:42:45 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:21:20 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@
 # define MINI "minishell: "
 # define IS_DIR "is a directory"
 # define NO_PERM "Permission denied"
+
+#define CRED "\001\e[0;31m\002"
+#define CGREEN "\001\e[0;32m\002"
+#define CBLUE "\001\e[0;34m\002"
+#define CYELLOW "\001\e[0;33m\002"
+#define CMAGENTA "\001\e[0;35m\002"
+#define CCYAN "\001\e[0;36m\002"
+#define CBOLD "\001\e[1m\002"
+#define CITALIC "\001\e[3m\002"
+#define CORANGE "\001\e[38;5;208m\002"
+#define RESET   "\001\e[0m\002"
 
 enum		e_builtin
 {

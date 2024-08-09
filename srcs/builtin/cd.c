@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/02 13:47:23 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:33:28 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	cd_go_home(t_data *exec)
 	pwd = find_path("HOME=", exec);
 	if (pwd == NULL)
 	{
-		ft_dprintf(2, "%scd: HOME not set\n", MINI);
+		ft_dprintf(2, CRED "%scd: HOME not set\n" RESET, MINI);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
@@ -58,7 +58,7 @@ int	cd_go_path(t_data *exec, char *path)
 
 	if (chdir(path) == -1)
 	{
-		ft_dprintf(2, "cd: %s: %s\n", path, NO_FILES);
+		ft_dprintf(2, CRED"cd: %s: %s\n" RESET, path, NO_FILES);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
@@ -92,6 +92,7 @@ int	cd_go_back(t_data *exec)
 	update_oldpwm(exec);
 	update_pwd(exec, pwd);
 	chdir(pwd);
+	free(pwd);
 	return (EXIT_SUCCESS);
 }
 
@@ -118,7 +119,7 @@ int	ft_cd(t_command_tree *tree, t_data *exec)
 	{
 		update_oldpwm(exec);
 		cd_go_path(exec, tree->argument[1]);
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
 	return (EXIT_SUCCESS);
 }
