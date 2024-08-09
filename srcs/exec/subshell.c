@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:11:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 14:06:17 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 18:41:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exec_normal_subshell(t_command_tree *tree, t_data *exec)
 	if (exec->pid[index] == 0)
 	{
 		if (do_all_redir(tree, exec) == EXIT_FAILURE)
-			exit(EXIT_FAILURE);
+			exit(exec->error_code);
 		else
 			tree = get_next_subshell(tree);
 		tree->subshell = ss_NO;
@@ -57,7 +57,7 @@ void	exec_piped_subshell(t_command_tree *tree, t_data *exec)
 		dup2(fdpipe[1], STDOUT_FILENO);
 		close(fdpipe[1]);
 		if (do_all_redir(tree, exec) == EXIT_FAILURE)
-			exit(EXIT_FAILURE);
+			exit(exec->error_code);
 		else
 			tree = get_next_subshell(tree);
 		tree->subshell = ss_NO;

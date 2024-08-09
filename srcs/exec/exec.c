@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 10:22:04 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 17:44:48 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,9 @@ static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 			return (tree->argument[0]);
 		ft_dprintf(2, "%s%s: %s\n", MINI, tree->argument[0], NO_FILES);
 		free(path);
-		exec->error_code = 127;
-		ft_close_error(tree, exec);
 		return (NULL);
 	}
 	tmp = find_cmd(tree->argument, ft_split(path, ':'));
-	if (tmp == NULL)
-	{
-		exec->error_code = 127;
-		ft_dprintf(2, "%s%s: command not found\n", MINI, tree->argument[0]);
-		return (tmp);
-	}
 	return (tmp);
 }
 
@@ -75,20 +67,23 @@ static void	normal_exec(t_command_tree *tree, t_data *exec)
 {
 	char	*tmp;
 
-	if (tree->argument[0][0] == '/' || tree->argument[0][0] == '.')
-		is_a_directory(tree->argument[0], exec, tree);
 	tmp = find_exec_cmd(tree, exec);
 	if (tmp == NULL)
 	{
 		free(tmp);
 		ft_close_error(tree, exec);
+		exec->error_code = 127;
 		exit(exec->error_code);
 	}
 	else
 	{
 		exec->error_code = execve(tmp, tree->argument, exec->env);
+		if (errno == EACCES)
+			is_a_directory(tree->argument[0], exec, tree);
+		else
+			perror("minishell");
+		ft_close_error(tree, exec);
 		free(tmp);
-		perror("minishell");
 		exit(exec->error_code);
 	}
 }
