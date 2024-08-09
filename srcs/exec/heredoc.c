@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:50 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 15:17:20 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:22:10 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static void	print_incorrect_delimiter_error(char *limiter, int nb_line)
 {
-	ft_dprintf(2, "%swarning: here-document at line%d", MINI, nb_line);
-	ft_dprintf(2, "delimited by end-of-file (wanted '%s')\n", limiter);
+	ft_dprintf(2, CORANGE "%swarning: here-document at line%d" RESET, MINI,
+		nb_line);
+	ft_dprintf(2, CORANGE "delimited by end-of-file (wanted '%s')\n" RESET,
+		limiter);
 }
 
 static struct s_here_doc	open_here_document(void)

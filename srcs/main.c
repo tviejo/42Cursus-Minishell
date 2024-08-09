@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 16:39:17 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 21:49:35 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 	print_minishell();
 }
 
-char	*read_prompt(void)
+char	*read_prompt(t_data *mshell)
 {
 	char	*cmdline;
+	char *prompt;
 
-	cmdline = readline("minishell> ");
+	prompt = create_prompt(mshell);
+	cmdline = readline(prompt);
 	while (cmdline != NULL && (cmdline[0] == '\0' || cmdline[0] == '\n'))
 	{
 		free(cmdline);
-		cmdline = readline("minishell> ");
+		cmdline = readline(prompt);
 	}
+	free(prompt);
 	return (cmdline);
 }
 
@@ -78,7 +81,7 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		signal_init();
-		cmdline = read_prompt();
+		cmdline = read_prompt(&mshell);
 		if (cmdline == NULL)
 		{
 			mshell.error_code = 131;
