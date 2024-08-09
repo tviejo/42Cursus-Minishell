@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 22:49:32 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 23:03:40 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_free_all(t_data *exec)
 int	exit_parameter(t_data *exec, int return_value)
 {
 	if (exec->oldtype != nt_pipe)
-		clear_terminal(exec->env);	
+		clear_terminal(exec->env);
 	ft_free_all(exec);
 	exit(return_value);
 }

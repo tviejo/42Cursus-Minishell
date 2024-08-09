@@ -6,15 +6,15 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 22:46:08 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 23:03:46 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void clear_terminal(char **env)
+void	clear_terminal(char **env)
 {
-	char *arg[2];
+	char	*arg[2];
 
 	arg[0] = "/usr/bin/clear";
 	arg[1] = NULL;
