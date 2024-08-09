@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/08 10:21:09 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 17:42:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define NO_FILES "No such file or directory"
 # define MINI "minishell: "
 # define IS_DIR "is a directory"
+# define NO_PERM "Permission denied"
 
 enum		e_builtin
 {

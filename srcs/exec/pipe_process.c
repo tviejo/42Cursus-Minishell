@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:10 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 14:06:13 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/09 16:48:42 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	child_process(t_command_tree *tree, t_data *exec)
 	{
 		init_pipe(fdpipe, exec);
 		if (do_all_redir(tree, exec) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+			exit(exec->error_code);
 		else
 			tree = get_next_command(tree);
 		exec_cmd(tree, exec);
@@ -70,7 +70,7 @@ int	last_child_process(t_command_tree *tree, t_data *exec)
 		close(fdpipe[0]);
 		close(fdpipe[1]);
 		if (do_all_redir(tree, exec) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+			exit(exec->error_code);
 		else
 			tree = get_next_command(tree);
 		exec_cmd(tree, exec);
