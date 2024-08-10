@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:20:29 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/03 00:31:33 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:19:07 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	enqueue(t_queue *s, void *obj);
 void	*dequeue(t_queue *s);
 void	*q_getout(t_queue *s);
 void	*q_get(t_queue *q, int pos);
+void	*q_getlastin(t_queue *q);
 int		q_getsize(t_queue *s);
 
 #endif
