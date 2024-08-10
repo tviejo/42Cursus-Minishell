@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 09:12:40 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 15:41:09 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	update_oldpwm(t_data *exec)
 	int		i;
 	char	*pwd;
 	char	buffer[4096];
+	char	*tmp;
 
 	pwd = getcwd(buffer, 4096);
 	i = 0;
@@ -31,7 +32,11 @@ int	update_oldpwm(t_data *exec)
 		i++;
 	}
 	if (exec->env[i] == NULL)
-		exec->env = add_back_env(exec, ft_strjoin("OLDPWD=", pwd));
+	{
+		tmp = ft_strjoin("OLDPWD=", pwd);
+		exec->env = add_back_env(exec, tmp);
+		free(tmp);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -53,16 +58,26 @@ int	cd_go_home(t_data *exec)
 
 int	cd_go_path(t_data *exec, char *path)
 {
-	char	pwd[4096];
-	char	*pwd2;
+	char		pwd[4096];
+	char		*pwd2;
+	struct stat	buf;
 
-	if (chdir(path) == -1)
+	if (chdir(path) != 0)
 	{
-		ft_dprintf(2, CRED "cd: %s: %s\n" RESET, path, NO_FILES);
+		if (stat(path, &buf) == 0)
+			ft_dprintf(2, CRED "cd: %s: %s\n" RESET, path, NOT_DIR);
+		else
+			ft_dprintf(2, CRED "cd: %s: %s\n" RESET, path, NO_FILES);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
-	pwd2 = ft_strjoin("PWD=", getcwd(pwd, 4096));
+	getcwd(pwd, 4096);
+	if (access(pwd, F_OK) == -1)
+	{
+		ft_dprintf(2, CRED "cd: %s: %s\n" RESET, path, NO_FILES);
+		return (exec->error_code = 1, EXIT_FAILURE);
+	}
+	pwd2 = ft_strjoin("PWD=", pwd);
 	update_pwd(exec, pwd2);
 	free(pwd2);
 	return (EXIT_SUCCESS);
@@ -86,14 +101,14 @@ int	cd_go_back(t_data *exec)
 	if (exec->env[i] == NULL)
 	{
 		ft_dprintf(2, CRED "%sminishell: cd: OLDPWD not set\n" RESET, MINI);
-		exec->error_code = 1;
-		return (EXIT_FAILURE);
+		return (exec->error_code = 1, EXIT_FAILURE);
 	}
 	update_oldpwm(exec);
 	update_pwd(exec, pwd);
 	chdir(pwd);
-	free(pwd);
-	return (EXIT_SUCCESS);
+	if (access(pwd, F_OK) == -1)
+		return (free(pwd), exec->error_code = 1, EXIT_FAILURE);
+	return (free(pwd), EXIT_SUCCESS);
 }
 
 int	ft_cd(t_command_tree *tree, t_data *exec)
@@ -104,17 +119,15 @@ int	ft_cd(t_command_tree *tree, t_data *exec)
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
-	else if (tree->argument[1] == NULL)
+	else if (tree->argument[1] == NULL || ft_strncmp(tree->argument[1], "~\0",
+			2) == 0)
 	{
 		update_oldpwm(exec);
 		cd_go_home(exec);
 		return (EXIT_SUCCESS);
 	}
-	else if (ft_strncmp(tree->argument[1], "-", 1) == 0)
-	{
-		cd_go_back(exec);
-		return (EXIT_SUCCESS);
-	}
+	else if (ft_strncmp(tree->argument[1], "-\0", 2) == 0)
+		return (cd_go_back(exec), EXIT_SUCCESS);
 	else
 	{
 		update_oldpwm(exec);
