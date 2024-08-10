@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:37:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 23:09:34 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 00:18:04 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	unsupported_token(t_data *ms, char *cmdline)
 	if ((*cmdline == '&' && cmdline[1] != '&')
 		|| *cmdline == '!' || *cmdline == ':' || *cmdline == ';')
 	{
-		ft_dprintf(ms->error_fd, "minishell: unsupported token '%c'\n",
+		ft_dprintf(ms->error_fd, CRED"minishell: unsupported token '%c'\n"RESET,
 			*cmdline);
 		purger_lexqueue(ms->file_lex);
 		ms->error_code = 2;
@@ -35,8 +35,8 @@ bool	validate_lexqueue_before_core(t_data *ms, char *str,
 	{
 		if (!*has_cmd)
 		{
-			ft_dprintf(ms->error_fd, "%ssyntax error before token '%s': \
-missing operand\n", MINI, str);
+			ft_dprintf(ms->error_fd, CRED "%ssyntax error before token '%s': \
+missing operand\n" RESET, MINI, str);
 			purger_lexqueue(ms->file_lex);
 			ms->error_code = 1;
 			return (false);
@@ -78,8 +78,8 @@ bool	validate_lexqueue(t_data *ms)
 		type = get_node_type(ms, laststr);
 		if (type >= nt_infile && type <= nt_AND)
 		{
-			ft_dprintf(ms->error_fd, "%ssyntax error after token '%s': \
-missing operand\n", MINI, laststr);
+			ft_dprintf(ms->error_fd, CRED "%ssyntax error after token '%s': \
+missing operand\n" RESET, MINI, laststr);
 			purger_lexqueue(ms->file_lex);
 			ms->error_code = 1;
 			return (false);

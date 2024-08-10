@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:03 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 08:18:40 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 02:13:22 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct s_printcmdtree
 	int			targetdepth;
 	int			fd;
 	t_operator	*ope;
-	int			xpos;
+	int			child_xpos;
+	int			branch_xpos;
 	bool		prnbranch;
 }	t_printcmdtree;
 

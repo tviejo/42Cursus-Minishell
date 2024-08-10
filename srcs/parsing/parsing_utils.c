@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:27:35 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/07 17:39:33 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 00:10:54 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ enum e_nodetype	get_node_type(t_data *p, char *word)
 	enum e_nodetype	type;
 
 	if (p->debug_mode >= 3)
-		ft_dprintf(p->debug_fd, "[get_node_type] word: '%s'\n", word);
+		ft_dprintf(p->debug_fd, CORANGE "[get_node_type] word: '%s'\n" RESET,
+			word);
 	type = 0;
 	while (++type < nt_number_of_nodetype)
 	{
@@ -129,8 +130,8 @@ t_cmdtree	*new_node(t_data *p, char *word)
 		return (&close_parenthesis);
 	node = malloc(sizeof(t_cmdtree));
 	if (node == NULL)
-		return (ft_putstr_fd("[new_node] error: malloc fails !\n", p->error_fd),
-			NULL);
+		return (ft_putstr_fd(CRED "[new_node] error: malloc fails !\n" RESET,
+				p->error_fd), NULL);
 	node->type = type;
 	node->argument = NULL;
 	node->left = NULL;

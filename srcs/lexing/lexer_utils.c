@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:29:32 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 12:57:25 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 00:07:16 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	if_debug_print_outstr(t_data *ms, char *outstr)
 {
 	if (ms->debug_mode >= 2)
-		ft_dprintf(ms->debug_fd, "  get_string returns: '%s'\n", outstr);
+		ft_dprintf(ms->debug_fd, CORANGE "  get_string returns: '%s'\n" RESET,
+			outstr);
 }
 
 /* Recupère un element de la ligne de commande (fin de la chaine identifiée par
@@ -54,9 +55,10 @@ void	if_debug_print_lex_queue(t_data *ms)
 {
 	if (ms->debug_mode > 0)
 	{
-		ft_dprintf(ms->file_lex->print_fd, " ");
+		ft_dprintf(ms->file_lex->print_fd, CORANGE " ");
 		queue_print(ms->file_lex, false,
 			(t_q_prn_elem_fct)print_queue_node, ms);
+		ft_dprintf(ms->file_lex->print_fd, RESET);
 	}
 }
 
