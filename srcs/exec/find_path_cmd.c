@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:40 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 21:20:39 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 12:09:28 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char	*find_good_path(char **cmd, char **paths)
 	i = -1;
 	tmp = NULL;
 	tmppath = NULL;
+	if (cmd == NULL || cmd[0] == NULL || cmd[0][0] == '\0')
+		return (NULL);
 	while (paths[++i] != NULL)
 	{
 		free(tmp);
@@ -49,7 +51,7 @@ static char	*find_good_path(char **cmd, char **paths)
 			return (tmp);
 		}
 	}
-	return (free(tmppath), free(tmp), NULL);
+	return (free(tmppath), free(tmp), cmd[0]);
 }
 
 char	*find_cmd(char **cmd, char **paths)
@@ -65,8 +67,7 @@ char	*find_cmd(char **cmd, char **paths)
 			return (cmd[0]);
 		else
 		{
-			ft_dprintf(2, CRED "%s%s: %s\n" RESET, MINI, cmd[0], NO_PERM);
-			return (NULL);
+			return (cmd[0]);
 		}
 	}
 	if (cmd != NULL && paths != NULL)
@@ -74,8 +75,5 @@ char	*find_cmd(char **cmd, char **paths)
 		tmp = find_good_path(cmd, paths);
 	}
 	ft_free_split(paths);
-	if (tmp != NULL)
-		return (tmp);
-	ft_dprintf(2, CRED "%s%s: command not found\n" RESET, MINI, cmd[0]);
-	return (NULL);
+	return (tmp);
 }

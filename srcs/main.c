@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 23:20:12 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 09:12:10 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 		mshell->debug_mode = 0;
 	if (!init_parsing(mshell))
 	{
-		ft_putstr_fd("minishell [init_parsing]: error: malloc failed.\n",
-			mshell->error_fd);
+		ft_dprintf(mshell->error_fd,
+			CRED "minishell [init]: error: malloc failed.\n" RESET);
 		exit(2);
 	}
 	store_env(mshell, env);

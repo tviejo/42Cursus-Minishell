@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 23:03:40 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 10:24:47 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_free_all(t_data *exec)
 
 int	exit_parameter(t_data *exec, int return_value)
 {
-	if (exec->oldtype != nt_pipe)
+	if (exec->oldtype != nt_pipe && exec->subshell != true)
 		clear_terminal(exec->env);
 	ft_free_all(exec);
 	exit(return_value);
@@ -48,7 +48,7 @@ int	exit_parameter(t_data *exec, int return_value)
 
 int	ft_exit(t_command_tree *tree, t_data *exec)
 {
-	if (exec->oldtype != nt_pipe)
+	if (exec->oldtype != nt_pipe && exec->subshell != true)
 		ft_putstr_fd("exit\n", 1);
 	if (tree->argument[1] != NULL)
 	{
@@ -60,7 +60,7 @@ int	ft_exit(t_command_tree *tree, t_data *exec)
 		}
 		else if (tree->argument[2] != NULL)
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			ft_dprintf(2, CRED "minishell: exit: too many arguments\n" RESET);
 			return (EXIT_FAILURE);
 		}
 		else if (ft_atoi(tree->argument[1]) > 255

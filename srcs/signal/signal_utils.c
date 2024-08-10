@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:18:34 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/07 18:17:19 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 09:13:18 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	signal_sigquit(int sig)
 {
 	(void)sig;
 	g_signal = 128 + SIGINT;
-	ft_putstr_fd("Quit (core dumped)\n", 2);
+	ft_dprintf(2, "Quit (core dumped)\n");
 }
 
 void	signal_handler(int sig)

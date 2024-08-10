@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 21:33:28 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 09:12:40 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	cd_go_path(t_data *exec, char *path)
 
 	if (chdir(path) == -1)
 	{
-		ft_dprintf(2, CRED"cd: %s: %s\n" RESET, path, NO_FILES);
+		ft_dprintf(2, CRED "cd: %s: %s\n" RESET, path, NO_FILES);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
@@ -85,7 +85,7 @@ int	cd_go_back(t_data *exec)
 	}
 	if (exec->env[i] == NULL)
 	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		ft_dprintf(2, CRED "%sminishell: cd: OLDPWD not set\n" RESET, MINI);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
@@ -100,7 +100,7 @@ int	ft_cd(t_command_tree *tree, t_data *exec)
 {
 	if (tree->argument[1] != NULL && tree->argument[2] != NULL)
 	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
+		ft_dprintf(2, CRED "%sminishell: cd: too many arguments\n" RESET, MINI);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}

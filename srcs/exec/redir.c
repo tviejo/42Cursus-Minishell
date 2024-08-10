@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:53:14 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/09 21:23:06 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 12:05:28 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	redir_outfile(t_command_tree *tree, t_data *exec)
 				0644);
 	if (exec->outfile == -1)
 	{
-		ft_dprintf(2, CRED "minishell: %s: Permission denied\n" RESET,
+		ft_dprintf(2, CRED "minishell: '%s': Permission denied\n" RESET,
 			tree->argument[0]);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
@@ -56,7 +56,7 @@ int	redir_infile(t_command_tree *tree, t_data *exec)
 {
 	if (access(tree->argument[0], F_OK) == -1)
 	{
-		ft_dprintf(2, CRED "minishell: %s: %s\n" RESET, tree->argument[0],
+		ft_dprintf(2, CRED "minishell: '%s': %s\n" RESET, tree->argument[0],
 			NO_FILES);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
@@ -64,7 +64,7 @@ int	redir_infile(t_command_tree *tree, t_data *exec)
 	exec->infile = open(tree->argument[0], O_RDONLY);
 	if (exec->infile == -1)
 	{
-		ft_dprintf(2, CRED "minishel: %s: %s\n" RESET, tree->argument[0],
+		ft_dprintf(2, CRED "minishel: '%s': %s\n" RESET, tree->argument[0],
 			NO_PERM);
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
