@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 13:28:36 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 14:12:11 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,20 @@ bool	contain_backslash(char *str)
 		i++;
 	}
 	return (false);
+}
+
+void	ft_print_error_env(t_data *exec, t_command_tree *tree)
+{
+	if (find_path("PATH=", exec) != NULL)
+	{
+		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
+			NO_CMD);
+		exec->error_code = 127;
+	}
+	else
+	{
+		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
+			NO_FILES);
+		exec->error_code = 127;
+	}
 }

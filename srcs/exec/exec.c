@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 13:31:22 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 14:11:01 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	is_a_directory(char *path, t_data *exec, t_command_tree *tree,
 	else if (contain_backslash(path) == true)
 		directory_error(tree, exec, FILES);
 	else
-		directory_error(tree, exec, CMD);
+		ft_print_error_env(exec, tree);
 }
 
 static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
@@ -72,8 +72,6 @@ static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
 	{
 		if (access(tree->argument[0], F_OK | X_OK) == 0)
 			return (tree->argument[0]);
-		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
-			NO_FILES);
 		free(path);
 		return (NULL);
 	}
@@ -87,8 +85,7 @@ static void	normal_exec(t_command_tree *tree, t_data *exec)
 	tmp = find_exec_cmd(tree, exec);
 	if (tmp == NULL)
 	{
-		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
-			NO_CMD);
+		ft_print_error_env(exec, tree);
 		free(tmp);
 		ft_close_error(tree, exec);
 		exec->error_code = 127;

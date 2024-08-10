@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 13:28:40 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 14:10:31 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ void					close_pipe_2(int *fdpipe);
 char					*create_prompt(t_data *mshell);
 void					clear_terminal(char **env);
 bool					contain_backslash(char *str);
+void					ft_print_error_env(t_data *exec, t_command_tree *tree);
 
 /*				Lexer & Parser					*/
 
