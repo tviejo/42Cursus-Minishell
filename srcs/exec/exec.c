@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:32 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 12:13:16 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 13:31:22 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,29 @@
 
 static void	directory_error(t_command_tree *tree, t_data *exec, int type)
 {
-	if (type == FILES)
-	{
-		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
-			NO_FILES);
-		exec->error_code = 127;
-	}
-	else if (type == DIR_2)
+	if (type == DIR_2)
 	{
 		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
 			IS_DIR);
 		exec->error_code = 126;
 	}
-	else
+	else if (type == PERM)
 	{
 		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
 			NO_PERM);
 		exec->error_code = 126;
+	}
+	else if (type == CMD)
+	{
+		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
+			NO_CMD);
+		exec->error_code = 126;
+	}
+	else
+	{
+		ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],
+			NO_FILES);
+		exec->error_code = 127;
 	}
 }
 
@@ -48,13 +54,13 @@ static void	is_a_directory(char *path, t_data *exec, t_command_tree *tree,
 	{
 		if (S_ISDIR(buf.st_mode))
 			directory_error(tree, exec, DIR_2);
-		else
-			directory_error(tree, exec, FILES);
+		else if (access(path, X_OK) == -1)
+			directory_error(tree, exec, PERM);
 	}
-	else if (errno == EACCES)
-		directory_error(tree, exec, PERM);
-	else
+	else if (contain_backslash(path) == true)
 		directory_error(tree, exec, FILES);
+	else
+		directory_error(tree, exec, CMD);
 }
 
 static char	*find_exec_cmd(t_command_tree *tree, t_data *exec)
@@ -91,7 +97,7 @@ static void	normal_exec(t_command_tree *tree, t_data *exec)
 	else
 	{
 		execve(tmp, tree->argument, exec->env);
-		if (errno == ENOENT || errno == EISDIR || errno == EPERM)
+		if (errno == ENOENT || errno == EISDIR || errno == EACCES)
 			is_a_directory(tree->argument[0], exec, tree, tmp);
 		else
 			ft_dprintf(2, CRED "%s'%s': %s\n" RESET, MINI, tree->argument[0],

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 09:21:54 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 13:28:40 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ int						find_closest_subshell(t_command_tree *tree);
 void					close_pipe_2(int *fdpipe);
 char					*create_prompt(t_data *mshell);
 void					clear_terminal(char **env);
+bool					contain_backslash(char *str);
 
 /*				Lexer & Parser					*/
 

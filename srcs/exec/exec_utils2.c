@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 11:52:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/30 17:20:43 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 13:28:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ void	ft_lstclear_process(t_proccess **process)
 	}
 	free(process2);
 	*process = NULL;
+}
+
+bool	contain_backslash(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '/')
+			return (true);
+		i++;
+	}
+	return (false);
 }
