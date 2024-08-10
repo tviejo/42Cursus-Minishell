@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 09:12:59 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 03:19:12 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 08:18:02 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	print_branch(t_printcmdtree *pct, t_cmdtree *node)
 
 	if (p == NULL)
 		return ;
-	//print_char_xtimes(pct->fd, ' ', p->prnxpos);
 	if (p->prnxpos == pct->child_xpos)
 		pct->branch_xpos += (ft_dprintf(pct->fd, "\u2502"), 1);
 	else if (p->prnxpos < pct->child_xpos)
