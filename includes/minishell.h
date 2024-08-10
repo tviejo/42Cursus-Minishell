@@ -6,8 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 15:26:25 by tviejo           ###   ########.fr       */
-/*   Updated: 2024/08/10 15:39:56 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 16:38:03 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +247,8 @@ enum e_quote_state		lex_quote_open(enum e_quote_state qstate,
 							char **lexstring);
 void					if_debug_print_lex_queue(t_data *ms);
 void					if_redir_enqueue_echo_n(t_data *ms,
+							enum e_nodetype ntype);
+void					enqueue_token(t_data *ms, char *token,
 							enum e_nodetype ntype);
 bool					validate_lexqueue(t_data *ms);
 char					*get_token(t_data *ms, char **cmdline, char *outstr,
