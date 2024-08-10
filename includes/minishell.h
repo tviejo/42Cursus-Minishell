@@ -6,6 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
+/*   Updated: 2024/08/10 15:26:25 by tviejo           ###   ########.fr       */
 /*   Updated: 2024/08/10 15:39:56 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -223,7 +224,7 @@ char					*join_with_space(char *str1, char *str2);
 void					lex_and_parse(t_data *ms, char *cmdline);
 void					execute(t_data *mshell);
 char					**ft_strdup_env(char **env);
-void					print_exp_error(char *varname);
+void					exprint(char *varname);
 void					exec_subshell(t_command_tree *tree, t_data *exec);
 void					exec_piped_subshell(t_command_tree *tree, t_data *exec);
 void					ft_redirect_subshell(t_data *exec);

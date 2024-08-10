@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 11:12:18 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 15:46:32 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define NO_FILES "No such file or directory"
 # define MINI "minishell: "
 # define IS_DIR "is a directory"
+# define NOT_DIR "Not a directory"
 # define NO_PERM "Permission denied"
 # define NO_CMD "command not found"
 # define FILES 1
