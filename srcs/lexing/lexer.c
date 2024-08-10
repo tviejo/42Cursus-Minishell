@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:19:35 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:28:51 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void	lex_others(t_data *ms, enum e_quote_state quote_state, char **cmdline,
 				*lexstring = NULL;
 			}
 			if (ntype != nt_command)
+			{
+				if_redir_enqueue_echo_n(ms, ntype);
 				enqueue(ms->file_lex, ft_strdup(token));
+			}
 		}
 		else if (!lex_wildcard(ms, token))
 			*lexstring = ft_stradd(*lexstring, token);

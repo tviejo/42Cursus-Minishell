@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:41:37 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:18:48 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:38:45 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,4 @@ char	*ft_straddchar(char *s, char const c)
 	const char	toadd[] = {c, '\0'};
 
 	return (ft_stradd(s, toadd));
-}
-
-enum e_quote_state	lex_quote_open(enum e_quote_state qstate, char **lexstring)
-{
-	*lexstring = ft_stradd(*lexstring, "");
-	return (qstate);
 }
