@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 02:00:11 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 16:35:59 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:28:32 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ void	lex_others(t_data *ms, enum e_quote_state quote_state, char **cmdline,
 		{
 			if (*lexstring)
 			{
-				enqueue(ms->file_lex, *lexstring);
+				lex_enqueue(ms, *lexstring);
 				*lexstring = NULL;
 			}
 			if (ntype != nt_command)
-				enqueue_token(ms, token, ntype);
+				lex_enqueue(ms, ft_strdup(token));
 		}
 		else if (!lex_wildcard(ms, token))
 			*lexstring = ft_stradd(*lexstring, token);
@@ -126,6 +126,7 @@ bool	lexer(t_data *ms, char *cmdline)
 	char				*lexstring;
 	enum e_quote_state	quote_state;
 
+	ms->redir_lexstate = rs_NO;
 	lexstring = NULL;
 	quote_state = no_quote;
 	while (*cmdline)
@@ -140,7 +141,9 @@ bool	lexer(t_data *ms, char *cmdline)
 			lex_others(ms, quote_state, &cmdline, &lexstring);
 	}
 	if (lexstring)
-		enqueue(ms->file_lex, lexstring);
+		lex_enqueue(ms, lexstring);
+	if (ms->redir_lexstate == rs_ARG)
+		enqueue_echo_n(ms);
 	if_debug_print_lex_queue(ms);
 	return (validate_lexqueue(ms));
 }

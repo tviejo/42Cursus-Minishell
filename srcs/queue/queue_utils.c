@@ -6,7 +6,7 @@
 /*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 04:38:22 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 15:18:39 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:07:38 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,7 @@ void	queue_print(t_queue *q, bool reverse,
 
 void	*q_getlastin(t_queue *q)
 {
+	if (q_getsize(q) <= 0)
+		return (NULL);
 	return (q_get(q, q_getsize(q) - 1));
 }

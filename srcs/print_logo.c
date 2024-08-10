@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_logo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 09:51:31 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/10 18:34:13 by ade-sarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	clear_terminal(char **env)
 
 int	print_minishell(void)
 {
-	ft_dprintf(2, CMAGENTA CBOLD);
+	ft_dprintf(2, "\n" CMAGENTA CBOLD);
 	ft_dprintf(2, L1 "\n");
 	ft_dprintf(2, L2 "\n");
 	ft_dprintf(2, L3 "\n");
