@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   print_logo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:47:13 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 18:34:13 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:13:13 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_shell_level(t_data *mshell)
+{
+	int		i;
+	char	*level;
+	char	*tmp;
+	char	buffer[4096];
+
+	i = -1;
+	while (mshell->env[++i])
+	{
+		if (ft_strncmp(mshell->env[i], "SHLVL=", 6) == 0)
+		{
+			level = ft_substr(mshell->env[i], 6, ft_strlen(mshell->env[i]) - 6);
+			tmp = ft_itoa(ft_atoi(level) + 1);
+			free(level);
+			free(mshell->env[i]);
+			mshell->env[i] = ft_strjoin("SHLVL=", tmp);
+			free(tmp);
+		}
+		else if (ft_strncmp(mshell->env[i], "SHELL=", 6) == 0)
+		{
+			free(mshell->env[i]);
+			mshell->env[i] = ft_strjoin("SHELL=", getcwd(buffer, 4096));
+		}
+	}
+}
 
 static bool	search_term_env(char **env)
 {

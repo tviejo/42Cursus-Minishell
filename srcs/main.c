@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 05:00:55 by ade-sarr          #+#    #+#             */
-/*   Updated: 2024/08/10 09:12:10 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/12 10:16:15 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 	mshell->info_fd = STDERR_FILENO;
 	mshell->error_code = 0;
 	if (argc > 1)
-		mshell->debug_mode = atoi(argv[1]);
+		mshell->debug_mode = ft_atoi(argv[1]);
 	else
 		mshell->debug_mode = 0;
 	if (!init_parsing(mshell))
@@ -29,6 +29,7 @@ void	init(t_data *mshell, int argc, char **argv, char **env)
 		exit(2);
 	}
 	store_env(mshell, env);
+	update_shell_level(mshell);
 	rl_bind_key('\t', rl_complete);
 	using_history();
 	print_minishell();

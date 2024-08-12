@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:05 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 15:41:09 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/12 09:58:55 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	update_oldpwm(t_data *exec)
 int	cd_go_home(t_data *exec)
 {
 	char	*pwd;
+	int		error;
 
 	pwd = find_path("HOME=", exec);
 	if (pwd == NULL)
@@ -51,8 +52,14 @@ int	cd_go_home(t_data *exec)
 		exec->error_code = 1;
 		return (EXIT_FAILURE);
 	}
+	error = chdir(pwd);
+	if (error == -1)
+	{
+		ft_dprintf(2, CRED "cd: %s: %s\n" RESET, pwd, NO_FILES);
+		exec->error_code = 1;
+		return (EXIT_FAILURE);
+	}
 	update_pwd(exec, pwd);
-	chdir(pwd);
 	return (EXIT_SUCCESS);
 }
 

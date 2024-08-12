@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:16:44 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 15:46:32 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/12 09:54:43 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define CLEAR_MODE 1 /*1  for true 0 for false */
+# define CLEAR_MODE 0 /*1  for true 0 for false */
 
 # define NO_FILES "No such file or directory"
 # define MINI "minishell: "

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-sarr <ade-sarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:17:18 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/10 18:18:50 by ade-sarr         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:06:08 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ char					*create_prompt(t_data *mshell);
 void					clear_terminal(char **env);
 bool					contain_backslash(char *str);
 void					ft_print_error_env(t_data *exec, t_command_tree *tree);
+void					update_shell_level(t_data *mshell);
 
 /*				Lexer & Parser					*/
 
@@ -256,7 +257,7 @@ enum e_quote_state		lex_quote_open(enum e_quote_state qstate,
 void					if_debug_print_lex_queue(t_data *ms);
 /*void					if_redir_enqueue_echo_n(t_data *ms,
 							enum e_nodetype ntype);
-void					enqueue_token(t_data *ms, char *token,
+void	enqueue_token(t_data *ms, char *token,
 							enum e_nodetype ntype);*/
 void					lex_enqueue(t_data *ms, char *token);
 void					enqueue_echo_n(t_data *ms);

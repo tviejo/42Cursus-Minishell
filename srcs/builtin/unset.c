@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:55:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/08/01 13:01:52 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/08/12 09:51:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ static bool	find_equal(char *str)
 	return (false);
 }
 
+static bool	is_valid_var(t_data *exec, char *var, int i)
+{
+	if (ft_strncmp(exec->env[i], var, ft_strlen(var)) == 0
+		&& exec->env[i][ft_strlen(var)] == '=')
+		return (true);
+	return (false);
+}
+
 int	ft_unset(t_command_tree *tree, t_data *exec)
 {
 	int	i;
@@ -37,8 +45,7 @@ int	ft_unset(t_command_tree *tree, t_data *exec)
 		return (EXIT_FAILURE);
 	while (exec->env[i] != NULL)
 	{
-		if (ft_strncmp(exec->env[i], tree->argument[1],
-				ft_strlen(tree->argument[1])) == 0)
+		if (is_valid_var(exec, tree->argument[1], i) == true)
 		{
 			while (exec->env[i + 1] != NULL)
 			{
