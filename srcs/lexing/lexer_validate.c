@@ -38,7 +38,7 @@ bool	validate_lexqueue_before_core(t_data *ms, char *str,
 			ft_dprintf(ms->error_fd, CRED "%ssyntax error before token '%s': \
 missing operand\n" RESET, MINI, str);
 			purger_lexqueue(ms->file_lex);
-			ms->error_code = 1;
+			ms->error_code = 2;
 			return (false);
 		}
 		*has_cmd = false;
@@ -81,7 +81,7 @@ bool	validate_lexqueue(t_data *ms)
 			ft_dprintf(ms->error_fd, CRED "%ssyntax error after token '%s': \
 missing operand\n" RESET, MINI, laststr);
 			purger_lexqueue(ms->file_lex);
-			ms->error_code = 1;
+			ms->error_code = 2;
 			return (false);
 		}
 	}

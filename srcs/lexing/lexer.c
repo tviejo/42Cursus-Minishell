@@ -131,9 +131,7 @@ bool	lexer(t_data *ms, char *cmdline)
 	quote_state = no_quote;
 	while (*cmdline)
 	{
-		if (unsupported_token(ms, cmdline))
-			return (false);
-		else if (lex_quote(ms, &quote_state, cmdline, &lexstring))
+		if (lex_quote(ms, &quote_state, cmdline, &lexstring))
 			cmdline++;
 		else if (lex_bslash_n_dollar(ms, quote_state, &cmdline, &lexstring))
 			;
@@ -147,3 +145,8 @@ bool	lexer(t_data *ms, char *cmdline)
 	if_debug_print_lex_queue(ms);
 	return (validate_lexqueue(ms));
 }
+/* Removed unsupported_token() call from lexer():		
+		if (unsupported_token(ms, cmdline))
+			return (false);
+		else 
+*/
