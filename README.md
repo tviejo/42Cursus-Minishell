@@ -13,7 +13,12 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
-- [License](#license)
+  - [Executing a Simple Command](#executing-a-simple-command)
+  - [Using Builtins](#using-builtins)
+  - [Changing Directory](#changing-directory)
+  - [Redirections and Pipes](#redirections-and-pipes)
+  - [Handling Signals](#handling-signals)
+  - [Bonus Features Examples](#bonus-features-examples)
 - [Authors](#authors)
 
 ## Introduction
@@ -117,43 +122,71 @@ Once inside the shell, you can start typing commands as you would in a standard 
 
 - Press `Ctrl+D` or type `exit` to exit the shell.
 
-## Examples
+## Features
 
-### Executing a Simple Command
+### Basic Functions
 
-```bash
-minishell> ls -la
-```
+- **Redirections**
+  - Output Redirection: `>`
+  - Append Redirection: `>>`
+  - Heredoc: `<<`
+- **Pipes**
+  - Chain commands using `|`
+- **Quotes Handling**
+  - Double Quotes: `" "`
+  - Single Quotes: `' '`
+- **Error Handling**
+  - Return values using `$?`
+- **Environment Variables**
+  - Access and modify environment variables
+- **Signal Handling**
+  - `Ctrl+D` to exit
+  - `Ctrl+C` to interrupt
+  - `Ctrl+\` to quit
 
-### Using Builtins
+### Builtins
 
-```bash
-minishell> echo -n "Hello, World!"
-Hello, World!minishell$
-```
+- **echo**
+  - Usage: `echo [-n] [string ...]`
+  - Supports the `-n` option to omit the trailing newline
+- **cd**
+  - Usage: `cd [directory]`
+  - Supports only relative or absolute paths
+- **pwd**
+  - Usage: `pwd`
+  - Prints the current working directory
+- **export**
+  - Usage: `export [variable]`
+  - Adds or modifies environment variables
+- **unset**
+  - Usage: `unset [variable]`
+  - Removes environment variables
+- **env**
+  - Usage: `env`
+  - Displays all environment variables
+- **exit**
+  - Usage: `exit`
+  - Exits the shell
 
-### Changing Directory
+### Bonus Features
 
-```bash
-minishell> cd /usr/local
-minishell> pwd
-/usr/local
-```
-
-### Redirections and Pipes
-
-```bash
-minishell> cat file.txt | grep "search_term" > output.txt
-```
-
-### Handling Signals
-
-- Pressing `Ctrl+C` will interrupt the current command.
-- Pressing `Ctrl+\` will quit the shell.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+- **Logical Operators**
+  - **AND (`&&`)**
+    - Executes the next command only if the previous command succeeds.
+    - **Example:** `mkdir new_folder && cd new_folder`
+  - **OR (`||`)**
+    - Executes the next command only if the previous command fails.
+    - **Example:** `cd nonexistent_folder || echo "Failed to change directory"`
+- **Subshells (`()`)**
+  - Groups commands to control execution flow and manage scope.
+  - Executes commands within a subshell, isolating their environment.
+  - **Example:** `(cd /tmp && ls)`: Changes to `/tmp` and lists its contents without affecting the current shell's directory.
+- **Wildcards**
+  - Supports wildcard characters like `*` and `?` for pattern matching.
+  - **`*`**: Matches any number of characters.
+    - **Example:** `ls *.txt` lists all `.txt` files in the current directory.
+  - **`?`**: Matches exactly one character.
+    - **Example:** `ls file?.c` matches `file1.c`, `file2.c`, etc., but not `file10.c`.
 
 ## Authors
 
@@ -164,5 +197,3 @@ This project is licensed under the [MIT License](LICENSE).
 ```
 
 ---
-
-**Note:** Replace `path/to/banner.png`, `path/to/main_interface.png`, and `path/to/builtin_commands.png` with the actual paths to your images in the repository. You can upload images to your GitHub repository and reference them accordingly.
