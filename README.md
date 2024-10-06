@@ -240,9 +240,3 @@ minishell> cat file.txt | grep "search_term" > output.txt
 
 - **tviejo** - [tviejo](https://github.com/tviejo)
 - **ade-sarr** - [ade-sarr](https://github.com/ade-sarr)
-
-
-```
-
----
-
