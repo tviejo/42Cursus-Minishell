@@ -212,14 +212,6 @@ minishell> cat file.txt | grep "search_term" > output.txt
 
   - **Explanation:** Lists files like `file1.txt`, `file2.txt`, etc., but not `file10.txt`.
 
-- **Combined Wildcards Example:**
-
-  ```bash
-  minishell> ls src/*Test?.py
-  ```
-
-  - **Explanation:** Lists Python test files in the `src` directory that match the pattern, such as `src/MyTest1.py` but not `src/MyTest10.py`.
-
 - **Using Wildcards with Pipes:**
 
   ```bash
