@@ -1,7 +1,7 @@
 
 # Minishell
 
-![Minishell Banner](path/to/banner.png)
+![Minishell Banner](screenshots/begin.png)
 
 ## Table of Contents
 
@@ -13,11 +13,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
-- [Acknowledgements](#acknowledgements)
 
 ## Introduction
 
@@ -87,7 +84,7 @@ To install and set up Minishell on your local machine, follow these steps:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/tviejo/minishell.git
+   git clone https://github.com/tviejo/42Cursus-Minishell.git
    ```
 
 2. **Navigate to the Project Directory**
@@ -154,22 +151,6 @@ minishell$ cat file.txt | grep "search_term" > output.txt
 - Pressing `Ctrl+C` will interrupt the current command.
 - Pressing `Ctrl+\` will quit the shell.
 
-## Screenshots
-
-![Minishell Main Interface](path/to/main_interface.png)
-
-![Executing Builtin Commands](path/to/builtin_commands.png)
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
@@ -179,10 +160,6 @@ This project is licensed under the [MIT License](LICENSE).
 - **tviejo** - [tviejo](https://github.com/tviejo)
 - **ade-sarr** - [ade-sarr](https://github.com/ade-sarr)
 
-## Acknowledgements
-
-- Thanks to School 42 for providing the framework and resources for this project.
-- Inspiration and guidance from the open-source community.
 
 ```
 
