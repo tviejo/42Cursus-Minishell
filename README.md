@@ -230,5 +230,5 @@ minishell> cat file.txt | grep "search_term" > output.txt
 
 ## Authors
 
-- **tviejo** - [tviejo](https://github.com/tviejo)
-- **ade-sarr** - [ade-sarr](https://github.com/ade-sarr)
+- **Thomas Viejo** - [tviejo](https://github.com/tviejo)
+- **Aurélien De Sarrau** - [ade-sarr](https://github.com/dpblue)
