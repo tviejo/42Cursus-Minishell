@@ -1,4 +1,4 @@
-```markdown
+
 # Minishell
 
 ![Minishell Banner](path/to/banner.png)
