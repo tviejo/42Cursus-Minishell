@@ -122,71 +122,119 @@ Once inside the shell, you can start typing commands as you would in a standard 
 
 - Press `Ctrl+D` or type `exit` to exit the shell.
 
-## Features
+## Examples
 
-### Basic Functions
+### Executing a Simple Command
 
-- **Redirections**
-  - Output Redirection: `>`
-  - Append Redirection: `>>`
-  - Heredoc: `<<`
-- **Pipes**
-  - Chain commands using `|`
-- **Quotes Handling**
-  - Double Quotes: `" "`
-  - Single Quotes: `' '`
-- **Error Handling**
-  - Return values using `$?`
-- **Environment Variables**
-  - Access and modify environment variables
-- **Signal Handling**
-  - `Ctrl+D` to exit
-  - `Ctrl+C` to interrupt
-  - `Ctrl+\` to quit
+```bash
+minishell> ls -la
+```
 
-### Builtins
+### Using Builtins
 
-- **echo**
-  - Usage: `echo [-n] [string ...]`
-  - Supports the `-n` option to omit the trailing newline
-- **cd**
-  - Usage: `cd [directory]`
-  - Supports only relative or absolute paths
-- **pwd**
-  - Usage: `pwd`
-  - Prints the current working directory
-- **export**
-  - Usage: `export [variable]`
-  - Adds or modifies environment variables
-- **unset**
-  - Usage: `unset [variable]`
-  - Removes environment variables
-- **env**
-  - Usage: `env`
-  - Displays all environment variables
-- **exit**
-  - Usage: `exit`
-  - Exits the shell
+```bash
+minishell> echo -n "Hello, World!"
+Hello, World!minishell>
+```
 
-### Bonus Features
+### Changing Directory
 
-- **Logical Operators**
-  - **AND (`&&`)**
-    - Executes the next command only if the previous command succeeds.
-    - **Example:** `mkdir new_folder && cd new_folder`
-  - **OR (`||`)**
-    - Executes the next command only if the previous command fails.
-    - **Example:** `cd nonexistent_folder || echo "Failed to change directory"`
-- **Subshells (`()`)**
-  - Groups commands to control execution flow and manage scope.
-  - Executes commands within a subshell, isolating their environment.
-  - **Example:** `(cd /tmp && ls)`: Changes to `/tmp` and lists its contents without affecting the current shell's directory.
-- **Wildcards**
-  - Supports wildcard characters like `*` and `?` for pattern matching.
-  - **`*`**: Matches any number of characters.
-    - **Example:** `ls *.txt` lists all `.txt` files in the current directory.
-  - **`?`**: Matches exactly one character.
-    - **Example:** `ls file?.c` matches `file1.c`, `file2.c`, etc., but not `file10.c`.
+```bash
+minishell> cd /usr/local
+minishell> pwd
+/usr/local
+```
+
+### Redirections and Pipes
+
+```bash
+minishell> cat file.txt | grep "search_term" > output.txt
+```
+
+### Handling Signals
+
+- Pressing `Ctrl+C` will interrupt the current command.
+- Pressing `Ctrl+\` will quit the shell.
+
+### Bonus Features Examples
+
+#### Logical Operators (`&&`, `||`)
+
+- **AND (`&&`) Example:**
+
+  ```bash
+  minishell> mkdir new_folder && cd new_folder
+  ```
+
+  - **Explanation:** Creates a new directory named `new_folder` and changes into it only if the `mkdir` command succeeds.
+
+- **OR (`||`) Example:**
+
+  ```bash
+  minishell> cd nonexistent_folder || echo "Failed to change directory"
+  ```
+
+  - **Explanation:** Attempts to change to `nonexistent_folder`. If it fails, it echoes an error message.
+
+#### Subshells (`()`)
+
+- **Subshell Example:**
+
+  ```bash
+  minishell> (cd /tmp && ls)
+  ```
+
+  - **Explanation:** Changes to the `/tmp` directory and lists its contents within a subshell. The current shell's directory remains unchanged.
+
+- **Complex Subshell Example:**
+
+  ```bash
+  minishell> (echo "Starting backup" > backup.log && cp -r /source /backup >> backup.log) && echo "Backup successful" || echo "Backup failed"
+  ```
+
+  - **Explanation:** Executes a series of commands within a subshell to perform a backup. Logs the process and provides success or failure messages based on the outcome.
+
+#### Wildcards (`*`, `?`)
+
+- **Asterisk (`*`) Example:**
+
+  ```bash
+  minishell> ls *.c
+  ```
+
+  - **Explanation:** Lists all files with a `.c` extension in the current directory.
+
+- **Question Mark (`?`) Example:**
+
+  ```bash
+  minishell> ls file?.txt
+  ```
+
+  - **Explanation:** Lists files like `file1.txt`, `file2.txt`, etc., but not `file10.txt`.
+
+- **Combined Wildcards Example:**
+
+  ```bash
+  minishell> ls src/*Test?.py
+  ```
+
+  - **Explanation:** Lists Python test files in the `src` directory that match the pattern, such as `src/MyTest1.py` but not `src/MyTest10.py`.
+
+- **Using Wildcards with Pipes:**
+
+  ```bash
+  minishell> ls *.txt | grep "report" > reports.txt
+  ```
+
+  - **Explanation:** Lists all `.txt` files, filters those containing the word "report", and redirects the output to `reports.txt`.
+
+- **Wildcard in Subshell:**
+
+  ```bash
+  minishell> (cd documents && ls *.pdf)
+  ```
+
+  - **Explanation:** Changes to the `documents` directory within a subshell and lists all `.pdf` files without affecting the current shell's directory.
 
 ## Authors
 
@@ -197,3 +245,4 @@ Once inside the shell, you can start typing commands as you would in a standard 
 ```
 
 ---
+
