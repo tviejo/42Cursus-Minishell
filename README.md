@@ -122,28 +122,28 @@ Once inside the shell, you can start typing commands as you would in a standard 
 ### Executing a Simple Command
 
 ```bash
-minishell$ ls -la
+minishell> ls -la
 ```
 
 ### Using Builtins
 
 ```bash
-minishell$ echo -n "Hello, World!"
+minishell> echo -n "Hello, World!"
 Hello, World!minishell$
 ```
 
 ### Changing Directory
 
 ```bash
-minishell$ cd /usr/local
-minishell$ pwd
+minishell> cd /usr/local
+minishell> pwd
 /usr/local
 ```
 
 ### Redirections and Pipes
 
 ```bash
-minishell$ cat file.txt | grep "search_term" > output.txt
+minishell> cat file.txt | grep "search_term" > output.txt
 ```
 
 ### Handling Signals
